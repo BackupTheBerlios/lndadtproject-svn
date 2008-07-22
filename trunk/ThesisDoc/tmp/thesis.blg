@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: thesis.aux
+A level-1 auxiliary file: chapIntro.aux
+A level-1 auxiliary file: chapBackground.aux
+The style file: acm.bst
+Database file #1: references.bib
+Warning--I didn't find a database entry for "SunSPOTs"
+Warning--I didn't find a database entry for "ADDREF_NIST"
+You've used 20 entries,
+            2253 wiz_defined-function locations,
+            661 strings with 7970 characters,
+and the built_in function-call counts, 5746 in all, are:
+= -- 508
+> -- 338
+< -- 0
++ -- 139
+- -- 118
+* -- 448
+:= -- 1011
+add.period$ -- 59
+call.type$ -- 20
+change.case$ -- 117
+chr.to.int$ -- 0
+cite$ -- 20
+duplicate$ -- 213
+empty$ -- 436
+format.name$ -- 118
+if$ -- 1147
+int.to.chr$ -- 0
+int.to.str$ -- 20
+missing$ -- 17
+newline$ -- 102
+num.names$ -- 42
+pop$ -- 123
+preamble$ -- 1
+purify$ -- 97
+quote$ -- 0
+skip$ -- 117
+stack$ -- 0
+substring$ -- 151
+swap$ -- 42
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 78
+warning$ -- 0
+while$ -- 46
+width$ -- 22
+write$ -- 196
+(There were 2 warnings)

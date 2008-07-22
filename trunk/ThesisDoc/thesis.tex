@@ -1,0 +1,46 @@
+%&latex
+\documentclass[msc, openright, a4paper]{TNthesis}
+
+%package declaration 
+\usepackage{times}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{indent}  
+\usepackage{listings}
+
+\usepackage{color} 
+
+\title{Distributed Programming Abstraction for Java-based wireless sensor nodes
+(draft)}
+\author{Galiia Khasanova}
+
+% Adds a space between the text and the [B]ottom \hline
+\newcommand\B{\rule[-1.7ex]{0pt}{0pt}} 
+% Adds a space between the text and the [T]op \hline
+\newcommand\T{\rule{0pt}{3.1ex}}
+ \abstract{
+ This thesis presents blah blah blah.
+ }
+\begin{document} 
+
+\begin{preliminary}
+\maketitle 
+\begin{acknowledgements}
+Bla
+\end{acknowledgements}
+\standarddeclaration
+%\dedication{To Eric Cartman, Southpark, Colorado, USA. Only because my
+%boyfriend insists.}
+\tableofcontents
+\listoffigures
+\listoftables
+\end{preliminary}  
+
+\include{chapIntro}
+\include{chapBackground}
+
+\bibliography{references}
+\bibliographystyle{acm}
+
+
+\end{document}
