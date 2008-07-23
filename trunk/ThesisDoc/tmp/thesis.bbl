@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{NIST_website}
+National institute of standards and technology.
+\newblock http://www.nist.gov.
+
 \bibitem{Abdelzaher_EnviroTrack:2004}
 {\sc Abdelzaher, T., Blum, B., Cao, Q., Chen, Y., Evans, D., George, J.,
   George, S., Gu, L., He, T., Krishnamurthy, S., et~al.}
@@ -89,10 +93,6 @@
 \newblock Programming wireless sensor networks: Fundamental concepts and
   state-of-the-art.
 \newblock University of Trento, Italy.
-
-\bibitem{NIST_website}
-{\sc of~Standards, N.~I., and Technology}.
-\newblock http://www.nist.gov.
 
 \bibitem{migliavacca_DADT:2006}
 {\sc Picco, G., Migliavacca, M., Murphy, A., and G., R.}
