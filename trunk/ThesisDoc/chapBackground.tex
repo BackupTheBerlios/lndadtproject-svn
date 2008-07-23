@@ -26,12 +26,13 @@ enables routing and scoping, and how LNs can be used to eliminate the
 limitations inherent in the DADT prototype. The chapter then concludes 
 with a description of the simulation environment \cite{barr_JIST:2005}, \cite{barr_SWANS} underlying the 
 implementation, and the hardware platform - Sun Small Programable Object
-Technology (SPOT) \cite{SunSPOTs}- used during the course of this work to experimentally validate the simulated implementation in a
+Technology (SPOT) \cite{simon_squawk:2006} - used during the course of this work
+to experimentally validate the simulated implementation in a
 real-world environment. 
 
 \section{Introduction to Wireless Sensor Networks}
 
-\subsection{Sensor Nodes}
+\subsection{Sensor Nodes} \label{subsec:sensornodes}
 
 Sensor nodes are multifunctional devices that are characterised by their low 
 cost, low power consumption, and small form factor. They can communicate across 
@@ -341,7 +342,7 @@ abstract view to the problem at hand. The model of a problem defines:
 \end{itemize}
 
 This set of the data values and associated operations, independent of any
-specific implementation, is called an ADT \cite{ADDREF_NIST}. 
+specific implementation, is called an ADT \cite{NIST_website}. 
 
 One of the simplest example of an abstract data type is a stack, which
 consists of the stacked data, and set of defined operations including \emph{push(Data), pop(),}
@@ -440,7 +441,7 @@ sensor node. Thus, ADTs used in WSNs are of two types:
 
 The ADTs presented in the previous section are examples of data ADTs. Space
 ADTs are defined and implemented in a similar manner, except for changes in
-their properties and operations (see Listing \ref{SpaceADTSpec} for the
+their properties and operations (see Listing \ref{listing:SpaceADTSpec} for the
 specification of a Space ADT).  
  
  \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor Space ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label = listing:SpaceADTSpec ]
@@ -464,8 +465,7 @@ class SensorLoc extends Site {
  
 As described in Section \ref{subsubsec:DataAndSpaceADTs}, a space ADT defines
 the computing environment that ``hosts'' the data ADT. A data ADT can be
-associated with the corresponding space ADT using a placement operation
-\footnote{the placement operation is
+associated with the corresponding space ADT using a placement operation\footnote{the placement operation is
 performed explicitly by the application programmer.} as can be seen in Figure \ref{Fig:DADTs}.
 A Sensor data ADT
 instance can be ``placed'' in a SensorLoc space ADT instance as shown in Listing
@@ -610,7 +610,7 @@ implementation of actions are outlined in Chapter \ref{chap:Implementation}.}
 
 \subsubsection{Views}
 
-The concept of views is summarised in Figure \ref{ADDREF_FigureDADTViews}.
+The concept of views is summarised in Figure \ref{Fig:DADT_Views}.
 
 A \emph{property} is a DADT characteristic that is defined in terms of an ADT's
 data and operations, and is executed locally on the ADT instance
@@ -646,6 +646,13 @@ model]{Data and space in the DADT model (reproduced from
 \cite{migliavacca_DADT:2006})}
 \end{figure}
 
+\begin{figure}
+\centering
+\label{Fig:DADT_Views}
+\includegraphics[scale=0.50]{img/DADT_Views.eps} \caption[DADT views]{DADT views
+(reproduced from 
+\cite{migliavacca_DADT:2006})}
+\end{figure}
 
 \subsection {DADT prototype limitations}
 
@@ -713,7 +720,7 @@ class hello implements JistAPI.Entity {
 } 
 \end{lstlisting}
 
-\begin{figure} 
+\begin{figure}
 \centering
 \label{Fig:JiST_architecture}
 \includegraphics[scale=0.72]{img/JiST_architecture.eps} \caption[The JiST 
@@ -833,10 +840,74 @@ of) the node's logical neighborhood} (reproduced from
 \cite{mottola_LN:2006})}
 \end{figure} 
 
-\section {SUNSPOTs}	
+\section {Sun SPOTs}	
+
+\subsection{Motivation}
+
+Sensor nodes, as mentioned in Section \ref{subsec:sensornodes}, are
+characterised by limited resources, including memory.
  
+Managed runtime languages like Java were not used for sensor network programming
+because of the combination of the static memory footprint of the Java Virtual
+Machine (JVM) and the dynamic memory footprint of the WSN application code.
+
+In order to overcome
+memory limitations, wireless sensor network applications have traditionally been
+ coded in non-managed languages like C and assembly language
+ \cite{simon_squawk:2006}. 
+ 
+ On the other hand, it is widely accepted that development times are greatly reduced
+upon the use of managed runtime languages such as Java
+\cite{simon_squawk:2006}. Therefore, currently prevalent WSN programming practice
+trades developer efficiency for memory efficiency. 
+
+However, Simon et al \cite{simon_squawk:2006} state the benefits accrued from
+using a managed runtime language for WSN programming as follows:
+
+\begin{itemize}
+  \item Simplification of the process of WSN programming, that would cause an
+  increase in developer adoption rates, as well as developer productivity.
+  \item Opportunity to use standard development and debugging tools.
+\end{itemize}
+ 
+\subsection{The Sun SPOT hardware platform }
+Sun Microsystems has, on the basis of the arguments discussed in the previous
+section, built a sensor device
+called the Sun Small Programmable Object Technology (Sun SPOT) that uses a
+on-board JVM to allow for WSN programming using Java.
+
+The Sun SPOT uses an ARM-9 processor, has 512 KB of RAM and 4 MB of flash
+memory, uses a Chipcon CC 2420 IEEE 802.15.4 compliant radio to enable
+wireless RF communication between nodes, and allows for pluggable sensors.
+
+\subsection{The Squawk JVM}
+
+The Squawk JVM is used on Sun SPOTs to enable on-board execution of Java
+programs. The Squawk VM was originally developed for a smart card system with
+even greater memory constraints than the Sun SPOTs. The Squawk JVM has the
+following features \cite{simon_squawk:2006}:
+
+\begin{itemize}
+  \item It is written in Java, and specifically designed for resource
+  constrained devices, meeting the Connected Limited Device Configuration
+  (CLDC) Java Micro Edition (Java ME) configuration requirements.
+  \item It does not require an underlying OS, as it runs directly on the Sun
+  SPOT hardware. This reduces memory consumption.
+  \item It allows for inter-device application migration.
+  \item It authenticates deployed applications.
+  \item It supports the execution of multiple applications on one VM,
+  representing each one as an object.
+\end{itemize}
   
-\begin{figure}[ht]
+\begin{figure}
+\centering
+\label{Fig:SquawkVM_architecture}
+\includegraphics[scale=0.71]{img/Squawk_architecture.eps} \caption[The Squawk
+Split VM Architecture]{The Squawk
+Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
+\end{figure}   
+  
+\begin{figure}
 \centering
 \label{Fig:DADTLN_architecture}
 \includegraphics[scale=0.71]{img/DADTLN_architecture.eps} \caption[DADTLN

@@ -90,6 +90,10 @@
   state-of-the-art.
 \newblock University of Trento, Italy.
 
+\bibitem{NIST_website}
+{\sc of~Standards, N.~I., and Technology}.
+\newblock http://www.nist.gov.
+
 \bibitem{migliavacca_DADT:2006}
 {\sc Picco, G., Migliavacca, M., Murphy, A., and G., R.}
 \newblock Distributed abstract data types.
@@ -102,6 +106,13 @@
 \newblock Discrete-event simulation.
 \newblock Tech. rep., Department of Computer Science, University of Maryland,
   January 1991.
+
+\bibitem{simon_squawk:2006}
+{\sc Simon, D., Cifuentes, C., Cleal, D., Daniels, J., and White, D.}
+\newblock {Java™ on the bare metal of wireless sensor devices: the squawk
+  Java virtual machine}.
+\newblock {\em Proceedings of the 2nd international conference on Virtual
+  execution environments\/} (2006), 78--88.
 
 \bibitem{MANETWarrier:2007}
 {\sc Warrier, S.}
