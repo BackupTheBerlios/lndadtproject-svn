@@ -664,6 +664,143 @@ an implementation of logical neighborhoods. %?????Additionally, the full
 %??? ASK functionality of  space DADTs has not been implemented in the
 %??? prototype.
 
+\section {Logical neighbourhoods} \label{LNDescription}
+
+Typically, communication between WSN nodes is based on routing 
+information between nodes by exploiting the communication radius of each node.
+Thus, the notion of a node's physical neighbourhood - the set of nodes in the
+network
+that fall within the communication range of a given node - is central to this.
+
+However, in heterogenous WSN applications, the developer might require to
+communicate with a specific subset of the network that is defined logically and
+not physically. As an example of this, consider the following example. An
+application that provides security in a high-risk environment by monitoring 
+motion might require - in the event of a security alarm - all sensors at the
+entrances to the guarded area to report a recent history of recorded motion.
+The sensors at the entrance form a logical neighbourhood in this case. However,
+as the entrances may be widely separated, it is not necessary that this subset
+of nodes is part of a single physical neighbourhood. The use of current WSN
+programming techniques to enable a mechanism of this nature entails additional
+programming effort, increased complexity, and less reliable code
+\cite{mottola_LN:2006}.  
+
+\begin{figure} 
+\centering
+\label{Fig:LN_physical_vs_logical}
+\includegraphics[scale=0.65]{img/LN_physical_vs_logical.eps} 
+\caption[Difference between physical and logical neighborhoods]{Representation 
+of logical and physical neighborhood of a given node. \emph{The dashed circle 
+represents the physical neighborhood, whereas the solid polygon represents (one 
+of) the node's logical neighborhood} (reproduced from
+\cite{mottola_LN:2006})}
+\end{figure} 
+
+Mottola and Picco \cite{mottola_LN:2006} suggest the addressing of the
+aforementioned issues by using \emph{Logical Neighbourhoods (LNs)}, an abstraction
+that replaces the node's physical neighbourhood with a logical notion of
+proximity (See example above, and Figure \ref{Fig:LN_physical_vs_logical}). Using this abstraction, programmers
+can communicate
+with members of a LN using a simple message passing API,
+thereby allowing for logical broadcasts. The implementation of the aforementioned API is
+supported by means of a novel routing mechanism devised specifically to support
+LN communication.
+
+The rest of this section discusses the LN abstraction and the
+underlying routing mechanism in greater detail.
+
+\subsection{The LN Abstraction}
+
+\subsubsection{Specification}
+
+LNs can be specified using a declarative language such as SPIDEY
+\cite{mottola_LN:2006, mottola_LNScoping:2006}\footnote{The LN prototype used as
+part of this work does not use a declarative language for LN specification}, and
+involves the definition and instantiation of the \emph{node} and the
+\emph{neighbourhood}. 
+
+Nodes are a logical representation of the subset of a sensor node's state and
+characterstics that are used for the specification of an LN. Nodes are defined
+in a \emph{node template} and are subsequently instantiated, as shown in Listing \ref{listing:LN1}
+   
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Node Definition and Instantiation, label = listing:LN1 ]  
+node template Sensor
+  static Function
+  static Type
+  dynamic BatteryPower
+  dynamic Reading
+
+create node ts from Sensor
+  Function as ``Sensor''
+  Type as ``Temperature''
+  Reading as getTempReading()
+  BatteryPower as getBatteryPower()
+\end{lstlisting}
+
+A neighbourhood can be defined by applying predicates on the attributes defined
+in the
+node template. The neighbourhood is defined using a neighbourhood
+template, and subsequently instantiated. 
+
+Listing \ref{Listing:LN2} shows the definition and
+instantiation of a
+neighbourhood - based on the node template defined in Listing \ref{Listing:LN1}
+- which selects all temperature sensors where the reading exceeds a threshold.
+ 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Neighbourhood Definition and Instantiation, label = listing:LN2 ]  
+neighbourhood template HighTempSensors(threshold)
+  with Function = ``Sensor'' and Type  = ``Temperature'' and Reading > Threshold
+
+create neighbourhood HigherTemperatureSensors
+  from HighTempSensors(threshold:45)
+\end{lstlisting}
+
+\subsubsection{Communication}
+
+Communication using LNs is performed using a simple API which overrides the
+traditionally used broadcast facility and makes it dependent on the (logical)
+neighbourhood the message is addressed to \cite{mottola_LN:2006}. The routing mechanism described in
+the next section enables LN commmunication.
+
+\subsection{Routing}
+
+The routing approach used in LNs is structure-less, and uses a local search
+mechanism based on a distributed state space built by the periodic updation of
+node profiles. The routing mechanism can be divided into two phases \cite{mottola_LNAbstraction}:
+
+\subsubsection{Phase 1: Construction of a distributed state space}
+Each node periodically transmits a \emph{profile advertisement} that contains
+information on the attribute-value pairs defined in the node template. This message
+causes an
+update in its physical neighbours' \emph{State Space Descriptors (SSDs)} if (a)
+no
+entry exists for any given attribute-value pair specified in the profile
+advertisement, or (b) the \emph{transmit cost} is lower than the costs for any
+existing SSD entry for a particular attribute-value pair. If any such change
+occurs, the profile advertisement is rebroadcast with an updated cost. 
+
+Additionally, passive listening to profile advertisements for attribute-value
+pairs with higher costs than what is entered in the SDD is used to construct
+increasing paths.
+
+\subsubsection{Phase 2: Routing through Local Search}
+When a message has to be sent to a particular LN, the sending node sends the
+message to any node in its SSD whose attribute-value pairs match the LN
+predicates. The message is associated with a specific set of \emph{credits} from
+which the cost to send to the node is deducted. This process continues until the
+message is received at node(s) in the LN along the reverse of the path
+determined during the first phase. This path is called a \emph{decreasing path}.
+
+However, to ensure that messages are received by every nodes that belongs to the
+neighbourhood (and the algorithm is not trapped in local state-space minima),
+\emph{exploring paths} are used at specific points during the message traversal
+(at nodes which meet the neighbourhood predicates, and/or after a user-defined
+number of hops). The credit reservation system described above is used in that
+case, with the node dividing the reserved credits between following decreasing
+paths and exploring paths.
+
 \section {JiST/SWANS}
 
 As the simulator used in this work is a discrete event simulator, this section 
@@ -703,7 +840,7 @@ The execution of a JiST program can be understood by considering example as
 shown in Listing \ref{listing:JiSTExample}
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Example JiST program (reproduced from \cite{barr_JIST:2005}, label =   ]  
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Example JiST program (reproduced from \cite{barr_JIST:2005}, label = listing:JiSTExample]  
 import jist.runtime.JistAPI;  
 class hello implements JistAPI.Entity { 
   public static void main(String[] args) { 
@@ -711,13 +848,11 @@ class hello implements JistAPI.Entity {
     hello h = new hello(); 
     h.myEvent(); 
   } 
- 
   public void myEvent() { 
     JistAPI.sleep(1); 
     myEvent(); 
     System.out.println("hello world, " + JistAPI.getTime()); 
-  } 
-} 
+  }} 
 \end{lstlisting}
 
 \begin{figure}
@@ -726,7 +861,7 @@ class hello implements JistAPI.Entity {
 \includegraphics[scale=0.72]{img/JiST_architecture.eps} \caption[The JiST 
 System Architecture]{The JiST system architecture (reproduced from
 \cite{barr_JIST:2005})}
-\end{figure} 
+\end{figure}  
  
 This program is then compiled and executed in the JiST simulation
 kernel, using the following commands:
@@ -774,70 +909,6 @@ The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}.
 \label{Fig:SWANS_architecture}
 \includegraphics[scale=0.71]{img/SWANS_architecture.eps} \caption[SWANS 
 architecture]{SWANS architecture}
-\end{figure} 
-
-\section {Logical neighborhoods} \label{LNDescription}
-\textbf{Please do not read. This section is being reworked, and is to be
-extended and written more clearly.}
- The notion of
-neighborhoods gains importance with the increasing 
-decentralisation of WSN applications, for example with the development of 
-Wireless Sensor and Actor Networks (WSANs). In a decentralised application, the 
-programmer is concerned with not just the implementation of the application 
-itself, but also about identifying and interacting with the relevant subset of 
-the network \cite{mottola_LN:2006}. The latter task is far more complex, would 
-require greater programming effort, and possibly less reliable code.
-
-Mottola amd Picco propose the use of logical neighborhoods to allow for the 
-partitioning of the network in applications of the type described above. A 
-Logical neighborhood is a programming abstraction that differs from a physical 
-neighborhood in that the notion of proximity is determined by 
-application-dependent information and not by the communication range of the 
-device.
-
-The system described in \cite{mottola_LN:2006} provides an API that restricts 
-communication to an application defined subset of the network, and a routing 
-mechanism that performs better than existing ones in decentralised application 
-domains. Logical neighbourhoods may be defined using a declarative language 
-named SPIDEY.
-
-An application may define a logical neighborhood as a collection of nodes that 
-satisfy defined predicates. A node itself is described using a combination of 
-static attributes (for examples, the type of the node) and dynamic attributes 
-(for examples,the value of a sensor on the node).
-
-Figure \ref{Fig:LN_templates_instances} shows examples of:
-\begin{itemize} 
- \item A \emph{node template} that specifies the attributes that define the 
- node.
- \item A \emph{node instance} that is created from a node template
- \item A \emph{neighborhood template} that defines the predicates used to 
- determine logical neighborhood membership.
- \item A \emph{neighbourhood instance} that is created from a neighbourhood 
- template, and provides specific values for the aforementioned predicates
-\end{itemize}  
-
-\begin{figure}
-\centering
-\label{Fig:LN_templates_instances}
-\includegraphics[scale=0.65]{img/LN_templates_instances.eps} \caption[Sample 
-node and neighborhood definition and instantiation]{Sample node and 
-neighborhood definition and instantiation (reproduced from \cite{mottola_LN:2006})}
-\end{figure}
-
-
-The difference between the logical and physical neighbourhood of a given node 
-is represented in Figure \ref{Fig:LN_physical_vs_logical}.
-
-\begin{figure} 
-\centering
-\label{Fig:LN_physical_vs_logical}
-\includegraphics[scale=0.65]{img/LN_physical_vs_logical.eps} 
-\caption[Difference between physical and logical neighborhoods]{Representation 
-of logical and physical neighborhood of a given node. \emph{The dashed circle 
-represents the physical neighborhood, whereas the solid polygon represents (one 
-of) the node's logical neighborhood} (reproduced from
-\cite{mottola_LN:2006})}
 \end{figure} 
 
 \section {Sun SPOTs}	
@@ -898,6 +969,32 @@ following features \cite{simon_squawk:2006}:
   \item It supports the execution of multiple applications on one VM,
   representing each one as an object.
 \end{itemize}
+
+\subsection{Split VM Architecture}
+
+As resource constrained devices are incapable of loading class files on-device
+by virtue of their limited memory, a VM architecture known as the ``split VM
+architecture'' is used (See Figure \ref{Fig:SquawkVM_architecture}. 
+
+The Squawk split VM architecture uses a class file preprocessor (known as the
+suite creator) that converts the \emph{.class} bytecode into a more compact
+representation called the Squawk bytecode. According to
+\cite{simon_squawk:2006}, Squawk bytecodes are optimised in order to:
+\begin{itemize}
+\item minimise space used by using smaller bytecode representation, escape
+mechanisms for float and double instructions, and widened operands. 
+\item allow for in-place execution, by ``resolving symbolic references to other
+classes, data members, and member functions into direct pointers, object offsets
+and method table offsets respectively'' \cite{simon_squawk:2006}.
+\item simplify garbage collection, by the careful reallocation of local
+variables and storing on the operand stack only the operands for those
+instructions that would result in a memory allocation.
+\end{itemize}
+
+The Squawk bytecodes are converted into a \emph{.suite} file created by
+serialising and saving into a file the internal object memory representation.
+These files are loaded on to the device, and subsequently interpreted by the
+on-device VM.
   
 \begin{figure}
 \centering
@@ -907,10 +1004,4 @@ Split VM Architecture]{The Squawk
 Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
 \end{figure}   
   
-\begin{figure}
-\centering
-\label{Fig:DADTLN_architecture}
-\includegraphics[scale=0.71]{img/DADTLN_architecture.eps} \caption[DADTLN
-prototype architecture - to be renamed]{DADTLN prototype architecture - to
-be moved to the other section}
-\end{figure} 
+
