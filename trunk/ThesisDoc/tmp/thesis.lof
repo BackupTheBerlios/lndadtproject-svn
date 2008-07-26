@@ -1,0 +1,15 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Architecture of a sensor node}}{4}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces WSN protocol stack}}{6}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Taxonomy of WSN programming models}}{8}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Classification of Programming Abstractions}}{9}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Programming models on the WSN protocol stack}}{12}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Data and space in the DADT model}}{21}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces DADT views}}{21}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Difference between physical and logical neighborhoods}}{22}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces The JiST System Architecture}}{27}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces SWANS architecture}}{28}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces The Squawk Split VM Architecture}}{31}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces DADT/LN application workflow}}{33}

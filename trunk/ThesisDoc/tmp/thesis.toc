@@ -1,0 +1,56 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Definitions and Acronyms}{2}
+\contentsline {chapter}{\numberline {2}Background}{3}
+\contentsline {section}{\numberline {2.1}Introduction to Wireless Sensor Networks}{4}
+\contentsline {subsection}{\numberline {2.1.1}Sensor Nodes}{4}
+\contentsline {subsection}{\numberline {2.1.2}Wireless Sensor Networks}{5}
+\contentsline {section}{\numberline {2.2}WSN Protocol Stack}{5}
+\contentsline {section}{\numberline {2.3}Programming models for WSNs}{7}
+\contentsline {subsection}{\numberline {2.3.1}Motivation}{7}
+\contentsline {subsection}{\numberline {2.3.2}Benefits of using programming models}{7}
+\contentsline {subsection}{\numberline {2.3.3}Taxonomy of WSN Programming Models}{8}
+\contentsline {subsection}{\numberline {2.3.4}Classification of WSN Programming Abstractions}{9}
+\contentsline {subsubsection}{\numberline {2.3.4.1}Communication span}{10}
+\contentsline {subsubsection}{\numberline {2.3.4.2}Addressing scheme}{10}
+\contentsline {subsubsection}{\numberline {2.3.4.3}Communication Abstraction}{11}
+\contentsline {subsubsection}{\numberline {2.3.4.4}Computation Span}{11}
+\contentsline {subsection}{\numberline {2.3.5}Programming models on the WSN protocol stack}{12}
+\contentsline {section}{\numberline {2.4}Distributed Abstract Data Types}{13}
+\contentsline {subsection}{\numberline {2.4.1}Abstract Data Types}{13}
+\contentsline {subsubsection}{\numberline {2.4.1.1}ADTs in WSNs}{13}
+\contentsline {subsubsection}{\numberline {2.4.1.2}Data and space ADTs}{15}
+\contentsline {subsubsection}{\numberline {2.4.1.3}Placement}{16}
+\contentsline {subsection}{\numberline {2.4.2}DADTs as an extension of ADTs}{17}
+\contentsline {subsubsection}{\numberline {2.4.2.1}DADT specification and instantiation}{17}
+\contentsline {subsubsection}{\numberline {2.4.2.2}Binding}{18}
+\contentsline {subsubsection}{\numberline {2.4.2.3}Operators and Actions}{18}
+\contentsline {subsubsection}{\numberline {2.4.2.4}Views}{19}
+\contentsline {subsection}{\numberline {2.4.3}DADT prototype limitations}{20}
+\contentsline {section}{\numberline {2.5}Logical neighbourhoods}{20}
+\contentsline {subsection}{\numberline {2.5.1}The LN Abstraction}{23}
+\contentsline {subsubsection}{\numberline {2.5.1.1}Specification}{23}
+\contentsline {subsubsection}{\numberline {2.5.1.2}Communication}{24}
+\contentsline {subsection}{\numberline {2.5.2}Routing}{24}
+\contentsline {subsubsection}{\numberline {2.5.2.1}Phase 1: Construction of a distributed state space}{24}
+\contentsline {subsubsection}{\numberline {2.5.2.2}Phase 2: Routing through Local Search}{25}
+\contentsline {section}{\numberline {2.6}JiST/SWANS}{25}
+\contentsline {subsection}{\numberline {2.6.1}Discrete Event Simulator}{25}
+\contentsline {subsection}{\numberline {2.6.2}Java In Simulation Time (JiST)}{26}
+\contentsline {subsection}{\numberline {2.6.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{27}
+\contentsline {section}{\numberline {2.7}Sun SPOTs}{28}
+\contentsline {subsection}{\numberline {2.7.1}Motivation}{28}
+\contentsline {subsection}{\numberline {2.7.2}The Sun SPOT hardware platform }{29}
+\contentsline {subsection}{\numberline {2.7.3}The Squawk JVM}{29}
+\contentsline {subsection}{\numberline {2.7.4}Split VM Architecture}{30}
+\contentsline {chapter}{\numberline {3}Implementation}{32}
+\contentsline {section}{\numberline {3.1}Contribution}{32}
+\contentsline {section}{\numberline {3.2}The DADT/LN Architecture}{33}
+\contentsline {subsection}{\numberline {3.2.1}Overview}{33}
+\contentsline {subsection}{\numberline {3.2.2}Application Example}{34}
+\contentsline {section}{\numberline {3.3}Simulation using JiST/SWANS}{34}
+\contentsline {section}{\numberline {3.4}DADT-LN on Sun SPOTs}{34}
+\contentsline {section}{\numberline {3.5}Challenges}{34}
+\contentsline {section}{\numberline {3.6}Future Work}{34}
+\contentsline {section}{\numberline {3.7}Evaluation}{34}
+\contentsline {section}{\numberline {3.8}Analysis of Results}{34}
+\contentsline {chapter}{Bibliography}{35}
