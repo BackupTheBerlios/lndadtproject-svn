@@ -57,9 +57,35 @@ the aforementioned simulator
 
 \subsection{Execution Details}
 
-This section outlines the communication mechanisms used for the development and
-execution of an application that uses the DADT/LN architecture developed as part
-of this work.
+This section attempts to explain the operation of the DADT/LN prototype
+developed as part of this work by considering the sequence of method calls made
+during execution. The operation of the simulation platform as well as the
+nodes itself is abstracted from the explanations that follow, as is the actual
+\emph{.dadt} syntax used by the application programmer himself to trigger these
+operations. 
+
+\subsubsection{The DADT/LN prototype on the sensor node}
+
+Figure \ref{ADDREF_fig:sensornode} presents the operation of the DADT/LN
+prototype on the sensor node (which may be either simulated or a real
+device). As shown in the figure, the implementation running on each sensor node 
+consists of the following entities:
+
+\begin{itemize}
+  \item \emph{Sensor Node:} A sensor node is an abstraction that consists of a
+  list of sensors. This follows from the example used to illustrate the concept
+  of ADTs in Section \ref{sec:DADT}\footnote{The term \emph{device} is used to
+  refer to the physical sensor node entity, while the term \emph{sensor node}
+  refers to the application layer abstraction of all of the sensors within the device.}
+  \item \emph{Sensor ADT instance:} This is an ADT instance for a given sensor
+  on the sensor node upon which the prototype executes. 
+  \item \emph{ADT Manager:} The ADT manager provides the interface between the
+  sensor node and the network, thereby abstracting sensor ADT instances from
+  queries issued by the DADT instance at the client node. It also manages the
+  interface between the application layer and the lower layers of the protocol
+  stack on the
+\end{itemize}
+
 
 
 

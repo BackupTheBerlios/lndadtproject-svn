@@ -46,11 +46,12 @@
 \contentsline {section}{\numberline {3.1}Contribution}{32}
 \contentsline {section}{\numberline {3.2}The DADT/LN Architecture}{33}
 \contentsline {subsection}{\numberline {3.2.1}Overview}{33}
-\contentsline {subsection}{\numberline {3.2.2}Application Example}{34}
-\contentsline {section}{\numberline {3.3}Simulation using JiST/SWANS}{34}
-\contentsline {section}{\numberline {3.4}DADT-LN on Sun SPOTs}{34}
-\contentsline {section}{\numberline {3.5}Challenges}{34}
-\contentsline {section}{\numberline {3.6}Future Work}{34}
-\contentsline {section}{\numberline {3.7}Evaluation}{34}
-\contentsline {section}{\numberline {3.8}Analysis of Results}{34}
-\contentsline {chapter}{Bibliography}{35}
+\contentsline {subsection}{\numberline {3.2.2}Execution Details}{34}
+\contentsline {subsubsection}{\numberline {3.2.2.1}The DADT/LN prototype on the sensor node}{34}
+\contentsline {section}{\numberline {3.3}Simulation using JiST/SWANS}{35}
+\contentsline {section}{\numberline {3.4}DADT-LN on Sun SPOTs}{35}
+\contentsline {section}{\numberline {3.5}Challenges}{35}
+\contentsline {section}{\numberline {3.6}Future Work}{35}
+\contentsline {section}{\numberline {3.7}Evaluation}{35}
+\contentsline {section}{\numberline {3.8}Analysis of Results}{35}
+\contentsline {chapter}{Bibliography}{36}
