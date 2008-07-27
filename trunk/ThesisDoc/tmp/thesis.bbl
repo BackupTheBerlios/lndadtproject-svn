@@ -120,6 +120,11 @@ National institute of standards and technology.
 \newblock {\em Proceedings of the 2nd international conference on Virtual
   execution environments\/} (2006), 78--88.
 
+\bibitem{sun_developer:2008}
+{\sc Sun Microsystems, Inc}.
+\newblock {\em Sun(TM) Small Programmable Object Technology (Sun SPOT)
+  Developer's Guide}, July 2008.
+
 \bibitem{MANETWarrier:2007}
 {\sc Warrier, S.}
 \newblock {C}haracterisation and {A}pplications of {MANET} {R}outing

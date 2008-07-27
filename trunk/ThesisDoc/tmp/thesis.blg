@@ -6,45 +6,45 @@ A level-1 auxiliary file: chapImplementation.aux
 The style file: acm.bst
 Database file #1: references.bib
 Warning--to sort, need author or key in NIST_website
-You've used 23 entries,
+You've used 24 entries,
             2253 wiz_defined-function locations,
-            672 strings with 8478 characters,
-and the built_in function-call counts, 6539 in all, are:
-= -- 583
-> -- 378
+            676 strings with 8594 characters,
+and the built_in function-call counts, 6696 in all, are:
+= -- 599
+> -- 379
 < -- 0
-+ -- 156
++ -- 157
 - -- 132
-* -- 506
-:= -- 1138
-add.period$ -- 67
-call.type$ -- 23
-change.case$ -- 133
+* -- 517
+:= -- 1159
+add.period$ -- 69
+call.type$ -- 24
+change.case$ -- 136
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 238
-empty$ -- 503
+cite$ -- 25
+duplicate$ -- 248
+empty$ -- 521
 format.name$ -- 132
-if$ -- 1312
+if$ -- 1347
 int.to.chr$ -- 0
-int.to.str$ -- 23
+int.to.str$ -- 24
 missing$ -- 19
-newline$ -- 116
+newline$ -- 120
 num.names$ -- 46
-pop$ -- 141
+pop$ -- 144
 preamble$ -- 1
-purify$ -- 110
+purify$ -- 113
 quote$ -- 0
-skip$ -- 136
+skip$ -- 141
 stack$ -- 0
-substring$ -- 185
-swap$ -- 47
+substring$ -- 191
+swap$ -- 49
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 90
+type$ -- 94
 warning$ -- 1
 while$ -- 52
-width$ -- 25
-write$ -- 222
+width$ -- 26
+write$ -- 230
 (There was 1 warning)

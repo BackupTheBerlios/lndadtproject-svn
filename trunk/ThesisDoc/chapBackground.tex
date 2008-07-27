@@ -1005,3 +1005,21 @@ Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
 \end{figure}   
   
 
+\subsection{Sun SPOT applications} \label{subsec:sunspotapps}
+
+Sun SPOT applications can be of two kinds \cite{sun_developer:2008}:
+
+\begin{itemize}
+  \item \emph{On-SPOT applications:} these applications are deployed and
+  executed on a remote Sun SPOT that communicates untethered. On-SPOT
+  applications is a Java program that runs on the Squawk VM, and is compliant
+  with Java ME. 
+  \item \emph{On-Host applications:} these applications run on the host machine
+  (typically a PC), and communicate with the network of Sun SPOTs through a base
+  station node that serves no purpose other than to facilitate Sun SPOT-host
+  machine communication. 
+  The base station node, which is a Sun SPOT itself, communicates with other
+  nodes in the network using RF communication and with the host machine via a
+  USB link (see Figure \ref{ADDREF_Fig_from_dev_guide}. The host application is a Java 2 Standard
+  Edition (J2SE) program.
+\end{itemize}
