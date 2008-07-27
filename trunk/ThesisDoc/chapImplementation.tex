@@ -114,9 +114,41 @@ consists of the following entities:
   \item \emph{Data View:} Data views are explained in Section
   \ref{subsubsec:views}, and is a mechanism for partitioning the collection of
   ADT instances bound to a particular DADT type.
-  
-
 \end{itemize}
+
+The instantiation of a DADT type by the application programmer's
+code\footnote{This is written in the DADT specification language.} causes the
+following actions to take place at the Controller:
+\begin{itemize}
+  \item The Client Node creates an instance of the DADT type that is used to perform
+collective operations on the network.  
+\item A new expression tree is created to provide a hierarchical representation
+of the application programmer's definition of a data view.
+\item The DADT instance creates an instance of the DADT manager.
+\end{itemize}
+
+When the application programmer's code requests the execution of a distributed operation
+on the WSN, the following actions take place:
+
+\begin{itemize}
+  \item The Client Node forwards the request to the DADT instance. The DADT instance:
+  \begin{itemize} 
+    \item creates a Data
+  view using the expression tree (see above),
+  \item subsequently uses the DADT 
+  manager to construct LN predicates from the expression, 
+  \item sends a
+  request message to the network using the DADT manager, and
+  \item sleeps until the result of the computation is
+  received from the network layer \emph{(N.B.: The DADT instance is implemented as a
+  separate thread)}.
+  \end{itemize}
+  \item When the result of the distributed computation is received, the Client Node is notified. 
+ The Client Node then executes
+  the appropriate function on the DADT instance to collect and process the
+  readings. The DADT instance returns the processed readings to the Client Node.
+\end{itemize}
+
 
 \subsubsection{The DADT/LN prototype on the sensor node}
 
