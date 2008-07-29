@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="host-run" basedir="." name="Telemetry-onSpot">
+
+    <property name="user.properties.file" value="build.properties"/>
+    <property file="${user.home}/.sunspot.properties"/>
+    <import file="${sunspot.home}/build.xml"/>
+
+    <target name="javadoc" depends="init">
+        <delete dir="doc"/>
+        <mkdir dir="doc"/>
+        <javadoc destdir="doc"
+	         author="true"
+		 sourcepath="src" 
+		 overview="overview.html"
+		 packagenames="org.sunspotworld.demo,org.sunspotworld.demo.util, unitn.dadt.internals, unitn.dadt.LNSupport, unitn.dadt.space, unitn.dadt.samples"
+		 windowtitle="Sun SPOT Sensor Node"
+		 doctitle="Sun SPOT Sensor Node" >
+	    <classpath path="${sunspot.classpath}:${sunspot.bootclasspath}" />
+            <header><![CDATA[<b>Based on Sun SPOT Telemetry Demo -- SPOT-side<br>v1.1</b>]]></header>
+            <bottom><![CDATA[<center><font size="-1"><i>Copyright &#169; 2006-2008 Sun Microsystems, Inc. All Rights Reserved.</i></font></center>]]></bottom>
+        </javadoc>
+    </target>
+    
+</project>
