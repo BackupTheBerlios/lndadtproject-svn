@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DADT2Update"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/bcel.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/bsh.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/checkstyle-all.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/jargs.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/jist.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/jython.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/log4j.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/LNDADTAverageSample/libs/swans.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

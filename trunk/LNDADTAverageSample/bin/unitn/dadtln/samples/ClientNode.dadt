@@ -1,0 +1,17 @@
+package sensorApp;
+import DADT.*;
+import DADT.LnSupport.*; // defines packages implementing views
+
+public class ClientNode {
+
+	public static void main(String[] node) {
+		DSensor ds = new DSensor();
+		
+		dataview dv on DSensor as isActive();
+		
+		System.out.println(ds.averagePrecision() begin on dv end);
+		
+		
+	}
+
+}

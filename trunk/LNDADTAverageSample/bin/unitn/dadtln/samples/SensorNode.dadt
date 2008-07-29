@@ -1,0 +1,26 @@
+package sensorApp;
+import DADT.*;
+
+public class SensorNode {
+
+	public static void main(String[] args) {
+		
+		
+		Sensor s1 = new Sensor(Sensor.TEMP, 5);
+		Sensor s2 = new Sensor(Sensor.TEMP, 10);
+		Sensor s3 = new Sensor(Sensor.PRESSURE, 15);
+		
+		DADT.setMgr("LNView"); //TODO: to be defined by means of JADTprocessor
+		
+		bind(s1, "sensorApp.DSensor");
+		bind(s2, "sensorApp.DSensor");
+		bind(s3, "sensorApp.DSensor");
+		
+		try {
+            Thread.sleep(1000000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+	}
+
+}

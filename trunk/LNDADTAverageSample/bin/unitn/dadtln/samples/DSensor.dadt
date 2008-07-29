@@ -1,0 +1,43 @@
+package sensorApp;
+
+import DADT.*;
+import DADT.LnSupport.*; // defines packages implementing views
+
+public class DSensor distributes Sensor {
+	
+	property isActive() {
+		return local.isActive();
+	}
+	
+	property isPrecise(double precision) {
+		return local.precision > precision;
+	}
+
+	property isOfType(int type) {
+		return (local.type == type);
+	}
+	
+	action double read() {
+		return local.precision;
+	}
+	
+	public distributed double averagePrecision() {
+		Collection<ResultData> readings = (Collection<ResultData>) (all in targetSet).read();
+		double tot = 0;
+        for (ResultData r : readings) {
+            tot += (Double) r.getData();
+        }
+        
+        if (((Integer) (sizeof targetSet)) == 0)
+        {	
+        	return 0;
+        }
+        
+        else
+        {
+        	return tot/(Integer) (sizeof targetSet);
+		}
+		
+	}
+	
+}
