@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry excluding="DADT/IPMulticast/" kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/bcel.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/bsh.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/checkstyle-all.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/jargs.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/jist.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/jython.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/log4j.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/workspace/jist-swans-1.0.6/libs/swans.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
