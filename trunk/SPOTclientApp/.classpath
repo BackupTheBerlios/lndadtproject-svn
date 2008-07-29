@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTclientApp/lib/multihop_common.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTclientApp/lib/spotlib_common.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTclientApp/lib/spotlib_host.jar"/>
+	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTclientApp/lib/squawk_common.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SPOTsensorApp"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
