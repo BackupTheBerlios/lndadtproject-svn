@@ -1,5 +1,8 @@
 \chapter{Background}
 
+\textcolor{green}{Jo: quote is fine, but better Sth Like : Mark Weiser once
+wrote in his visionary paper from whenever [22]:}
+
 \begin{quote}
 \emph{``The most profound technologies are those that disappear. They weave
 themselves into the fabric of everyday life until they are indistinguishable
@@ -7,6 +10,7 @@ from it''}
 Mark Weiser \cite{Weiser_ComputerIn21stCentury}
 \end{quote}
 
+\textcolor{green}{this chapter should be extended/rewritten}
 
 This chapter presents a brief discussion of the concepts, algorithms, and 
 simulation and hardware platforms that were used
@@ -32,13 +36,15 @@ real-world environment.
 
 \section{Introduction to Wireless Sensor Networks}
 
+\textcolor{green}{some intro lines here}
+
 \subsection{Sensor Nodes} \label{subsec:sensornodes}
 
 Sensor nodes are multifunctional devices that are characterised by their low 
 cost, low power consumption, and small form factor. They can communicate across 
 short distances using Radio Frequency (RF) communication 
-\cite{SensorSurveyAkyildiz:2002}.\footnote{Research is currently underway into
-investigating alternative techniques of wireless communication}
+\cite{SensorSurveyAkyildiz:2002}.
+
 \begin{figure}[h] \centering
 \label{Fig:SensorNodeArch}
 \includegraphics[scale=0.55]{img/SensorNodeArch.eps} \caption[Architecture of a 
@@ -47,12 +53,12 @@ sensor node] {Architecture of a sensor node (reproduced from
 \end{figure} 
 
 A typical sensor node is architected as follows 
-\cite{SensorSurveyAkyildiz:2002}. It consists of a sensing unit, a processing 
-unit, a transceiver unit, and a power unit as shown in Figure 
-\ref{Fig:SensorNodeArch}.
+\cite{SensorSurveyAkyildiz:2002}. It consists of a sensing unit coupled with a
+tranceiver, a processing unit, and a power unit as shown in
+Figure \ref{Fig:SensorNodeArch}.
 
 The sensing unit is comprised of sensors and analog-to-digital converters. 
-The sensors may either be built into the nodes, or be hot pluggable 
+The sensors may either be built into the nodes, or be pluggable 
 \cite{MANETWarrier:2007}. The processing unit usually comprises a 
 microcontroller/microprocessor that performs processing, and is associated with 
 a storage unit. The transceiver unit facilitates node-node communication using 
@@ -60,6 +66,11 @@ a variety of techniques. The power
 unit provides the energy required to run the sensor node, and can use chemical 
 batteries or power scavenging units such as solar cells. This can be seen in 
 Figure \ref{Fig:SensorNodeArch}.
+
+\textcolor{green}{the next paragraph needs a bit of reformulation. about the constraints
+I think your argumentation should go like size/weight -> battery  (that's the
+point where it really gets hard to make smaller). -> energy efficient processing, memory and so on
+and cost as an additional constraint }
 
 Sensor nodes have constraints on both their size and their cost. The former 
 constraint arises from the requirement that sensor nodes be easily deployable, 
@@ -69,12 +80,16 @@ sensor nodes in the environment being monitored). These limit the memory capacit
 power, and the amount of energy available on a particular node.
 
 \subsection{Wireless Sensor Networks}
+\textcolor{green}{the first sentence of 2.1.2 is a bit well, almost German
+too long and self referring. actually, what you write about in that section, is more like routing in networks of sensor nodes
+maybe you should expand a bit}
 
-As mentioned in the previous section, sensor nodes are capable of communicating 
-untethered with one another, and are hence capable of forming networks of nodes 
+As mentioned in the previous section, sensor nodes are capable of communicating
+untethered with one another, and are hence capable of forming networks of nodes
 called a Wireless Sensor Network. WSNs are typically deployed randomly in an
-environment where phenomena are required to be monitored. A topology of a typical WSN has the 
-following properties:
+environment where phenomena are required to be monitored. A topology of a typical
+WSN has the following properties:
+\textcolor{green}{generally, from a precision and "scientific" aesthetics (contrary to business reports) it's best to either avoid bullet points or make them one word or a whole paragraph}
 
 \begin{itemize}
 \item A WSN is self-organising, given the random nature of the deployment.
@@ -85,12 +100,17 @@ redeployment of additional sensor nodes at any time during operation.
 \end{itemize}
 
 \section{WSN Protocol Stack} \label{sec:WSNProtStack}
+\textcolor{green}{you begin with "irrelevant" "ignoring". I think you should
+start positive. and mention later, that in practise you don't stack or plane
+things }
 
 The WSN protocol stack \cite{SensorSurveyAkyildiz:2002} is adapted from 
 \cite{ComputerNetworksTannenbaum:2003}. While ignoring the division of the 
 stack into planes as irrelevant to the understanding of the work presented 
 herein, one may view the protocol stack as consisting of the following layers
 (as can be seen from the Figure \ref{Fig:ProtStack}):
+
+\textcolor{green}{anyways, I'm not so happy with figure 2.2, gives me the ATM creeps hahaha}
 
 \begin{itemize}
 \item \emph{Physical Layer:} This layer is responsible for the transmission of 
@@ -103,7 +123,7 @@ data across the network.
 \item \emph{Application Layer:} This layer holds the application software.
 \end{itemize}
 
-The LN mechanism that forms the bedrock of this work (see 
+The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see 
 Section \ref{LNDescription}) provides the functionality of the Data Link Layer 
 and the Network Layer (CHECK WITH LUCA). The concept of Distributed Abstract
 Data Types (see Section \ref{sec:DADT}) is restricted to the application layer,
@@ -118,7 +138,8 @@ stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
 
 \section {Programming models for WSNs}
 
-\subsection{Motivation}
+\textcolor{green}{regarding the node centricity...you might want to mention, that this was a requirement because of the resource constraints  but that nodes  are 1) a bit more performant now, 2) the abstraction techniques a getting better in projecting high level descriptions on the hardware. and that this second point is, where you focus more then }
+
 Current WSN programming paradigms are predominantly node-centric, wherein
 applications are monolithic and tightly coupled with the protocols and algorithms
 used in the lower layers of the protocol stack. The primary problem with this
@@ -174,8 +195,12 @@ of the WSN application as a system, and represent it through the concepts and
 abstractions of sensor nodes and sensor data. Some
 examples of programming models that take this approach include Kairos
 \cite{gummadi_Kairos:2005} and
-EnviroTrack \cite{Abdelzaher_EnviroTrack:2004} .
+EnviroTrack \cite{Abdelzaher_EnviroTrack:2004} 
+\textcolor{green}{cite TinyOS. as it would make a nice point in programming
+abstractions }.
 \end{itemize}
+
+
 
 The rest of this section focuses on the discussion of WSN programming
 abstractions, as it is this type of programming model that is relevant to the
@@ -190,15 +215,14 @@ work presented herein.
 \caption{Classification of Programming Abstractions} 
 \end{figure} 
 
+
 Programming abstractions may either be global (also referred to 
 as macroprogramming) or local \cite{hadim_middleware:2006}. 
 
 In the former case, the sensor network is programmed as a whole, and gets rid of
 the notion of individual nodes \cite{mottola_middleware:2008}. Examples of
 macroprogramming solutions include \emph{TinyDB} \cite{madden_TinyDB:2005} and
-\emph{Kairos} \cite{gummadi_Kairos:2005}\footnote{N.B.: Kairos does not do away
-with the notion of individual nodes as dedicated prorgramming constructs exist to
-iterate through the neighbours of a given node}. 
+\emph{Kairos} \cite{gummadi_Kairos:2005}. 
 
 In the latter case, the focus is on identifying relevant sections or
 \emph{neighbourhoods} of the network. It is to be noted that these neighbourhoods
@@ -208,8 +232,8 @@ course of this work belongs to the latter class of programming abstractions.
 Programming abstractions may also be classified on the basis of the
 nature of the language constructs made available to the WSN programmer
 \cite{mottola_middleware:2008}. Some of the metrics used for classification
-are\footnote{Only relevant to this work classification bases, from among those
-outlined in \cite{mottola_middleware:2008},were selected for discussion}:
+are\footnote{Only relevant to this work classification bases
+were selected from \cite{mottola_middleware:2008} for discussion}:
 
 \begin{itemize}
   \item Communication span
@@ -228,19 +252,25 @@ The \emph{Communication span} enabled by a WSN programming interface is defined
 as the set of nodes that communicate with one another in order to accomplish a
 task. The communication span provided by a given abstraction can be:
 \begin{itemize}
-  \item \emph{Physical neighbourhood:} Abstractions using this approach provide
+  \item Physical neighbourhood
+  \item Multi-hop group
+  \item System-wide
+  
+\end{itemize}
+Abstractions that use \emph{physical neighbourhood} approach provide
   the programmer with constructs to allow nodes to exchange data with others
   within direct communication range.
-  \item \emph{Multi-hop group:} Abstractions that use this approach allow the
+  
+Abstractions with \emph{multi-hop group} approach allow the
   programmer to exchange data among subsets of nodes in the WSN using
   multi-hop communication. These sets may either be
   \emph{connected}, wherein there always exists a path between any two nodes in
   the set, or \emph{non-connected/disconnected}.
-  \item \emph{System-wide:} When using abstractions of this kind, the
-  programmer can use constructs that allow data exchange between any two nodes
+
+\emph{System-wide} abstractions let the
+  programmer use constructs that allow data exchange between any two nodes
   of the entire WSN. This may be seen as an extreme manifestation of the
-  \emph{Multi-hop group} approach described above.
-\end{itemize}
+  \emph{Multi-hop group} approach mentioned above.
 
 \subsubsection{Addressing scheme}
 
@@ -248,16 +278,23 @@ The \emph{addressing scheme} specifies the mechanism by which nodes are
 identified. Typically, there are two kinds of addressing schemes used:
 
 \begin{itemize}
-  \item \emph{Physical addressing:} Nodes are identified using statically
-  assigned\footnote{S: not entirely convinced. Unique is better, methinks.}
+  \item Physical addressing
+  \item \textcolor{green}{Data-centric addressing}
+  \item Logical addressing
+\end{itemize}
+
+In \emph{physical addressing} schemes nodes are identified using unique 
   identifiers. The same address always identifies the same node (or nodes, if
   duplicate  identifiers exist) at any time during the execution of the
   application.
-  \item \emph{Logical addressing:} Nodes are identified on the basis of
-  predicates specified by the application programmer. Therefore, the same
+\textcolor{green}{data-centric addressing you don'T talk to specific nodes at all I mean it is sort of logical addresses} 
+
+\textcolor{green}{the logical addresses can combine group addresses and geographic addresses but also independent (like dht like) data addresses }
+
+When \emph{logical addressing} mechanism is used, nodes are identified on the
+basis of predicates specified by the application programmer. Therefore, the same
   address (i.e., set of predicates) can identify different node(s) at different
   times.
-\end{itemize}
 
 \subsubsection{Communication Abstraction}
 
@@ -282,19 +319,19 @@ instruction. The
 computation span provided by a given abstraction can be:
 
 \begin{itemize}
-  \item \emph{Node:} The effect of any instruction is restricted to a single
-  node.
-  \item \emph{Group:} Where the programmer is provided with constructs that
-  could affect a subset of nodes.  
-  \item \emph{Global:} An extreme case of previous type, a single instruction
-  can impact every node in the WSN.
+  \item \emph{Node}, when the effect of any instruction is restricted to a
+  single node.
+  \item \emph{Group}, where the programmer is provided with constructs that
+  could affect a subset of nodes. \textcolor{green}{node is also a special case
+  of group ;)}
+  \item \emph{Global} present an extreme case of previous type, a single
+  instruction can impact every node in the WSN.
 \end{itemize}
 
 To illustrate, if it were possible in a given WSN programming abstraction to
 send a \emph{Reset} message to all nodes with sensor readings greater than a
-specific threshold, the computation span enabled is of type \emph{Group} (or
-possibly \emph{Global}, which, as mentioned earlier, is an extreme case of the
-\emph{Group} type).
+specific threshold, the computation span enabled is of type \emph{Group}, or
+even possibly \emph{Global}.
 
 \subsection{Programming models on the WSN protocol stack}
 
@@ -307,10 +344,10 @@ stack (adapted from \cite{mottola_middleware:2008})}
 \end{figure}
 
 WSN programming models are placed between the application layer and the
-transport layer (change to network layer if trans layer not used) in the
+transport layer in the
 protocol stack shown in Section \ref{sec:WSNProtStack}. As can be seen from
 Figure \ref{Fig:ProtStack_ProgAbstr},
-fine-grained details are hidden from the application programmer's view. The abstracted details
+fine-grained details are hidden from the application programmer's view. These
 include:
 
 \begin{itemize}
@@ -327,19 +364,17 @@ Distributed Abstract Data Types is a new programming language construct used to
 support distributed and context-aware applications. \cite{migliavacca_DADT:2006}
 introduces the concept of DADTs, and presents a prototype that implements it.
 The rest of this section discusses the concepts and the background, and
-provides the reader with an understanding of the prototype.
-
-N.B.: Every code snippet provided as an example is a code snippet based on the
-DADT prototype described in \cite{migliavacca_DADT:2006}.
+provides the reader with an understanding of the prototype \footnote{Every code snippet provided as an example is a code snippet based on
+the DADT prototype described in \cite{migliavacca_DADT:2006}}.
 
 \subsection{Abstract Data Types}
-An Abstract Data Type (ADT) is the representation of a model that presents an
-abstract view to the problem at hand. The model of a problem defines:
 
-\begin{itemize}
-  \item The data affected.
-  \item The operations identified.
-\end{itemize}
+\textcolor{green}{you seem to have been either more sleepy, more stressed or otherwise coming to this part...
+the sentences and paragraphs become shorter}
+
+An Abstract Data Type (ADT) is the representation of a model that presents an
+abstract view to the problem at hand. The model of a problem defines the
+affected data and the identified operations.
 
 This set of the data values and associated operations, independent of any
 specific implementation, is called an ADT \cite{NIST_website}. 
@@ -357,6 +392,12 @@ A WSN, as defined earlier, consists of several sensor nodes. Each sensor node
 may include several sensors. By defining each sensor as
 an ADT instance, the concept of ADTs can be used in WSNs. The code snippet below
 shows the specification of a sensor ADT \ref{listing:ADTSpec}.   
+
+\textcolor{green}{egarding the listings
+I think this should go to implementation
+or at least some of it
+you should focus more on the concepts in the background chapter. point is, the
+background chapter is not supposed to be ahowto for programming sth already}
   
 \lstset{language = Java}  
  \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label = listing:ADTSpec ]
