@@ -47,9 +47,9 @@ short distances using Radio Frequency (RF) communication
 
 \begin{figure}[h] \centering
 \label{Fig:SensorNodeArch}
-\includegraphics[scale=0.55]{img/SensorNodeArch.eps} \caption[Architecture of a 
-sensor node] {Architecture of a sensor node (reproduced from
-\cite{SensorSurveyAkyildiz:2002}). \emph{Note: The presence of components drawn using dotted lines is application dependent.}}
+\includegraphics[width=\textwidth]{img/SensorNodeArch.eps} 
+\caption[Architecture of a sensor node] {Architecture of a sensor node (adapted
+from \cite{SensorSurveyAkyildiz:2002}). \emph{Note: The presence of components drawn using dotted lines is application dependent.}}
 \end{figure} 
 
 A typical sensor node is architected as follows 
@@ -132,8 +132,8 @@ and the focus of this work thus lies primarily within the application layer.
 \begin{figure}
 \centering
 \label{Fig:ProtStack}
-\includegraphics[scale=0.6]{img/ProtStack.eps}\caption[WSN protocol stack]{WSN protocol
-stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
+\includegraphics[scale=0.65]{img/ProtStack.eps}
+\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
 \end{figure}
 
 \section {Programming models for WSNs}
@@ -175,8 +175,8 @@ resources.
 \begin{figure}
 \centering
 \label{Fig:ProgrammingModels}
-\includegraphics[scale=0.6]{img/ProgrammingAbstractions.eps} \caption[Taxonomy 
-of WSN programming models]{Taxonomy of WSN programming models (reproduced from
+\includegraphics[width=\textwidth]{img/ProgrammingAbstractions.eps} 
+\caption[Taxonomy of WSN programming models]{Taxonomy of WSN programming models (reproduced from
 \cite{hadim_middleware:2006})}
 \end{figure}
 
@@ -211,7 +211,7 @@ work presented herein.
 \begin{figure}
 \centering
 \label{Fig:ProgrAbstrClassification}
-\includegraphics[scale=0.6]{img/ProgAbstr_Classification.eps}
+\includegraphics[scale=0.65]{img/ProgAbstr_Classification.eps}
 \caption{Classification of Programming Abstractions} 
 \end{figure} 
 
@@ -338,8 +338,8 @@ even possibly \emph{Global}.
 \begin{figure}
 \centering
 \label{Fig:ProtStack_ProgAbstr}
-\includegraphics[scale=0.6]{img/ProtStack_ProgAbstr.eps}\caption[Programming
-models on the WSN protocol stack]{Programming models on the WSN protocol
+\includegraphics[scale=0.61]{img/ProtStack_ProgAbstr.eps}
+\caption[Programming models on the WSN protocol stack]{Programming models on the WSN protocol
 stack (adapted from \cite{mottola_middleware:2008})}
 \end{figure}
 
@@ -682,17 +682,16 @@ The data view \emph{dv} specifies that the scope of the DADT operation
 \begin{figure}
 \centering
 \label{Fig:DADTs}
-\includegraphics[scale=0.50]{img/DADTs.eps} \caption[Data and space in the DADT 
-model]{Data and space in the DADT model (reproduced from 
+\includegraphics[scale=0.65]{img/DADTs.eps} 
+\caption[Data and space in the DADT model]{Data and space in the DADT model (reproduced from 
 \cite{migliavacca_DADT:2006})}
 \end{figure}
 
 \begin{figure}
 \centering
 \label{Fig:DADT_Views}
-\includegraphics[scale=0.50]{img/DADT_Views.eps} \caption[DADT views]{DADT views
-(reproduced from 
-\cite{migliavacca_DADT:2006})}
+\includegraphics[width=\textwidth]{img/DADT_Views.eps} 
+\caption[DADT views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
 \end{figure}
 
 \subsection {DADT prototype limitations}
@@ -729,7 +728,7 @@ programming effort, increased complexity, and less reliable code
 \begin{figure} 
 \centering
 \label{Fig:LN_physical_vs_logical}
-\includegraphics[scale=0.65]{img/LN_physical_vs_logical.eps} 
+\includegraphics[scale=0.71]{img/LN_physical_vs_logical.eps} 
 \caption[Difference between physical and logical neighborhoods]{Representation 
 of logical and physical neighborhood of a given node. \emph{The dashed circle 
 represents the physical neighborhood, whereas the solid polygon represents (one 
@@ -899,8 +898,8 @@ class hello implements JistAPI.Entity {
 \begin{figure}
 \centering
 \label{Fig:JiST_architecture}
-\includegraphics[scale=0.72]{img/JiST_architecture.eps} \caption[The JiST 
-System Architecture]{The JiST system architecture (reproduced from
+\includegraphics[width=\textwidth]{img/JiST_architecture.eps} 
+\caption[The JiST System Architecture]{The JiST system architecture (reproduced from
 \cite{barr_JIST:2005})}
 \end{figure}  
  
@@ -948,8 +947,8 @@ The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}.
 \begin{figure}[ht]
 \centering
 \label{Fig:SWANS_architecture}
-\includegraphics[scale=0.71]{img/SWANS_architecture.eps} \caption[SWANS 
-architecture]{SWANS architecture}
+\includegraphics[width=\textwidth]{img/SWANS_architecture.eps} 
+\caption[SWANS architecture]{SWANS architecture}
 \end{figure} 
 
 \section {Sun SPOTs} \label{sec:sunspots}
@@ -1040,8 +1039,8 @@ on-device VM.
 \begin{figure}
 \centering
 \label{Fig:SquawkVM_architecture}
-\includegraphics[scale=0.71]{img/Squawk_architecture.eps} \caption[The Squawk
-Split VM Architecture]{The Squawk
+\includegraphics[scale=0.61]{img/Squawk_architecture.eps} 
+\caption[The Squawk Split VM Architecture]{The Squawk
 Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
 \end{figure}   
   
@@ -1070,7 +1069,8 @@ Sun SPOT applications can be of two kinds \cite{sun_developer:2008}:
 \begin{figure}
 \centering
 \label{Fig:SunSPOTS_applications}
-\includegraphics[scale=0.71]{img/SunSPOTS_applications.eps} \caption[Types of Sun SPOT applications]{Types of Sun SPOT applications (adapted from
+\includegraphics[width=\textwidth]{img/SunSPOTS_applications.eps} 
+\caption[Types of Sun SPOT applications]{Types of Sun SPOT applications (adapted from
 \cite{sun_developer:2008})}
 \end{figure}   
   
