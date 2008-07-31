@@ -36,23 +36,21 @@ import unitn.dadt.internals.ResultData;
  */
 public class ClientNode /*implements LNDeliver */{
 
-	//private Node info;		// information about the "client" node being simulated in SWANS
 	private static DSensor ds;
+	
+	//--- temp hacks
 	private static Vector simDADTdataview = new Vector();
 
-	
-	//private static SPOTDataHandler dataHandler = new SPOTDataHandler();
-    
 	private RadiogramConnection conn = null;
     private static Datagram xdg = null;
-
+    //---
 	
 	public static void InitClientNodeSimData() {
 			
 		simDADTdataview.addElement(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
 	/*
 		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-							.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.PRESSURE))));
+							.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))));
 		
 		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
 							.and(new ExpressionTree(new DSensor_isActive_Property())));
@@ -60,21 +58,12 @@ public class ClientNode /*implements LNDeliver */{
 		
 		simDADTdataview.add((new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
 							.and(new ExpressionTree(new DSensor_isActive_Property()))
-						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.PRESSURE))
+						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
 							.and(new ExpressionTree(new DSensor_isPrecise_Property(1.0))))));
 		*/
 	}
 	
 	
-	/**
-	 * Provides node information for the node simulated in SWANS
-	 * @param info
-	 */
-	/*
-	public void setSimNodeInfo(Node info) {
-		this.info = info;
-	}
-	*/
 	/**
 	 * Support for requests to WSN, has been tested in SWANS simulator
 	 * @param args 	
@@ -83,8 +72,9 @@ public class ClientNode /*implements LNDeliver */{
 
 	public static void main(String[] args)  {
 
+		//---
 		InitClientNodeSimData();
-
+		//---
 		
 		ds = new DSensor(); 						// distributed Sensor data type (DADT)
 		ds.clearReadings();													// [*]
@@ -92,46 +82,28 @@ public class ClientNode /*implements LNDeliver */{
 		runRequest();
 				
 		int requestsNum = 1;
-
 		// for simulation purposes (signed with [*]) we use a list of pre-defined properties 
 		for (int i = 0; i < requestsNum; i++) {
-			
-			
+			//--- temp hack
 			int dataViewIndex = 0;														// [*]  
 			ExpressionTree expTree = (ExpressionTree) simDADTdataview.get(dataViewIndex);// [*] 	// Specify DADT dataview
-			// ExpressionTree expTree = ... is translated automatically from ClientNode.dadt
+			
+			
+			// ExpressionTree expTree = new ExpressionTree(new DSensor_isPrecise_Property(0));
 					
 			// calculate average readings, done by means of DADT over specified dataview
-				 		
-			//double reqResult = ds.average(definePredicates(expTree), dataview, nodeSelfId); // perform DADT request 
 			Vector reqResult = ds.average(expTree); // perform DADT request 
 			
 			if( reqResult != null) {
-				System.out.println("-----");														// [*]
+				System.out.println("DADT request of average over dataview returned:");				// [*]
 				
-				System.out.println("DADT request of average over dataview returned: ");				// [*]
-				
-				for (Enumeration e = reqResult.elements(); e.hasMoreElements(); )
-				
-				{
+				for (Enumeration e = reqResult.elements(); e.hasMoreElements(); ) {
 					ResultData elem = (ResultData) e.nextElement();
 					System.out.println("Sensor type = " + elem.getSource() + ", average value = " + elem.getData());
 				}
-				
-				
-				System.out.println("======\n");														// [*]
 				ds.clearReadings();													// [*]
 			}
-			
-			/*
-			// if request is executed periodically - set a timeout between requests
-				try {
-					Thread.sleep(Integer.parseInt(args[3]));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				**/
-			
+		
 		}	
 		System.exit(0);
 	}
@@ -172,28 +144,25 @@ public class ClientNode /*implements LNDeliver */{
 		}
 	}
 	
-    ///===================
+    //--- temp hack 
 	private static void runRequest() {
 	       
 		
-		
-	       try {
+		//---
+		try {
 	    	   sendCmd(PacketTypes.SEND_TEMP_DATA_REQ);
-	    	   		System.out.println("!");
-	    	   RadiogramConnection conn = (RadiogramConnection)Connector.open("radiogram://:" + PacketTypes.BROADCAST_PORT);
-	    	   		System.out.println("!!");
-	    	   Datagram xdg = conn.newDatagram(conn.getMaximumLength()); 
-	    	   		System.out.println("!!!");
-	    	   Vector<ResultData> replyData = new Vector<ResultData>();
 	    	   
+	    	   /*
+	    	   RadiogramConnection conn = (RadiogramConnection)Connector.open("radiogram://:" + PacketTypes.BROADCAST_PORT);
+	    	   Datagram xdg = conn.newDatagram(conn.getMaximumLength()); 
+	    	   Vector<ResultData> replyData = new Vector<ResultData>();
 	    	   int NUMBER_OF_SPOTS = 1;
 	    	   
 	    	   for (int i = 0; i < NUMBER_OF_SPOTS; i++)
 	    	   {
 		           try 
 		           {
-		    		    
-		        	   	// Read sensor sample received over the radio
+		    		   	// Read sensor sample received over the radio
 			            conn.receive(xdg);
 			            String addr = xdg.getAddress();  // read sender's Id
 			            
@@ -209,10 +178,12 @@ public class ClientNode /*implements LNDeliver */{
 	    	   
 	           	LNSupportReplyMsg replyMsg = new LNSupportReplyMsg (0, replyData);
 	           	deliver(replyMsg);
+	           	*/
 	        } 
 	   		catch (Exception e) {
 	         	e.printStackTrace();
-	        }   
+	        }  
+	         
 		       
 	    }
     private static void sendCmd (byte cmd) {
@@ -241,4 +212,6 @@ public class ClientNode /*implements LNDeliver */{
 			e.printStackTrace();
 		}
     }
+    //---
+    
 }
