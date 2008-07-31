@@ -1,5 +1,6 @@
 /*
- * Created on Sep 3, 2004
+ * 03/09/04, Migliava, Created
+ * 31/07/08, Khasanova, Modified to be used with LN
  *
  */
 
@@ -19,24 +20,23 @@ public abstract class DADTMgr {
      * This is the static field containing the DADT Manager of the current Site.
      */
 	
-	//!! @author galiya TODO: here we have an explicit use of IPMDADTMgr(); 
-    public static DADTMgr mgr; //!!= new IPMDADTMgr(); 
+	
+   // public static DADTMgr mgr;
     
 	protected BindingRegistry registry = new BindingRegistry();
 	protected Identificator adtIdentificator;
 
 
-	static public Logger l = Logger.getLogger("InfoLogger");
-	
-
     /**
      * Metod used to initialize the system 
      */
+	/*
 	public static void Initialize(DADTMgr mgr) {
 		DADTMgr.mgr = mgr;
         
-        l.setLevel(Level.ALL);
+       
     }
+	*/
 
 	
 	/**
@@ -44,9 +44,6 @@ public abstract class DADTMgr {
 	 */
 	protected void bind(Object adtInstance, String DADTClassName) {
 		registry.register(adtInstance, DADTClassName);
-//		//probably it is not needed (on the first identification 
-//		//it generates the identifier
-//		adtIdentificator.identify(adtInstance);
 	}
 	
     /**
@@ -88,7 +85,9 @@ public abstract class DADTMgr {
 	}
 	*/
     
-    public static Host getSpaceADT() { return host; };
+    public static Host getSpaceADT() { 
+    	return host; 
+    }
 	
     public Identificator getAdtIdentificator() {
         return adtIdentificator;

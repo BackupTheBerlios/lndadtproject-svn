@@ -7,9 +7,9 @@ package DADT;
 public interface OperatorFactory {
 
     /**
-     * @param qualifyingExpr TODO
+     * @param qualifyingExpr 
      * @param operator
-     * @param action TODO
+     * @param action 
      * @return
      */
     public Operator getOperator(String operator, Action action,

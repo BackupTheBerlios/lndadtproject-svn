@@ -7,21 +7,21 @@ package DADT.LNSupport;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 import polimi.ln.nodeAttributes.Node;
 import polimi.ln.runtime.LogicalNeighborhoods;
 import DADT.BindingRegistry;
-import DADT.DataView;
+import DADT.CompleteView;
+import DADT.DADTMgr;
 import DADT.ResultData;
+import DADT.Action;
 
 /**
  * Node manager (ADTs) that provides link between DADT layer and LN communication layer on the nodes. 
  * @author G.Khasanova
  */
-public class NodeMgr {
+public class NodeMgr extends DADTMgr {
     
-    protected BindingRegistry registry = new BindingRegistry(); // used for binding of ADT instances
-	protected LNADTIdentification adtMgrID; 					// ID of the ADT instance
+    protected LNADTIdentification adtMgrID; 					// ID of the ADT instance
 	
 	
 	/**
@@ -39,18 +39,16 @@ public class NodeMgr {
 	 * @param DADTClassName	Name of the DADT class
 	 */
 	public void bind(Object adtInstance, String DADTClassName) { 
-		registry.register(adtInstance, DADTClassName);
+		super.bind(adtInstance, DADTClassName);
 	}
 
     /**
 	 * Unbinding of the ADT instance from DADT Class, by unregistering ADT instance object in the binding registry
-	 * 
-	 * @param instance ADT instance to be unbinded
+     * @param adtInstance ADT instance to be unbinded
 	 * @param DADTClassName	Name of the DADT class
      */
-    public void unbind(Object instance, String DADTClassName) {
-    	registry.unregister(instance, DADTClassName);
-    	assert registry.getLocalInstances(DADTClassName).size() > 0;
+    public void unbind(Object adtInstance, String DADTClassName) {
+    	super.unbind(adtInstance, DADTClassName);
     }
 
    
@@ -64,14 +62,17 @@ public class NodeMgr {
 	 * @param nodeInfo debug information about simulated node
 	 */
 	public void processRequestMsg(Object reqMsg/*, Collection ADTinstances*/, LogicalNeighborhoods ln, Node nodeInfo) {		
+		
+		
+		
 		LinkedList<ResultData> resultList = new LinkedList<ResultData>();
 		
 		// collect parameters of the request
-		DADT.Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
-		DataView dataview = ((LNSupportRequestMsg)reqMsg).getDataView();					// defined DADT dataview
+		Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
+		CompleteView DADTview = ((LNSupportRequestMsg)reqMsg).getDADTView();					// defined DADT dataview
 		String DADTCLassName = ((LNSupportRequestMsg)reqMsg).getDADTClassName();					// requested DADT Class
 		
-		Collection reqADTInstances = dataview.filterMatchingInstances(registry.getLocalInstances(DADTCLassName));		//ADT instances which satisfy the given DADT
+		Collection reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTCLassName));		//ADT instances which satisfy the given DADT
 		
 		for (Object s : reqADTInstances) {
 			resultList.add((ResultData) reqAction.evaluate(s)); 		// perform action over selected ADT instances

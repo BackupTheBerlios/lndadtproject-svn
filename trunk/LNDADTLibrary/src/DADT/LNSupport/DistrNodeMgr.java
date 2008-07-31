@@ -1,23 +1,19 @@
 /*
- * Created on July 01, 2008
- * @author Khasanova
+ * 01/07/08, Khasanova, Created
+ * 30/07/08, Khasanova, Modified in order to use SelectionOperator
  */
 package DADT.LNSupport;
 
 
 import java.util.ArrayList;
 
-import java.util.logging.Logger;
-
-import polimi.ln.examples.swans.SimulationReferences;
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.ConjunctiveNeighborhood;
 import polimi.ln.neighborhoodDefs.Neighborhood;
 
-import polimi.ln.runtime.LogicalNeighborhoods;
 import DADT.Action;
-import DADT.DataView;
 import DADT.ExpressionTree;
+import DADT.Operator;
 import DADT.Property;
 
 /**
@@ -26,36 +22,20 @@ import DADT.Property;
  */
 public class DistrNodeMgr {
     
-    static Logger l = Logger.getLogger("InfoLogger"); 			// debug tool
-	
- 	/**
- 	 * @param predicates 
- 	 * @param dataview 
+	private Operator selector;
+    /**
+ 	 * @param selectorDescr 
+     * @param predicates 
+     * @param view 
  	 * @param pcNodeId
  	 * @param action 
+     * @param DADTClassName 
  	 */
- 	public void sendRequest(AtomicPredicate[] predicates, DataView dataview, int pcNodeId, Action action, String DADTClassName) {
+ 	public void requestData(String selectorDescr, AtomicPredicate[] predicates, LNCompleteView DADTview, int pcNodeId, Action action, String DADTClassName) {
  		
+ 		selector = DADTview.getOperator(selectorDescr, action, null);
  		
-		// define a neighborhood of nodes based on the LN predicates 
- 		
-		Neighborhood nodes = new ConjunctiveNeighborhood (predicates);
-		
-		// get reference to the logical neighborhood 
-		LogicalNeighborhoods ln = SimulationReferences.getLN(pcNodeId);		//[*]
-		SimulationReferences.getNodeInfo(pcNodeId).debugPrint("Request is sent");		//[*]
-
-		
-		SimulationReferences.getNodeInfo(pcNodeId).debugPrint("DADT class name is " + DADTClassName);		//[*]
-
-		
-		// PC-node sends request message into logical neighborhood (WSN)
-		ln.send(new LNSupportRequestMsg(pcNodeId, 
-										dataview, 
-										action,
-										DADTClassName), // create a message which contains action to be executed
-										new Neighborhood[] { nodes });
-		
+ 		selector.performRemoteLN(DADTview, (Neighborhood)(new ConjunctiveNeighborhood (predicates)), DADTClassName, pcNodeId);
 
  	}
  	
