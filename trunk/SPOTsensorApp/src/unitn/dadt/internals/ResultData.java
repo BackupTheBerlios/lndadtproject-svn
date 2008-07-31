@@ -1,18 +1,13 @@
 /*
- * Created on Sep 15, 2005
- *
+ * 15/09/05, Migliava, Created
+ * 25/07/08, Khasanova, Changed to be used on Sun SPOTs under CLDC specification
+ * 
  */
 package unitn.dadt.internals;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-/* javaME doesn't support any of these
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-*/
 
 /**
  * @author migliava
@@ -44,17 +39,7 @@ public class ResultData /*implements Serializable */{
      * @param resultData
      * @return
      */
-    /*javaME doesn't support Collections
-    public static Collection getData(Collection resultData) { 
-        ArrayList l = new ArrayList();
-        Iterator it = resultData.iterator();
-        while (it.hasNext()) {
-            ResultData el = (ResultData) it.next();
-            l.add(el.data);
-        }
-        return l;
-    }
-    */
+
     public static Vector getData(Vector resultData) { 
         Vector l = new Vector();
         Enumeration it = resultData.elements();

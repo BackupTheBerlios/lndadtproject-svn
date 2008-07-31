@@ -1,15 +1,17 @@
 /*
- * Created on Aug 10, 2005
+ * 10/08/05, Migliava, Created 
+ * 31/07/08, Khasanova, Modified to be used with LN
  *
  */
 package unitn.dadt.internals;
+
 
 import unitn.dadt.space.SpaceView;
 
 /**
  * @author migliava
  */
-public abstract class CompleteView implements OperatorFactory {
+public abstract class CompleteView implements OperatorFactory /*, Serializable*/ {
 
     protected SpaceView sv;
     protected DataView dv;
@@ -50,7 +52,7 @@ public abstract class CompleteView implements OperatorFactory {
      */
     //TODO after we have operator we should remove this method or make it package
     public DataView getDataView() {
-        return dv;
+	   return dv;
     }
     /**
      * @return
@@ -62,9 +64,6 @@ public abstract class CompleteView implements OperatorFactory {
     /**
      * @param qualifyingExpr 
      * @param action 
-     * @param action
-     * @param spaceInvocation 
-     * @param string
      * @return
      */
     /*

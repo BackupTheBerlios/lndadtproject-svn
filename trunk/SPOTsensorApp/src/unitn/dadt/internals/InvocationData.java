@@ -1,6 +1,7 @@
 /*
- * Created on Aug 11, 2005
- *
+ * 10/08/05, Migliava, Created
+ * 25/07/08, Khasanova, Changed to be used on Sun SPOTs under CLDC specification
+ * 
  */
 package unitn.dadt.internals;
 

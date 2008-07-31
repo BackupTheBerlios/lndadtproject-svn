@@ -4,12 +4,6 @@
  */
 package unitn.dadt.LNSupport;
 
-/* javaME doesn't support any of these
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.logging.Logger;
-*/
-
 /*
 import polimi.ln.nodeAttributes.Node;
 import polimi.ln.runtime.LogicalNeighborhoods;
@@ -20,28 +14,45 @@ import java.util.Vector;
 
 import javax.microedition.io.Datagram;
 
+import unitn.dadt.LNSupport.LNSupportRequestMsg;
+
 import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
 
-import unitn.dadt.internals.BindingRegistry;
-import unitn.dadt.internals.DataView;
+import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.ResultData;
 import unitn.dadt.internals.Action;
+import unitn.dadt.internals.DADTMgr;
 
 /**
  * Node manager (ADTs) that provides link between DADT layer and LN communication layer on the nodes. 
  * @author G.Khasanova
  */
-public class NodeMgr {
+public class NodeMgr extends DADTMgr{
     
-    protected BindingRegistry registry = new BindingRegistry(); // used for binding of ADT instances
 	protected LNADTIdentification adtMgrID; 					// ID of the ADT instance
 	    
+	protected NodeMgr spaceMgr;
+	
+	
 	/**
 	 * Constructor of the node manager
 	 * Specifies ID of the ADT instance
 	 */
-	public NodeMgr() {
+	public NodeMgr(){
 		adtMgrID = new LNADTIdentification();
+	}
+	
+	public NodeMgr(boolean isSpaceADTsAvailable) {
+		adtMgrID = new LNADTIdentification();
+		
+		if (isSpaceADTsAvailable) 
+		{
+			/*
+			spaceMgr = new NodeMgr();
+			super.Initialize(spaceMgr); // no use of space is available currently
+			 */			
+			//super.setSpaceADT(new Host(), spaceDADTClass);
+		}	
 	}
 	
 	/**
@@ -51,7 +62,7 @@ public class NodeMgr {
 	 * @param DADTClassName	Name of the DADT class
 	 */
 	public void bind(Object adtInstance, String DADTClassName) { 
-		registry.register(adtInstance, DADTClassName);
+		super.bind(adtInstance, DADTClassName);
 	}
 
     /**
@@ -60,8 +71,8 @@ public class NodeMgr {
 	 * @param instance ADT instance to be unbinded
 	 * @param DADTClassName	Name of the DADT class
      */
-    public void unbind(Object instance, String DADTClassName) {
-    	registry.unregister(instance,DADTClassName);
+    public void unbind(Object adtInstance, String DADTClassName) {
+    	super.unbind(adtInstance, DADTClassName);
     }
 
    
@@ -74,23 +85,6 @@ public class NodeMgr {
      * @param ln Logical neighbourhood object
 	 * @param nodeInfo debug information about simulated node
 	 */
-    /* javeME doesn't support Collections
-	public void processRequestMsg(Object reqMsg, Collection ADTinstances, LogicalNeighborhoods ln, Node nodeInfo) {
-		
-		LinkedList<ResultData> resultList = new LinkedList<ResultData>();
-		
-		// collect parameters of the request
-		Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
-		DataView dataview = ((LNSupportRequestMsg)reqMsg).getDataView();					// defined DADT dataview
-		Collection reqADTInstances = dataview.filterMatchingInstances(ADTinstances);		//ADT instances which satisfy the given DADT
-		
-		for (Object s : reqADTInstances) {
-			resultList.add((ResultData) reqAction.evaluate(s)); 		// perform action over selected ADT instances
-		}	
-		
-		sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList, ln, nodeInfo);	// send reply message
-  	}
-  	*/
     public void processRequestMsg(Object reqMsg /*, Vector ADTinstances */, RadiogramConnection rCon, Datagram dg, Datagram dgReply) {
     								
     	try
@@ -102,14 +96,14 @@ public class NodeMgr {
 			Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
 				//System.out.println("reqAction = " + reqAction.toString());
 			
-			DataView dataview = ((LNSupportRequestMsg)reqMsg).getDataView();					// defined DADT dataview
+			CompleteView DADTview = ((LNSupportRequestMsg)reqMsg).getDADTView();						// defined DADT dataview
 				//System.out.println("dataview = " + dataview.toString());
 			
 			String DADTClassName = 	((LNSupportRequestMsg)reqMsg).getDADTClassName();					// requested DADT
 				//System.out.println("DADTClassName = " + DADTClassName);
 			
 				
-			Vector reqADTInstances = dataview.filterMatchingInstances(registry.getLocalInstances(DADTClassName));		//ADT instances which satisfy the given DADT
+			Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		//ADT instances which satisfy the given DADT
 			
 			
 			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
@@ -162,21 +156,6 @@ public class NodeMgr {
 	 * @param nodeInfo debug information about simulated node
 	 * @param 
 	 */
-    
-    /* javaME doesn't support Collection
-    private void sendReplyMsg(int destNodeId, LinkedList<ResultData> resultList, LogicalNeighborhoods ln, Node nodeInfo) {
-		
-		//---- debug message
-		for(int i = 0; i < resultList.size(); i++)
-		{
-			nodeInfo.debugPrint("I'm a sensor node and my reading is (" + resultList.get(i).getSource() + "," + resultList.get(i).getData() + ") ");
-		}
-		//----
-		
-		ln.sendReply(new LNSupportReplyMsg(nodeInfo.getMyId(), resultList), destNodeId);	// send reply message over LN
-	
-	}
-	*/
     
     /*
     private void sendReplyMsg(int destNodeId, Vector resultList , LogicalNeighborhoods ln, Node nodeInfo) {

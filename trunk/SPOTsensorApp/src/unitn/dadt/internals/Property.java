@@ -17,6 +17,6 @@ public interface Property {
     public boolean evaluate(Object o);
     public Class getDADTClass();
     
-    //*public AtomicPredicate getDescriptionForLN(Object o); //To be used later in LN simulation to create a predicate
-    public String getClassName(); 				  // String name of the property
+    //*public AtomicPredicate getDescriptionForLN(Object o); //this method is used to support communication over LN 
+    public String getClassName(); 				  
 }

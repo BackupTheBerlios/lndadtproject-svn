@@ -1,11 +1,10 @@
 /*
- * Created on Sep 29, 2005
+ * 29/09/05 Migliava, Created
+ * 25/07/08 Khasanova, Changed to be used on Sun SPOTs under CLDC specification 
  *
  */
 package unitn.dadt.internals;
 
-//import java.io.Serializable;
-//import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -32,9 +31,6 @@ import java.util.Vector;
  * we have a single mechanism that works for both data and space? In the
  * paper we said identifiers 
  * 
- * Does it makes sense from the 
- * 
- * @author migliava
  */
 public interface Identificator {
 
@@ -49,17 +45,13 @@ public interface Identificator {
      * the same instance it generates the identifier and stores a weak reference into the table, when it is
      * called again with the same instance it simply returns the previous identifier.
      */
-	/*
-    public Serializable getID(Object adtInstance); // no Serializable objects in J2ME
-    */
+
 	public Object getID(Object adtInstance);
 	
     /**
      * Returns the ADT corresponing to a given Identifier
      */
-	/*
-    public Object getADT(Serializable adtIdentifier); // no Serializable objects in J2ME
-	*/
+
 	public Object getADT(Object adtIdentifier);
 	
     /**
@@ -67,15 +59,10 @@ public interface Identificator {
      * which are composed of ADTs instance together with the corresponding 
      * identifier
      */
-    /*javaME doesn't suppot collections
-     * public Collection getIdentifiedADTs(Collection adtCollection);
-     */public Vector getIdentifiedADTs(Vector adtCollection);
+	public Vector getIdentifiedADTs(Vector adtCollection);
     
      /**
      * Will receive a collection of ADTs, and returns a collection of identifiers 
      */
-     /*javaME doesn't support Collections
-    public Collection getIDs(Collection adtCollection);
-    */
     public Vector getIDs(Vector adtCollection);
 }	

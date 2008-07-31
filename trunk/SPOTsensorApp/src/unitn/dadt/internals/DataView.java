@@ -1,15 +1,10 @@
 /*
- * Created on Aug 31, 2004
- *
+ * 31/08/04, Migliava, Created
+ * 27/07/08, Khasanova, Changed to be used on Sun SPOTs under CLDC specification
  */
 package unitn.dadt.internals;
 
 import java.util.Vector;
-
-/* javaME doesn't support any of these
- * import java.io.Serializable;
-import java.util.Collection;
-*/
 
 /**
  * @author migliava
@@ -18,11 +13,8 @@ public class DataView /* implements Serializable */{
 
     ExpressionTree properties;
     
-    //public String[] LNproperties;
-    
     public DataView(ExpressionTree e) {
         properties = e;
-        //LNproperties = getLNProperties();
     }
     
     /**
@@ -46,18 +38,6 @@ public class DataView /* implements Serializable */{
      * @param instances
      * @return
      */
-    /* javaMe doesn't support Collections
-    public Collection filterMatchingInstances(Collection instances) {
-
-            Collection res = Functions.filter(instances,new Predicate() {
-
-                public boolean evaluate(Object ADTInstance) {
-                    return isMember(ADTInstance);
-                }
-            });
-            return res;
-    }
-    */
     public Vector filterMatchingInstances(Vector instances) {
 
         Vector res = Functions.filter(instances,new Predicate() {

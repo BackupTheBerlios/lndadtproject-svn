@@ -159,6 +159,8 @@ public class Sensor {
      */ 
     public boolean isActive() {
     	
+    
+    	
     	this.active = (generateNextValue() >= 0.25); 
     	
     	

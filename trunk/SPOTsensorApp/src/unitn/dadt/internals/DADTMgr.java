@@ -1,45 +1,41 @@
 /*
- * Created on Sep 3, 2004
+ * 03/09/04, Migliava, Created
+ * 31/07/08, Khasanova, Modified to be used with LN
  *
  */
 
 package unitn.dadt.internals;
-
-/* javaME deosn't support any of these
-import java.util.Collection;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-*/
-
 import java.util.Vector;
+
 
 import unitn.dadt.space.Host;
 /**
  * This singleton provides access to the DADT Manager of the current site. 
- * @author migliava, G.Khasanova (updates for LN support) 
+ * @author migliava
  */
 public abstract class DADTMgr {
 
     /**
      * This is the static field containing the DADT Manager of the current Site.
      */
-    public static DADTMgr mgr; 
+	
+	
+   // public static DADTMgr mgr;
     
 	protected BindingRegistry registry = new BindingRegistry();
 	protected Identificator adtIdentificator;
 
 
-	//static public Logger l = Logger.getLogger("InfoLogger");
-	
-
     /**
      * Metod used to initialize the system 
      */
+	/*
 	public static void Initialize(DADTMgr mgr) {
 		DADTMgr.mgr = mgr;
         
-        //l.setLevel(Level.ALL);
+       
     }
+	*/
 
 	
 	/**
@@ -47,9 +43,6 @@ public abstract class DADTMgr {
 	 */
 	protected void bind(Object adtInstance, String DADTClassName) {
 		registry.register(adtInstance, DADTClassName);
-//		//probably it is not needed (on the first identification 
-//		//it generates the identifier
-//		adtIdentificator.identify(adtInstance);
 	}
 	
     /**
@@ -64,11 +57,6 @@ public abstract class DADTMgr {
      * @param dv
      * @return
      */
-    /* javaME doesn't support Collections
-    public Collection getInstances(String DADTClassName) {
-        return registry.getLocalInstances(DADTClassName);
-    }
-    */
     public Vector getInstances(String DADTClassName) {
         return registry.getLocalInstances(DADTClassName);
     }
@@ -96,7 +84,9 @@ public abstract class DADTMgr {
 	}
 	*/
     
-    public static Host getSpaceADT() { return host; };
+    public static Host getSpaceADT() { 
+    	return host; 
+    }
 	
     public Identificator getAdtIdentificator() {
         return adtIdentificator;

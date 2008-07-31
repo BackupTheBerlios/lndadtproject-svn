@@ -1,20 +1,18 @@
 /*
- * Created on July 01, 2008
- * @author Khasanova
+ * 01/07/08, Khasanova, Created
  */
 package unitn.dadt.LNSupport;
 
 
 /*
-import polimi.ln.examples.swans.SimulationReferences;
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.ConjunctiveNeighborhood;
 import polimi.ln.neighborhoodDefs.Neighborhood;
-
-import polimi.ln.runtime.LogicalNeighborhoods;
 */
 
-import unitn.dadt.internals.*;
+import unitn.dadt.internals.Action;
+import unitn.dadt.internals.Operator;
+import unitn.dadt.LNSupport.LNCompleteView;
 
 
 
@@ -24,36 +22,23 @@ import unitn.dadt.internals.*;
  */
 public class DistrNodeMgr {
     
-    //static Logger l = Logger.getLogger("InfoLogger"); 			// debug tool
+	private Operator selector;
 	
- 	/**
+	/**
  	 * @param predicates 
  	 * @param dataview 
  	 * @param pcNodeId
  	 * @param action 
  	 */
-    
- 	public void sendRequest(/*AtomicPredicate[] predicates,*/ DataView dataview, Action action, String DADTClassName) {
+	/*
+ 	public void requestData(String selectorDescr, AtomicPredicate[] predicates, LNCompleteView DADTview, int pcNodeId, Action action, String DADTClassName) {
  		
+ 		selector = DADTview.getOperator(selectorDescr, action, null);
  		
-		// define a neighborhood of nodes based on the LN predicates 
- 		
- 		/*
-		Neighborhood nodes = new ConjunctiveNeighborhood (predicates);
-		
-		// get reference to the logical neighborhood 
-		LogicalNeighborhoods ln = SimulationReferences.getLN(pcNodeId);		//[*]
-		SimulationReferences.getNodeInfo(pcNodeId).debugPrint("Request is sent");		//[*]
+ 		selector.performRemoteLN(DADTview, (Neighborhood)(new ConjunctiveNeighborhood (predicates)), DADTClassName, pcNodeId);
 
-		// PC-node sends request message into logical neighborhood (WSN)
-		ln.send(new LNSupportRequestMsg(pcNodeId, 
-										dataview, 
-										action
-										DADTClassName), // create a message which contains action to be executed
-										new Neighborhood[] { nodes });
-		*/
-		
  	}
+ 	*/
  	
 	
     /**

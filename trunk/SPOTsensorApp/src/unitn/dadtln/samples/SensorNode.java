@@ -35,8 +35,6 @@ import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ITriColorLED;
 import com.sun.spot.sensorboard.peripheral.LEDColor;
 
-//import com.sun.spot.sensorboard.peripheral.LEDColor;
-//import com.sun.spot.peripheral.Spot;
 import com.sun.spot.io.j2me.radiogram.*;
 
 import java.util.Enumeration;
@@ -56,6 +54,7 @@ import polimi.ln.runtime.messages.ReplyMsg;
 */
 
 
+import unitn.dadt.LNSupport.LNCompleteView;
 import unitn.dadt.LNSupport.NodeMgr;
 import unitn.dadt.LNSupport.LNSupportRequestMsg;
 import unitn.dadt.internals.DataView;
@@ -65,7 +64,7 @@ public class SensorNode extends MIDlet implements //LNDeliver,
     
 	ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
 	  
-    public Vector ADTinstances = new Vector(); // collection of ADT instances beloging to the sensor node
+    public Vector ADTinstances = new Vector(); // collection of ADT instances belonging to the sensor node
     private NodeMgr ADTmgr = new NodeMgr(); // ADT manager that coordinates sensors' readings of ADT instances  
     
     RadiogramConnection rCon = null;
@@ -135,13 +134,24 @@ public class SensorNode extends MIDlet implements //LNDeliver,
 
 		
 		DataView tempDV = new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-									.and(new ExpressionTree(new DSensor_isActive_Property()))); 
-						 //new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
+										.and(new ExpressionTree(new DSensor_isActive_Property()).not()));
+			
+						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+						//	.and((new ExpressionTree(new DSensor_isActive_Property())).not())
+		   				//	.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
+		   				//	.and((new ExpressionTree(new DSensor_isActive_Property())).not())));
+						
+						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+						//			.and(new ExpressionTree(new DSensor_isActive_Property()))); 
+						
+						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
+		
+		LNCompleteView tempCompleteView = new LNCompleteView(tempDV); 
 		
 		Action tempAction = new DSensor_reset_Action(); //new DSensor_read_Action();
 		String DADTClassName = "unitn.dadtln.samples.DSensor";
 		
-		LNSupportRequestMsg tempMsg = new LNSupportRequestMsg(pkt.getAddress(), tempDV, tempAction, DADTClassName);
+		LNSupportRequestMsg tempMsg = new LNSupportRequestMsg(pkt.getAddress(), tempCompleteView, tempAction, DADTClassName);
 		deliver(tempMsg);
 	
 	}

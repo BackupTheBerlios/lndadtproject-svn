@@ -2,6 +2,7 @@ package unitn.dadt.LNSupport;
 
 //import java.io.Serializable;
 
+import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.DataView;
 import unitn.dadt.internals.Action;
 
@@ -16,21 +17,21 @@ public class LNSupportRequestMsg /*implements Serializable */{
 	private static final long serialVersionUID = 1L;
 	private String sender;
 	
-	private DataView dv;
-	private Action action;
 	
 	private String DADTClassName;
+	private CompleteView view;
+	private Action action;
 
 	/**
 	 * Creates a new message.
 	 * 
 	 */
-	public LNSupportRequestMsg(String sender, DataView dataview, Action action, String DADTClassName) {
+	public LNSupportRequestMsg(String sender, CompleteView DADTview, Action action, String DADTClassName) {
 		this.sender = sender;
 		
-		this.dv = dataview;
+		this.view = DADTview;
 		this.action = action;
-		
+
 		this.DADTClassName = DADTClassName;
 	}
 	
@@ -41,8 +42,8 @@ public class LNSupportRequestMsg /*implements Serializable */{
 		return action;
 	}
 
-	public DataView getDataView() {
-		return dv;
+	public CompleteView getDADTView() {
+		return view;
 	}
 	
 	/**
