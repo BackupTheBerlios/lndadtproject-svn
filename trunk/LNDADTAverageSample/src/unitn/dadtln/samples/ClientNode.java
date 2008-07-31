@@ -40,9 +40,10 @@ public class ClientNode implements LNDeliver {
 
 		
 		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
-	/*
+	
+		/*
 		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-							.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.PRESSURE))));
+							.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))));
 		
 		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
 							.and(new ExpressionTree(new DSensor_isActive_Property())));
@@ -50,8 +51,14 @@ public class ClientNode implements LNDeliver {
 		
 		simDADTdataview.add((new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
 							.and(new ExpressionTree(new DSensor_isActive_Property()))
-						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.PRESSURE))
+						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
 							.and(new ExpressionTree(new DSensor_isPrecise_Property(1.0))))));
+							
+							
+		simDADTdataview.add((new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+							.and(not(new ExpressionTree(new DSensor_isActive_Property())))
+						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
+							.and(not(new ExpressionTree(new DSensor_isActive_Property()))))));				// reset all not active temp and light sensors	
 		*/
 	}
 	

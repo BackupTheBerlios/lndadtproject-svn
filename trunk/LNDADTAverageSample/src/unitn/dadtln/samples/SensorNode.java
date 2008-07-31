@@ -98,6 +98,7 @@ public class SensorNode implements LNDeliver {
 		if (msg instanceof LNSupportRequestMsg) 
 		{
 			//get sensor readings (perform specified action) from ADTinstances 
+			
 			ADTmgr.processRequestMsg(msg, /*ADTinstances,*/ ln, info); // process request message 
 			
 			

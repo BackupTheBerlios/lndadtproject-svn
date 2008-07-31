@@ -60,7 +60,8 @@ public class Sensor {
      */
     public double read() {
     	this.value = (int)(generateNextValue() * 100);
-        return this.value;
+    	return this.value;
+        
     }
    
     

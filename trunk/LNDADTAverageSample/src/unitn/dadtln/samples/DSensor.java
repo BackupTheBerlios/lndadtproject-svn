@@ -3,6 +3,7 @@ package unitn.dadtln.samples;
 
 import DADT.*;
 import DADT.LNSupport.DistrNodeMgr;
+import DADT.LNSupport.LNCompleteView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class DSensor {
 		AtomicPredicate[] predicates = dadtMgr.definePredicates(expTree, new DSensor_isOfType_Property(0)); // DSensor TypeProperty is used as a "master" property for possibly complex requests over multiple instances 
 		
 		// perform a request 
-		dadtMgr.sendRequest(predicates, dataview, pcNodeId, new DSensor_read_Action(), this.getClass().getName());
+		dadtMgr.requestData("all", predicates, new LNCompleteView(dataview), pcNodeId, new DSensor_read_Action(), this.getClass().getName());
 		
 		// after request was sent into WSN, we wait over a timeout to collect replies from the distributed sensors 
 		// we assume that within the timeout all nodes in the neighbourhood can reply
