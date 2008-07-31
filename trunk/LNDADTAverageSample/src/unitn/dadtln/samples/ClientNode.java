@@ -89,14 +89,12 @@ public class ClientNode implements LNDeliver {
 		// for simulation purposes (signed with [*]) we use a list of pre-defined properties 
 		for (int i = 0; i < requestsNum; i++) {
 			ds = new DSensor(); 						// distributed Sensor data type (DADT)
-			
-			// TODO: move some parts of the code to the DistMgr
+			ds.clearReadings();													// [*]
+
 			int expIndex = 0;														// [*]  
 			ExpressionTree expTree = (ExpressionTree) simDADTdataview.get(expIndex);// [*] 	// Specify DADT dataview
-			// ExpressionTree expTree = ... is translated automatically from ClientNode.dadt
+			// ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
 					
-			ds.clearReadings();													// [*]
-			
 			// calculate average readings, done by means of DADT over specified dataview
 			int nodeSelfId = Integer.parseInt(args[1]); // read nodeId 
 	 		
