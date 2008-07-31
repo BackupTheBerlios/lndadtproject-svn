@@ -33,11 +33,6 @@
 
 package polimi.ln.neighborhoodDefs;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import polimi.ln.nodeAttributes.NodeAttribute;
 import polimi.ln.nodeAttributes.SetMapAttribute;
 

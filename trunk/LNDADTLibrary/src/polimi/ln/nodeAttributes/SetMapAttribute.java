@@ -33,7 +33,6 @@
 
 package polimi.ln.nodeAttributes;
 
-import java.util.HashSet;
 
 /**
  * Defines a static map attribute.
