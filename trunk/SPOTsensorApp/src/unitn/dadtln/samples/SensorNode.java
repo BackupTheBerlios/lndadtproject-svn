@@ -99,14 +99,14 @@ public class SensorNode extends MIDlet implements //LNDeliver,
             dg = rCon.newDatagram(rCon.getMaximumLength());  // only sending 12 bytes of data
             dgReply = rCon.newDatagram(rCon.getMaximumLength()); 
             
-         // Main data collection loop
+           // Main data collection loop
         	while (true) {
             
         		
                 // Read sensor sample received over the radio
                 rCon.receive(dg);
                 	// create replyMsg for DADT //
-               	leds[7].setColor(LEDColor.ORANGE);
+               	leds[7].setColor(LEDColor.GREEN);
                	leds[7].setOn();
                	
                	handlePacket(SEND_TEMP_DATA_REQ, dg);
@@ -119,7 +119,7 @@ public class SensorNode extends MIDlet implements //LNDeliver,
         }
     }
 
-    	public void deliver(Object msg) {
+    public void deliver(Object msg) {
 		if (msg instanceof LNSupportRequestMsg) 
 		{
 			//get sensor readings (perform specified action) from ADTinstances 
@@ -127,12 +127,6 @@ public class SensorNode extends MIDlet implements //LNDeliver,
 			ADTmgr.processRequestMsg(msg/*, ADTinstances*/, rCon, dg, dgReply); //, ln, info); // process request message 
 			leds[7].setOff();
 		} 
-		/*
-		else if (msg instanceof ReplyMsg) 
-		{
-			info.debugPrint("Sensor Node: Got reply message!");
-		}
-		*/
 	}
 
 	
@@ -140,28 +134,16 @@ public class SensorNode extends MIDlet implements //LNDeliver,
 	public void handlePacket(byte type, Datagram pkt) {
 
 		
-		DataView tempDV = new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
-		Action tempAction = new DSensor_read_Action();
+		DataView tempDV = new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+									.and(new ExpressionTree(new DSensor_isActive_Property()))); 
+						 //new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
+		
+		Action tempAction = new DSensor_reset_Action(); //new DSensor_read_Action();
 		String DADTClassName = "unitn.dadtln.samples.DSensor";
 		
 		LNSupportRequestMsg tempMsg = new LNSupportRequestMsg(pkt.getAddress(), tempDV, tempAction, DADTClassName);
-		
-		
-		switch (type) {
-			
-		    case SEND_TEMP_DATA_REQ:
-		    	deliver(tempMsg);
-		        leds[1].setRGB(0, 0, 255);
-		        leds[1].setOn();        // green = 2G, blue-green = 6G
-		        break;
-		    
-		    case SEND_LIGHT_DATA_REQ:
-		        deliver(tempMsg);
-		        leds[1].setRGB(0, 255, 0);
-		        leds[1].setOn();        // green = 2G, blue-green = 6G
-		        break;
-
-		}
+		deliver(tempMsg);
+	
 	}
 
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {

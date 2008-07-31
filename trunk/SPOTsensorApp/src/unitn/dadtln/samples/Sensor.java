@@ -6,11 +6,12 @@ package unitn.dadtln.samples;
 
 import java.util.Random;
 
-
-
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ILightSensor;
 import com.sun.spot.sensorboard.peripheral.ITemperatureInput;
+import com.sun.spot.sensorboard.peripheral.ITriColorLED;
+import com.sun.spot.sensorboard.peripheral.LEDColor;
+import com.sun.spot.util.Utils;
 
 
 /*
@@ -83,17 +84,39 @@ public class Sensor {
      * @return Sensed sensor reading
      */
     public double read() {
-  
-    	
     	try
     	{
 	    	switch(this.type){
 	    		case(TEMP):{
 	    			this.value = ((ITemperatureInput)sensorMonitor).getCelsius();
+	    			
+	    	        // for debug reasons //
+	    	        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+	    	        for (int i = 0; i < leds.length; i ++)
+	    	        {
+	    	        	leds[i].setColor(LEDColor.BLUE);
+	    	        	leds[i].setOn();
+	    	            Utils.sleep(150);             
+	    	        	leds[i].setOff();
+	    	        }	
+	    	       // --- // 
+	    			
 	    			break;
 	    		}
 	    		case(LIGHT):{
 	    			this.value = (double)((ILightSensor)sensorMonitor).getAverageValue();
+	    			
+	    	        // for debug reasons //
+	    	        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+	    	        for (int i = 0; i < leds.length; i ++)
+	    	        {
+	    	        	leds[i].setColor(LEDColor.WHITE);
+	    	        	leds[i].setOn();
+	    	            Utils.sleep(150);             
+	    	        	leds[i].setOff();
+	    	        }	
+	    	       // --- // 
+	    			
 	    			break;
 	    		}
 	    	}
@@ -101,8 +124,8 @@ public class Sensor {
     	catch (Exception e) {
 			this.value = -1;
 		}
-    	
-    	//this.value = (int)(generateNextValue() * 100);
+        
+      //this.value = (int)(generateNextValue() * 100);
         return this.value;
     }
    
@@ -112,6 +135,21 @@ public class Sensor {
      */
     public void reset() {
         value = 0;
+
+        
+        // for debug reasons //
+        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+	    for (int j = 0; j < 2; j ++) {
+        	for (int i = 0; i < leds.length; i ++)
+	        {
+	        	leds[i].setColor(LEDColor.YELLOW);
+	        	leds[i].setOn();
+	        }
+	        Utils.sleep(500);             
+	        for (int i = 0; i < leds.length; i ++)
+	        	leds[i].setOff();
+        }     
+       // --- // 
     }
     
     
@@ -123,10 +161,12 @@ public class Sensor {
     	
     	this.active = (generateNextValue() >= 0.25); 
     	
-    	/*
+    	
     	if (this.active) 
-    		System.out.println("Sensor says that it is active (sensor type is = " + this.type + ")");
-    	*/
+    		System.out.println("Sensor is active (sensor type is = " + this.type + ")");
+    	else
+    		System.out.println("Sensor is not active (sensor type is = " + this.type + ")");
+    	
     	
     	return (this.active);
     	

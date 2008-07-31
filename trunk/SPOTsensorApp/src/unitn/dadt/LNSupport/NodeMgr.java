@@ -100,57 +100,58 @@ public class NodeMgr {
 			
 			// collect parameters of the request
 			Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
-				System.out.println("reqAction = " + reqAction.toString());
+				//System.out.println("reqAction = " + reqAction.toString());
 			
 			DataView dataview = ((LNSupportRequestMsg)reqMsg).getDataView();					// defined DADT dataview
-				System.out.println("dataview = " + dataview.toString());
+				//System.out.println("dataview = " + dataview.toString());
 			
 			String DADTClassName = 	((LNSupportRequestMsg)reqMsg).getDADTClassName();					// requested DADT
-				System.out.println("DADTClassName = " + DADTClassName);
+				//System.out.println("DADTClassName = " + DADTClassName);
 			
 				
 			Vector reqADTInstances = dataview.filterMatchingInstances(registry.getLocalInstances(DADTClassName));		//ADT instances which satisfy the given DADT
 			
 			
 			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
-			
-				resultList.addElement((ResultData) reqAction.evaluate(e.nextElement())); 		// perform action over selected ADT instances
+			    resultList.addElement((ResultData) reqAction.evaluate(e.nextElement())); 		// perform action over selected ADT instances
 			}	
 
+			
+		    /*//temporary while LN is not available
+		    sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList); //, ln, nodeInfo);	// send reply message
+		    */			
+			
 			dgReply.reset();
-        	dgReply.setAddress(dg);
+			dgReply.setAddress(dg);
         	
-			if (resultList != null) {
-		        
-				System.out.println(resultList.size());
-		        
+			Enumeration en = resultList.elements();
+			   
+			if (en.hasMoreElements()) {
+				
 		        for (Enumeration e = resultList.elements(); e.hasMoreElements(); ){ 
+		        	
 		        	ResultData el = (ResultData) e.nextElement(); 
-
-		        	double data = el.getData();
-		        	String src = el.getSource();
-		        	
-		        	System.out.println("Sending: " + data + ", " + src);
-		        	
-		            dgReply.writeDouble(data);
-		            	
-		     		dgReply.writeUTF(src);
-		     		
-		     		//System.out.println(el.getData() + ", " + el.getSource());
-		        }
+		        	if (el != null){
+			        	double data = el.getData();
+			        	String src = el.getSource();
+	
+			        	System.out.println("Sending: " + data + ", " + src);
+			        	
+			            dgReply.writeDouble(data);		            	
+			            dgReply.writeUTF(src);
+		        	}
+		     	}
+		        //rCon.send(dgReply);
 		        
 			}
 			else {
 				System.out.println("Nothing to send");
 			}
 		
-	  		rCon.send(dgReply);
-		
-		    /*//temporary while LN is not available
-		    sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList); //, ln, nodeInfo);	// send reply message
-		    */
-    	} catch (IOException e) {
-    		e.printStackTrace();
+	  		
+
+    	} catch (Exception e) {
+    		System.out.println("processRequestMsg " + e.getMessage());
     	}
 	  	
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="DADT/internals/|DADT/IPMulticast/|DADT/LNSupport/|DADT/space/|polimi/ln/examples/|polimi/ln/examples/J2MEdevice/|polimi/ln/examples/swans/|polimi/ln/neighborhoodDefs/|polimi/ln/nodeAttributes/|polimi/ln/runtime/|polimi/ln/runtime/messages/|polimi/ln/runtime/platformDependent/|polimi/ln/runtime/swans/" kind="src" path="src"/>
+	<classpathentry excluding="DADT/internals/|DADT/IPMulticast/|DADT/LNSupport/|DADT/space/|polimi/ln/examples/J2MEdevice/|polimi/ln/examples/swans/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTsensorApp/lib/multihop_common.jar"/>
 	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTsensorApp/lib/squawk_device.jar"/>
 	<classpathentry kind="lib" path="/Users/galiyashka/Documents/MasterThesis/Code/LNDADTproject/SPOTsensorApp/lib/transducer_device.jar"/>

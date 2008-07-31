@@ -6,7 +6,6 @@ import java.util.ArrayList;
 */
 
 import unitn.dadt.internals.Property;
-
 /*
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.IntegerSimplePredicate;
