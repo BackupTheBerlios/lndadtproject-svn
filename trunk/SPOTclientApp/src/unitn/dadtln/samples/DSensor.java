@@ -135,7 +135,11 @@ public class DSensor {
 			return null;
 		}
 	}
-		
+	
+	public void resetAll(CompleteView targetSet)  {
+		//new IPMulticastView(targetSet).apply(null, "all", new DSensor_reset_Action(), null);
+	}
+	
 	/**
 	 * Appends sensor readings in the current list of data readings 
 	 * 
