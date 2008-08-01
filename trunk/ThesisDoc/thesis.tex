@@ -8,34 +8,77 @@
 \usepackage{indent}  
 \usepackage{listings} 
 \usepackage{rotating}
-
 \usepackage{color} 
 
-\title{Distributed Programming Abstraction for Java-based wireless sensor nodes
-(draft)}
+\title{Enabling Distributed Programming Abstractions for Real-World
+Wireless Sensor Networks (draft)}
+
 \author{Galiia Khasanova}
 
-% Adds a space between the text and the [B]ottom \hline
-\newcommand\B{\rule[-1.7ex]{0pt}{0pt}} 
-% Adds a space between the text and the [T]op \hline
-\newcommand\T{\rule{0pt}{3.1ex}}
- \abstract{
+\newcommand\B{\rule[-1.7ex]{0pt}{0pt}} % Adds a space between the text and the [B]ottom \hline
+\newcommand\T{\rule{0pt}{3.1ex}} % Adds a space between the text and the [T]op \hline
+
+
+\abstract{
  This thesis presents blah blah blah.
  }
 \begin{document} 
 
 \begin{preliminary}
 \maketitle 
-\begin{acknowledgements}
-Bla
-\end{acknowledgements}
+
 \standarddeclaration
+
+\begin{acknowledgements}
+	Bla
+\end{acknowledgements}
+
+\begin{acronyms}
+	\begin{center}
+	\begin{tabular}{| l |p{9cm}|}
+	\hline
+	ADT \T \B & Abstract Data Type \\
+	\hline
+	CLDC \T \B & Connected Limited Device Configuration \\
+	\hline
+	DADT \T \B & Distributed Abstract Data Type \\
+	\hline
+	Java ME \T \B & Java Micro Edition \\
+	\hline
+	JiST \T \B & Java in Simulation Time \\
+	\hline
+	JVM \T \B & Java Virtual Machine \\
+	\hline 
+	LN \T \B & Logical Neighborhoods \\
+	\hline
+	MAC \T \B & Media Access Control \\
+	\hline
+	OS \T \B & Operating System \\
+	\hline
+	RF \T \B & Radio Frequency \\
+	\hline
+	Sun SPOT \T \B & Sun Small Programable Object Technology \\
+	\hline
+	SWANS \T \B & Scalable Wireless Ad hoc Network Simulator \\
+	\hline
+	VM \T \B & Virtual Machine \\
+	\hline
+	WSN \T \B & Wireless Sensor Network \\
+	\hline
+	WSAN \T \B & Wireless Sensor and Actor Networks \\
+	\hline
+	\end{tabular}
+	\end{center}
+\end{acronyms}
+
+
 %\dedication{To Eric Cartman, Southpark, Colorado, USA. Only because my
 %boyfriend insists.}
 \tableofcontents
 \listoffigures
 \listoftables
-\end{preliminary}  
+\end{preliminary} 
+
 
 \include{chapIntro}
 \include{chapBackground}

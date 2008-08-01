@@ -1,140 +1,21 @@
 \chapter{Background}
 
-\textcolor{green}{Jo: quote is fine, but better Sth Like : Mark Weiser once
-wrote in his visionary paper from whenever [22]:}
 
-\begin{quote}
-\emph{``The most profound technologies are those that disappear. They weave
-themselves into the fabric of everyday life until they are indistinguishable
-from it''} 
-Mark Weiser \cite{Weiser_ComputerIn21stCentury}
-\end{quote}
-
-\textcolor{green}{this chapter should be extended/rewritten}
+\textcolor{green}{this chapter should be checked}
 
 This chapter presents a brief discussion of the concepts, algorithms, and 
-simulation and hardware platforms that were used
-during the course of this work. The chapter begins with a quick introduction to 
-wireless sensor nodes and Wireless Sensor Networks (WSNs). This is followed by a
-description of the protocol stack used in this work. The discussion
-then focuses on the advantage of introducing programming models, and their
-applications in WSN programming.
+hardware platforms that were used during the course of this work. This
+chapter begins with an introduction to programming abstractions, and contibues
+with discussion of their applications in WSN programming.
 
-This chapter then goes on to present the concepts underlying
-Distributed Abstract Data Types (DADTs), a short 
-description of existing DADT prototype \cite{migliavacca_DADT:2006}, and  an
-outline
-of the limitations of the current prototype. The next section presents 
-Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism that
-enables routing and scoping, and how LNs can be used to eliminate the
-limitations inherent in the DADT prototype. The chapter then concludes 
-with a description of the simulation environment \cite{barr_JIST:2005}, \cite{barr_SWANS} underlying the 
-implementation, and the hardware platform - Sun Small Programable Object
+This chapter then presents the concepts underlying
+Distributed Abstract Data Types (DADTs). This is followed by a presentation of
+the Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism that
+enables routing and scoping in WSNs. The chapter then concludes 
+with a description of the hardware platform - Sun Small Programable Object
 Technology (SPOT) \cite{simon_squawk:2006} - used during the course of this work
 to experimentally validate the simulated implementation in a
 real-world environment. 
-
-\section{Introduction to Wireless Sensor Networks}
-
-\textcolor{green}{some intro lines here}
-
-\subsection{Sensor Nodes} \label{subsec:sensornodes}
-
-Sensor nodes are multifunctional devices that are characterised by their low 
-cost, low power consumption, and small form factor. They can communicate across 
-short distances using Radio Frequency (RF) communication 
-\cite{SensorSurveyAkyildiz:2002}.
-
-\begin{figure}[h] \centering
-\label{Fig:SensorNodeArch}
-\includegraphics[width=\textwidth]{img/SensorNodeArch.eps} 
-\caption[Architecture of a sensor node] {Architecture of a sensor node (adapted
-from \cite{SensorSurveyAkyildiz:2002}). \emph{Note: The presence of components drawn using dotted lines is application dependent.}}
-\end{figure} 
-
-A typical sensor node is architected as follows 
-\cite{SensorSurveyAkyildiz:2002}. It consists of a sensing unit coupled with a
-tranceiver, a processing unit, and a power unit as shown in
-Figure \ref{Fig:SensorNodeArch}.
-
-The sensing unit is comprised of sensors and analog-to-digital converters. 
-The sensors may either be built into the nodes, or be pluggable 
-\cite{MANETWarrier:2007}. The processing unit usually comprises a 
-microcontroller/microprocessor that performs processing, and is associated with 
-a storage unit. The transceiver unit facilitates node-node communication using 
-a variety of techniques. The power 
-unit provides the energy required to run the sensor node, and can use chemical 
-batteries or power scavenging units such as solar cells. This can be seen in 
-Figure \ref{Fig:SensorNodeArch}.
-
-\textcolor{green}{the next paragraph needs a bit of reformulation. about the constraints
-I think your argumentation should go like size/weight -> battery  (that's the
-point where it really gets hard to make smaller). -> energy efficient processing, memory and so on
-and cost as an additional constraint }
-
-Sensor nodes have constraints on both their size and their cost. The former 
-constraint arises from the requirement that sensor nodes be easily deployable, 
-while the latter arises from the requirement for fault tolerance (which in turn 
-can be achieved only by being able to deploy cost-effectively large numbers of
-sensor nodes in the environment being monitored). These limit the memory capacity, processing 
-power, and the amount of energy available on a particular node.
-
-\subsection{Wireless Sensor Networks}
-\textcolor{green}{the first sentence of 2.1.2 is a bit well, almost German
-too long and self referring. actually, what you write about in that section, is more like routing in networks of sensor nodes
-maybe you should expand a bit}
-
-As mentioned in the previous section, sensor nodes are capable of communicating
-untethered with one another, and are hence capable of forming networks of nodes
-called a Wireless Sensor Network. WSNs are typically deployed randomly in an
-environment where phenomena are required to be monitored. A topology of a typical
-WSN has the following properties:
-\textcolor{green}{generally, from a precision and "scientific" aesthetics (contrary to business reports) it's best to either avoid bullet points or make them one word or a whole paragraph}
-
-\begin{itemize}
-\item A WSN is self-organising, given the random nature of the deployment.
-\item The WSN topology is subject to change. Sensor nodes should be capable of 
-dealing with changes of this kind in order to deal with hostile operating 
-conditions, the failure-prone nature of sensor nodes and the possibility of 
-redeployment of additional sensor nodes at any time during operation.
-\end{itemize}
-
-\section{WSN Protocol Stack} \label{sec:WSNProtStack}
-\textcolor{green}{you begin with "irrelevant" "ignoring". I think you should
-start positive. and mention later, that in practise you don't stack or plane
-things }
-
-The WSN protocol stack \cite{SensorSurveyAkyildiz:2002} is adapted from 
-\cite{ComputerNetworksTannenbaum:2003}. While ignoring the division of the 
-stack into planes as irrelevant to the understanding of the work presented 
-herein, one may view the protocol stack as consisting of the following layers
-(as can be seen from the Figure \ref{Fig:ProtStack}):
-
-\textcolor{green}{anyways, I'm not so happy with figure 2.2, gives me the ATM creeps hahaha}
-
-\begin{itemize}
-\item \emph{Physical Layer:} This layer is responsible for the transmission of 
-data over the physical transmission medium.
-\item \emph{Data Link Layer:} This layer deals with power-aware Medium Access 
-Control (MAC) protocols that minimise collisions and transceiver on-time.
-\item \emph{Network Layer:} This layer is primarily responsible for routing  
-data across the network.
-\item \emph{Transport Layer:} ??? - DOES LN USE IT?
-\item \emph{Application Layer:} This layer holds the application software.
-\end{itemize}
-
-The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see 
-Section \ref{LNDescription}) provides the functionality of the Data Link Layer 
-and the Network Layer (CHECK WITH LUCA). The concept of Distributed Abstract
-Data Types (see Section \ref{sec:DADT}) is restricted to the application layer,
-and the focus of this work thus lies primarily within the application layer.
-
-\begin{figure}
-\centering
-\label{Fig:ProtStack}
-\includegraphics[scale=0.65]{img/ProtStack.eps}
-\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
-\end{figure}
 
 \section {Programming models for WSNs}
 
@@ -142,14 +23,17 @@ and the focus of this work thus lies primarily within the application layer.
 
 Current WSN programming paradigms are predominantly node-centric, wherein
 applications are monolithic and tightly coupled with the protocols and algorithms
-used in the lower layers of the protocol stack. The primary problem with this
-approach is that most WSN applications are developed at an extremely low level of
-abstraction, which requires the programmer to be knowledgeable in the field of
+used in the lower layers of the protocol stack. 
+The main reason for this is the strict limit of resources on the sensor node, as
+it was discussed in the Setion \ref{subsec:sensornodes}.
+
+The primary problem with this approach is that most WSN applications are developed at an extremely low level of abstraction, 
+which requires the programmer to be knowledgeable in the field of
 embedded systems programming. This stunts the growth in the use of WSNs in the
 large space of application domains where it may be used
-\cite{mottola_middleware:2008}.
+\cite{mottola_middleware:2008}. 
 
- To increase the ubiquity of WSN
+To increase the ubiquity of WSN
 usage, it is essential that the protocols and mechanisms underlying WSN
 development recede to the background, and the application programmer is
 empowered to develop WSN applications at a higher level of abstraction. This
@@ -174,10 +58,10 @@ resources.
 
 \begin{figure}
 \centering
-\label{Fig:ProgrammingModels}
 \includegraphics[width=\textwidth]{img/ProgrammingAbstractions.eps} 
 \caption[Taxonomy of WSN programming models]{Taxonomy of WSN programming models (reproduced from
 \cite{hadim_middleware:2006})}
+\label{Fig:ProgrammingModels}
 \end{figure}
 
 Existing programming models for WSNs cover different areas and can serve 
@@ -193,14 +77,10 @@ examples of programming models that take this approach include Mate
 \item \emph{Programming abstractions}, where models deal with the global view 
 of the WSN application as a system, and represent it through the concepts and 
 abstractions of sensor nodes and sensor data. Some
-examples of programming models that take this approach include Kairos
-\cite{gummadi_Kairos:2005} and
-EnviroTrack \cite{Abdelzaher_EnviroTrack:2004} 
-\textcolor{green}{cite TinyOS. as it would make a nice point in programming
-abstractions }.
+examples of programming models that take this approach include TinyOS
+\cite{levis_tinyOS:2005}, Kairos \cite{gummadi_Kairos:2005} and
+EnviroTrack \cite{Abdelzaher_EnviroTrack:2004}.
 \end{itemize}
-
-
 
 The rest of this section focuses on the discussion of WSN programming
 abstractions, as it is this type of programming model that is relevant to the
@@ -210,14 +90,13 @@ work presented herein.
 
 \begin{figure}
 \centering
-\label{Fig:ProgrAbstrClassification}
 \includegraphics[scale=0.65]{img/ProgAbstr_Classification.eps}
 \caption{Classification of Programming Abstractions} 
+\label{Fig:ProgrAbstrClassification}
 \end{figure} 
 
-
-Programming abstractions may either be global (also referred to 
-as macroprogramming) or local \cite{hadim_middleware:2006}. 
+Programming abstractions may either be \emph{global} (also referred to 
+as macroprogramming) or \emph{local} \cite{hadim_middleware:2006}. 
 
 In the former case, the sensor network is programmed as a whole, and gets rid of
 the notion of individual nodes \cite{mottola_middleware:2008}. Examples of
@@ -265,12 +144,13 @@ Abstractions with \emph{multi-hop group} approach allow the
   programmer to exchange data among subsets of nodes in the WSN using
   multi-hop communication. These sets may either be
   \emph{connected}, wherein there always exists a path between any two nodes in
-  the set, or \emph{non-connected/disconnected}.
+  the set, or \emph{non-connected/disconnected}, where no such path
+  exists.
 
 \emph{System-wide} abstractions let the
   programmer use constructs that allow data exchange between any two nodes
   of the entire WSN. This may be seen as an extreme manifestation of the
-  \emph{Multi-hop group} approach mentioned above.
+  \emph{multi-hop group} approach mentioned above.
 
 \subsubsection{Addressing scheme}
 
@@ -328,24 +208,24 @@ computation span provided by a given abstraction can be:
   instruction can impact every node in the WSN.
 \end{itemize}
 
-To illustrate, if it were possible in a given WSN programming abstraction to
-send a \emph{Reset} message to all nodes with sensor readings greater than a
-specific threshold, the computation span enabled is of type \emph{Group}, or
-even possibly \emph{Global}.
+ As an illustration of the communication span of type \emph{Group}, or even
+ possibly \emph{Global}, could be an example of the WSN programming abstraction
+ that allows to send a message to all nodes in WSN, requiring to perform reset of the node, if
+ its sensor readings exceed a specific theshold.
 
 \subsection{Programming models on the WSN protocol stack}
 
 \begin{figure}
 \centering
-\label{Fig:ProtStack_ProgAbstr}
 \includegraphics[scale=0.61]{img/ProtStack_ProgAbstr.eps}
 \caption[Programming models on the WSN protocol stack]{Programming models on the WSN protocol
 stack (adapted from \cite{mottola_middleware:2008})}
+\label{Fig:ProtStack_ProgAbstr}
 \end{figure}
 
 WSN programming models are placed between the application layer and the
 transport layer in the
-protocol stack shown in Section \ref{sec:WSNProtStack}. As can be seen from
+protocol stack shown in Section \ref{sec:WSNProtStack}. As it can be seen from
 Figure \ref{Fig:ProtStack_ProgAbstr},
 fine-grained details are hidden from the application programmer's view. These
 include:
@@ -356,6 +236,9 @@ include:
   \item Lower-layers such as the MAC protocol used, and the physical means of
   communication such as RF communication.
 \end{itemize}
+
+\textcolor{blue}{The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see Section \ref{LNDescription}) provides the functionality of the Data Link Layer and the Network Layer. The concept of Distributed Abstract
+Data Types (see Section \ref{sec:DADT}) is restricted to the application layer, and the focus of this work thus lies primarily within the application layer.}
 
 
 \section {Distributed Abstract Data Types} \label{sec:DADT}
@@ -377,21 +260,21 @@ abstract view to the problem at hand. The model of a problem defines the
 affected data and the identified operations.
 
 This set of the data values and associated operations, independent of any
-specific implementation, is called an ADT \cite{NIST_website}. 
+specific implementation, is called an ADT \cite{NIST_website}. Generally
+speaking, use of ADTs allows to separate interfaces from the specific
+implementations.
 
-One of the simplest example of an abstract data type is a stack, which
-consists of the stacked data, and set of defined operations including \emph{push(Data), pop(),}
-and \emph{top()}.
-
-As is clear from the example, several different implementations of an ADT may
-be defined from the proposed specification.
+One of the simplest example of an ADT could be a stack, which
+consists of the stacked data, and set of defined operations that include
+\emph{push(data), pop(),} and \emph{top()}. It is intuitively clear that
+several different implementations of an ADT may be defined from the proposed specification.
 
 \subsubsection{ADTs in WSNs} \label{subsubsec:ADTsinWSN}
 
 A WSN, as defined earlier, consists of several sensor nodes. Each sensor node
 may include several sensors. By defining each sensor as
-an ADT instance, the concept of ADTs can be used in WSNs. The code snippet below
-shows the specification of a sensor ADT \ref{listing:ADTSpec}.   
+an ADT instance, the concept of ADTs can be used in WSNs. The code snippet
+below (see Listing \ref{listing:ADTSpec}) shows the specification of a sensor ADT .   
 
 \textcolor{green}{egarding the listings
 I think this should go to implementation
@@ -450,7 +333,7 @@ sensors - (a) a temperature sensor, that senses the atmospheric and in-device
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
-listing:ADTInstance ]
+listing:ADTInstances]
   // Temperature sensor ADT instance
   Sensor temperatureSensor = new Sensor(TEMPERATURE);
   ...
@@ -485,7 +368,7 @@ ADTs are defined and implemented in a similar manner, except for changes in
 their properties and operations (see Listing \ref{listing:SpaceADTSpec} for the
 specification of a Space ADT).  
  
- \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor Space ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label = listing:SpaceADTSpec ]
+ \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor Space ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label=listing:SpaceADTSpec]
 class SensorLoc extends Site {
   //space properties of the sensor 
 	location l;
@@ -507,8 +390,8 @@ class SensorLoc extends Site {
 As described in Section \ref{subsubsec:DataAndSpaceADTs}, a space ADT defines
 the computing environment that ``hosts'' the data ADT. A data ADT can be
 associated with the corresponding space ADT using a placement operation\footnote{the placement operation is
-performed explicitly by the application programmer.} as can be seen in Figure \ref{Fig:DADTs}.
-A Sensor data ADT
+performed explicitly by the application programmer.} as it can be seen in Figure
+\ref{Fig:DADTs}. A Sensor data ADT
 instance can be ``placed'' in a SensorLoc space ADT instance as shown in Listing
 \ref{listing:placement}. 
 
@@ -583,7 +466,7 @@ DSensor ds = new DSensor();
 double v = ds.average();
 \end{lstlisting}
 
-As can be seen from this listing, the distributed nature of the DADT can be
+As it can be seen from the listing, the distributed nature of the DADT can be
 abstracted from the application programmer.
 
 \subsubsection{Binding}
@@ -681,17 +564,17 @@ The data view \emph{dv} specifies that the scope of the DADT operation
 
 \begin{figure}
 \centering
-\label{Fig:DADTs}
 \includegraphics[scale=0.65]{img/DADTs.eps} 
 \caption[Data and space in the DADT model]{Data and space in the DADT model (reproduced from 
 \cite{migliavacca_DADT:2006})}
+\label{Fig:DADTs}
 \end{figure}
 
 \begin{figure}
 \centering
-\label{Fig:DADT_Views}
 \includegraphics[width=\textwidth]{img/DADT_Views.eps} 
 \caption[DADT views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
+\label{Fig:DADT_Views}
 \end{figure}
 
 \subsection {DADT prototype limitations}
@@ -727,13 +610,13 @@ programming effort, increased complexity, and less reliable code
 
 \begin{figure} 
 \centering
-\label{Fig:LN_physical_vs_logical}
 \includegraphics[scale=0.71]{img/LN_physical_vs_logical.eps} 
 \caption[Difference between physical and logical neighborhoods]{Representation 
 of logical and physical neighborhood of a given node. \emph{The dashed circle 
 represents the physical neighborhood, whereas the solid polygon represents (one 
 of) the node's logical neighborhood} (reproduced from
 \cite{mottola_LN:2006})}
+\label{Fig:LN_physical_vs_logical}
 \end{figure} 
 
 Mottola and Picco \cite{mottola_LN:2006} suggest the addressing of the
@@ -841,119 +724,7 @@ number of hops). The credit reservation system described above is used in that
 case, with the node dividing the reserved credits between following decreasing
 paths and exploring paths.
 
-\section {JiST/SWANS} \label{sec:jistswans}
-
-As the simulator used in this work is a discrete event simulator, this section 
-begins with a short description of discrete event simulators. 
-This is followed by a discussion on a particular discrete event simulator
-called JiST, and the SWANS network simulator built on top of JiST.
-
-\subsection{Discrete Event Simulator}
-
-A discrete event simulator allows for the simulated execution of a process (that
-may be either deterministic or stochastic), and consists of the following
-components \cite{Shankar_DiscreteEventSim}:
-
-\begin{itemize}
-  \item \emph{Simulation variables:} These variables keep track of simulation 
-  time, the list of events to be simulated, the (evolving) system state, and 
-  performance indicators.
-  \item \emph{Event handler:} The event handler schedules events for execution 
-  at specific points in simulation time (and unschedules them if necessary), 
-  and additionally updates the state variables and performance indicators.
-\end{itemize}
- 
-\subsection{Java In Simulation Time (JiST)} \label{subsec:jist}
-
-JiST \cite{barr_JIST:2005} is a discrete event simulator that is 
-efficient (compared to existing simulation systems), 
-transparent (simulations are automatically translated to run with the 
-simulation time semantics), and standard (simulations use a
-conventional programming language, i.e., Java).
-
-JiST simulation code is written in Java, and converted to run over the JiST 
-simulation kernel using a bytecode-level rewriter\footnote{N.B.: The bytecode 
-rewriter and the simulation kernel are both written in Java},  as can be seen 
-in Figure \ref{Fig:JiST_architecture}.
-
-The execution of a JiST program can be understood by considering example as
-shown in Listing \ref{listing:JiSTExample}
-
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Example JiST program (reproduced from \cite{barr_JIST:2005}, label = listing:JiSTExample]  
-import jist.runtime.JistAPI;  
-class hello implements JistAPI.Entity { 
-  public static void main(String[] args) { 
-    System.out.println("Simulation start"); 
-    hello h = new hello(); 
-    h.myEvent(); 
-  } 
-  public void myEvent() { 
-    JistAPI.sleep(1); 
-    myEvent(); 
-    System.out.println("hello world, " + JistAPI.getTime()); 
-  }} 
-\end{lstlisting}
-
-\begin{figure}
-\centering
-\label{Fig:JiST_architecture}
-\includegraphics[width=\textwidth]{img/JiST_architecture.eps} 
-\caption[The JiST System Architecture]{The JiST system architecture (reproduced from
-\cite{barr_JIST:2005})}
-\end{figure}  
- 
-This program is then compiled and executed in the JiST simulation
-kernel, using the following commands:
-
-  
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Execution of the
-program in the JiST, label = listing:JiST ]  
-javac hello.java
-java jist.runtime.Main hello
-\end{lstlisting}
-
-
-The simulation kernel is loaded upon execution of this command. This kernel
-installs into the JVM a class loader that performs the rewrite of the bytecode.
-The JistAPI functions used in the example code are used to perform the
-code transformations. The method call to myEvent is now scheduled and executed
-by the simulator in simulation time. Simulation time differs from ``actual''
-time in that the advancement of actual time is independent of application
-execution. 
- 
-\subsection{Scalable Wireless Ad hoc Network Simulator (SWANS)}
-SWANS is a wireless network simulator developed in order to provide efficient
-and scalable simulations without compromising on simulation detail \cite{barr_SWANS},
-and is built upon the JiST discrete event simulator described in Section \ref{subsec:jist}. 
-It is organised a a collection of independent, relatively simple, event driven
-components that are encapsulated as JiST entities. 
-  
-SWANS has the following capabilities \cite{barr_SWANS}:
-
-\begin{itemize}
-\item The use of
-interchangeable components enables the construction of a protocol stack for the
-network, and facilitates parallelism, and execution in a distributed environment.
-\item Can execute unmodified Java network applications on the
-simulated network (in simulation time), by virtue of its being built over
-JiST.Using a harness, the aforementioned Java code is automatically rewritten to
-run on the simulated network.  
-\end{itemize}
-   
-The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}. 
-
-\begin{figure}[ht]
-\centering
-\label{Fig:SWANS_architecture}
-\includegraphics[width=\textwidth]{img/SWANS_architecture.eps} 
-\caption[SWANS architecture]{SWANS architecture}
-\end{figure} 
-
 \section {Sun SPOTs} \label{sec:sunspots}
-
-\subsection{Motivation}
 
 Sensor nodes, as mentioned in Section \ref{subsec:sensornodes}, are
 characterised by limited resources, including memory.
@@ -1038,10 +809,10 @@ on-device VM.
   
 \begin{figure}
 \centering
-\label{Fig:SquawkVM_architecture}
 \includegraphics[scale=0.61]{img/Squawk_architecture.eps} 
 \caption[The Squawk Split VM Architecture]{The Squawk
 Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
+\label{Fig:SquawkVM_architecture}
 \end{figure}   
   
 
@@ -1068,9 +839,9 @@ Sun SPOT applications can be of two kinds \cite{sun_developer:2008}:
   
 \begin{figure}
 \centering
-\label{Fig:SunSPOTS_applications}
 \includegraphics[width=\textwidth]{img/SunSPOTS_applications.eps} 
 \caption[Types of Sun SPOT applications]{Types of Sun SPOT applications (adapted from
 \cite{sun_developer:2008})}
+\label{Fig:SunSPOTS_applications}
 \end{figure}   
   

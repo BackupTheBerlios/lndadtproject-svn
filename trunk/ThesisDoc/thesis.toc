@@ -1,0 +1,58 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Introduction to Wireless Sensor Networks}{1}
+\contentsline {subsection}{\numberline {1.1.1}Sensor Nodes}{2}
+\contentsline {subsection}{\numberline {1.1.2}Wireless Sensor Networks}{2}
+\contentsline {section}{\numberline {1.2}WSN Protocol Stack}{3}
+\contentsline {chapter}{\numberline {2}Background}{5}
+\contentsline {section}{\numberline {2.1}Programming models for WSNs}{5}
+\contentsline {subsection}{\numberline {2.1.1}Benefits of using programming models}{6}
+\contentsline {subsection}{\numberline {2.1.2}Taxonomy of WSN Programming Models}{6}
+\contentsline {subsection}{\numberline {2.1.3}Classification of WSN Programming Abstractions}{7}
+\contentsline {subsubsection}{\numberline {2.1.3.1}Communication span}{9}
+\contentsline {subsubsection}{\numberline {2.1.3.2}Addressing scheme}{9}
+\contentsline {subsubsection}{\numberline {2.1.3.3}Communication Abstraction}{10}
+\contentsline {subsubsection}{\numberline {2.1.3.4}Computation Span}{10}
+\contentsline {subsection}{\numberline {2.1.4}Programming models on the WSN protocol stack}{11}
+\contentsline {section}{\numberline {2.2}Distributed Abstract Data Types}{12}
+\contentsline {subsection}{\numberline {2.2.1}Abstract Data Types}{12}
+\contentsline {subsubsection}{\numberline {2.2.1.1}ADTs in WSNs}{13}
+\contentsline {subsubsection}{\numberline {2.2.1.2}Data and space ADTs}{15}
+\contentsline {subsubsection}{\numberline {2.2.1.3}Placement}{16}
+\contentsline {subsection}{\numberline {2.2.2}DADTs as an extension of ADTs}{16}
+\contentsline {subsubsection}{\numberline {2.2.2.1}DADT specification and instantiation}{17}
+\contentsline {subsubsection}{\numberline {2.2.2.2}Binding}{18}
+\contentsline {subsubsection}{\numberline {2.2.2.3}Operators and Actions}{18}
+\contentsline {subsubsection}{\numberline {2.2.2.4}Views}{19}
+\contentsline {subsection}{\numberline {2.2.3}DADT prototype limitations}{20}
+\contentsline {section}{\numberline {2.3}Logical neighbourhoods}{21}
+\contentsline {subsection}{\numberline {2.3.1}The LN Abstraction}{22}
+\contentsline {subsubsection}{\numberline {2.3.1.1}Specification}{22}
+\contentsline {subsubsection}{\numberline {2.3.1.2}Communication}{23}
+\contentsline {subsection}{\numberline {2.3.2}Routing}{24}
+\contentsline {subsubsection}{\numberline {2.3.2.1}Phase 1: Construction of a distributed state space}{24}
+\contentsline {subsubsection}{\numberline {2.3.2.2}Phase 2: Routing through Local Search}{24}
+\contentsline {section}{\numberline {2.4}Sun SPOTs}{25}
+\contentsline {subsection}{\numberline {2.4.1}The Sun SPOT hardware platform }{25}
+\contentsline {subsection}{\numberline {2.4.2}The Squawk JVM}{26}
+\contentsline {subsection}{\numberline {2.4.3}Split VM Architecture}{26}
+\contentsline {subsection}{\numberline {2.4.4}Sun SPOT applications}{27}
+\contentsline {chapter}{\numberline {3}Implementation}{29}
+\contentsline {section}{\numberline {3.1}Contribution}{29}
+\contentsline {section}{\numberline {3.2}The DADT/LN Architecture}{30}
+\contentsline {subsection}{\numberline {3.2.1}Overview}{30}
+\contentsline {subsection}{\numberline {3.2.2}Explanation of terms used}{32}
+\contentsline {subsection}{\numberline {3.2.3}Execution Details}{32}
+\contentsline {subsubsection}{\numberline {3.2.3.1}The DADT/LN prototype on the Controller}{32}
+\contentsline {subsubsection}{\numberline {3.2.3.2}The DADT/LN prototype on the sensor device}{34}
+\contentsline {section}{\numberline {3.3}The DADT/LN prototype in the simulated environment}{35}
+\contentsline {subsection}{\numberline {3.3.1}JiST/SWANS}{35}
+\contentsline {subsubsection}{\numberline {3.3.1.1}Discrete Event Simulator}{35}
+\contentsline {subsubsection}{\numberline {3.3.1.2}Java In Simulation Time (JiST)}{38}
+\contentsline {subsubsection}{\numberline {3.3.1.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{39}
+\contentsline {subsection}{\numberline {3.3.2}Simulation using JiST/SWANS}{40}
+\contentsline {section}{\numberline {3.4}The DADT/LN prototype on Sun SPOTs}{41}
+\contentsline {section}{\numberline {3.5}Challenges}{41}
+\contentsline {section}{\numberline {3.6}Future Work}{41}
+\contentsline {section}{\numberline {3.7}Evaluation}{42}
+\contentsline {section}{\numberline {3.8}Analysis of Results}{43}
+\contentsline {chapter}{Bibliography}{44}

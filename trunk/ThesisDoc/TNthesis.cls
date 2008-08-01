@@ -475,9 +475,16 @@ Processing}}
    {\renewcommand{\abstractname}{Acknowledgements}\begin{mainabs}}
    {\end{mainabs}\renewcommand{\abstractname}{Abstract}}   
 
+%%extra - definitions and abbreviations
+\newenvironment{acronyms}
+   {\renewcommand{\abstractname}{Definitions and Acronyms}\begin{mainabs}}
+   {\end{mainabs}\renewcommand{\abstractname}{Abstract}} 
+
 \newenvironment{declaration}
    {\renewcommand{\abstractname}{Declaration}\begin{mainabs}}
    {\end{mainabs}\renewcommand{\abstractname}{Abstract}}   
+
+
 
 \newcommand{\standarddeclaration}{
    \begin{declaration}

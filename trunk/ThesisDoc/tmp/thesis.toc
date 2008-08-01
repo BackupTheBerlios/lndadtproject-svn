@@ -4,57 +4,56 @@
 \contentsline {section}{\numberline {2.1}Introduction to Wireless Sensor Networks}{4}
 \contentsline {subsection}{\numberline {2.1.1}Sensor Nodes}{4}
 \contentsline {subsection}{\numberline {2.1.2}Wireless Sensor Networks}{5}
-\contentsline {section}{\numberline {2.2}WSN Protocol Stack}{5}
+\contentsline {section}{\numberline {2.2}WSN Protocol Stack}{6}
 \contentsline {section}{\numberline {2.3}Programming models for WSNs}{7}
-\contentsline {subsection}{\numberline {2.3.1}Motivation}{7}
-\contentsline {subsection}{\numberline {2.3.2}Benefits of using programming models}{7}
-\contentsline {subsection}{\numberline {2.3.3}Taxonomy of WSN Programming Models}{8}
-\contentsline {subsection}{\numberline {2.3.4}Classification of WSN Programming Abstractions}{9}
-\contentsline {subsubsection}{\numberline {2.3.4.1}Communication span}{10}
-\contentsline {subsubsection}{\numberline {2.3.4.2}Addressing scheme}{10}
-\contentsline {subsubsection}{\numberline {2.3.4.3}Communication Abstraction}{11}
-\contentsline {subsubsection}{\numberline {2.3.4.4}Computation Span}{11}
-\contentsline {subsection}{\numberline {2.3.5}Programming models on the WSN protocol stack}{12}
+\contentsline {subsection}{\numberline {2.3.1}Benefits of using programming models}{8}
+\contentsline {subsection}{\numberline {2.3.2}Taxonomy of WSN Programming Models}{8}
+\contentsline {subsection}{\numberline {2.3.3}Classification of WSN Programming Abstractions}{9}
+\contentsline {subsubsection}{\numberline {2.3.3.1}Communication span}{10}
+\contentsline {subsubsection}{\numberline {2.3.3.2}Addressing scheme}{11}
+\contentsline {subsubsection}{\numberline {2.3.3.3}Communication Abstraction}{12}
+\contentsline {subsubsection}{\numberline {2.3.3.4}Computation Span}{12}
+\contentsline {subsection}{\numberline {2.3.4}Programming models on the WSN protocol stack}{13}
 \contentsline {section}{\numberline {2.4}Distributed Abstract Data Types}{13}
-\contentsline {subsection}{\numberline {2.4.1}Abstract Data Types}{13}
-\contentsline {subsubsection}{\numberline {2.4.1.1}ADTs in WSNs}{13}
-\contentsline {subsubsection}{\numberline {2.4.1.2}Data and space ADTs}{15}
-\contentsline {subsubsection}{\numberline {2.4.1.3}Placement}{16}
-\contentsline {subsection}{\numberline {2.4.2}DADTs as an extension of ADTs}{17}
-\contentsline {subsubsection}{\numberline {2.4.2.1}DADT specification and instantiation}{17}
-\contentsline {subsubsection}{\numberline {2.4.2.2}Binding}{18}
-\contentsline {subsubsection}{\numberline {2.4.2.3}Operators and Actions}{18}
-\contentsline {subsubsection}{\numberline {2.4.2.4}Views}{19}
-\contentsline {subsection}{\numberline {2.4.3}DADT prototype limitations}{20}
-\contentsline {section}{\numberline {2.5}Logical neighbourhoods}{20}
-\contentsline {subsection}{\numberline {2.5.1}The LN Abstraction}{23}
-\contentsline {subsubsection}{\numberline {2.5.1.1}Specification}{23}
-\contentsline {subsubsection}{\numberline {2.5.1.2}Communication}{24}
-\contentsline {subsection}{\numberline {2.5.2}Routing}{24}
-\contentsline {subsubsection}{\numberline {2.5.2.1}Phase 1: Construction of a distributed state space}{24}
-\contentsline {subsubsection}{\numberline {2.5.2.2}Phase 2: Routing through Local Search}{25}
-\contentsline {section}{\numberline {2.6}JiST/SWANS}{25}
-\contentsline {subsection}{\numberline {2.6.1}Discrete Event Simulator}{25}
-\contentsline {subsection}{\numberline {2.6.2}Java In Simulation Time (JiST)}{26}
-\contentsline {subsection}{\numberline {2.6.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{27}
-\contentsline {section}{\numberline {2.7}Sun SPOTs}{28}
-\contentsline {subsection}{\numberline {2.7.1}Motivation}{28}
-\contentsline {subsection}{\numberline {2.7.2}The Sun SPOT hardware platform }{29}
-\contentsline {subsection}{\numberline {2.7.3}The Squawk JVM}{29}
-\contentsline {subsection}{\numberline {2.7.4}Split VM Architecture}{30}
-\contentsline {subsection}{\numberline {2.7.5}Sun SPOT applications}{31}
-\contentsline {chapter}{\numberline {3}Implementation}{33}
-\contentsline {section}{\numberline {3.1}Contribution}{33}
-\contentsline {section}{\numberline {3.2}The DADT/LN Architecture}{34}
-\contentsline {subsection}{\numberline {3.2.1}Overview}{34}
-\contentsline {subsection}{\numberline {3.2.2}Explanation of terms used}{35}
-\contentsline {subsection}{\numberline {3.2.3}Execution Details}{36}
-\contentsline {subsubsection}{\numberline {3.2.3.1}The DADT/LN prototype on the Controller}{36}
-\contentsline {subsubsection}{\numberline {3.2.3.2}The DADT/LN prototype on the sensor device}{37}
-\contentsline {section}{\numberline {3.3}Simulation using JiST/SWANS}{39}
-\contentsline {section}{\numberline {3.4}The DADT/LN prototype on Sun SPOTs}{39}
-\contentsline {section}{\numberline {3.5}Challenges}{42}
-\contentsline {section}{\numberline {3.6}Future Work}{42}
-\contentsline {section}{\numberline {3.7}Evaluation}{42}
-\contentsline {section}{\numberline {3.8}Analysis of Results}{43}
-\contentsline {chapter}{Bibliography}{44}
+\contentsline {subsection}{\numberline {2.4.1}Abstract Data Types}{14}
+\contentsline {subsubsection}{\numberline {2.4.1.1}ADTs in WSNs}{14}
+\contentsline {subsubsection}{\numberline {2.4.1.2}Data and space ADTs}{16}
+\contentsline {subsubsection}{\numberline {2.4.1.3}Placement}{17}
+\contentsline {subsection}{\numberline {2.4.2}DADTs as an extension of ADTs}{18}
+\contentsline {subsubsection}{\numberline {2.4.2.1}DADT specification and instantiation}{18}
+\contentsline {subsubsection}{\numberline {2.4.2.2}Binding}{19}
+\contentsline {subsubsection}{\numberline {2.4.2.3}Operators and Actions}{19}
+\contentsline {subsubsection}{\numberline {2.4.2.4}Views}{20}
+\contentsline {subsection}{\numberline {2.4.3}DADT prototype limitations}{21}
+\contentsline {section}{\numberline {2.5}Logical neighbourhoods}{21}
+\contentsline {subsection}{\numberline {2.5.1}The LN Abstraction}{24}
+\contentsline {subsubsection}{\numberline {2.5.1.1}Specification}{24}
+\contentsline {subsubsection}{\numberline {2.5.1.2}Communication}{25}
+\contentsline {subsection}{\numberline {2.5.2}Routing}{25}
+\contentsline {subsubsection}{\numberline {2.5.2.1}Phase 1: Construction of a distributed state space}{25}
+\contentsline {subsubsection}{\numberline {2.5.2.2}Phase 2: Routing through Local Search}{26}
+\contentsline {section}{\numberline {2.6}JiST/SWANS}{26}
+\contentsline {subsection}{\numberline {2.6.1}Discrete Event Simulator}{26}
+\contentsline {subsection}{\numberline {2.6.2}Java In Simulation Time (JiST)}{27}
+\contentsline {subsection}{\numberline {2.6.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{28}
+\contentsline {section}{\numberline {2.7}Sun SPOTs}{29}
+\contentsline {subsection}{\numberline {2.7.1}Motivation}{29}
+\contentsline {subsection}{\numberline {2.7.2}The Sun SPOT hardware platform }{30}
+\contentsline {subsection}{\numberline {2.7.3}The Squawk JVM}{30}
+\contentsline {subsection}{\numberline {2.7.4}Split VM Architecture}{31}
+\contentsline {subsection}{\numberline {2.7.5}Sun SPOT applications}{32}
+\contentsline {chapter}{\numberline {3}Implementation}{34}
+\contentsline {section}{\numberline {3.1}Contribution}{34}
+\contentsline {section}{\numberline {3.2}The DADT/LN Architecture}{35}
+\contentsline {subsection}{\numberline {3.2.1}Overview}{35}
+\contentsline {subsection}{\numberline {3.2.2}Explanation of terms used}{36}
+\contentsline {subsection}{\numberline {3.2.3}Execution Details}{37}
+\contentsline {subsubsection}{\numberline {3.2.3.1}The DADT/LN prototype on the Controller}{37}
+\contentsline {subsubsection}{\numberline {3.2.3.2}The DADT/LN prototype on the sensor device}{38}
+\contentsline {section}{\numberline {3.3}Simulation using JiST/SWANS}{40}
+\contentsline {section}{\numberline {3.4}The DADT/LN prototype on Sun SPOTs}{40}
+\contentsline {section}{\numberline {3.5}Challenges}{43}
+\contentsline {section}{\numberline {3.6}Future Work}{43}
+\contentsline {section}{\numberline {3.7}Evaluation}{43}
+\contentsline {section}{\numberline {3.8}Analysis of Results}{44}
+\contentsline {chapter}{Bibliography}{45}

@@ -1,19 +1,19 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Architecture of a sensor node}}{4}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces WSN protocol stack}}{6}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces WSN protocol stack}}{7}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Taxonomy of WSN programming models}}{8}
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Classification of Programming Abstractions}}{9}
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Programming models on the WSN protocol stack}}{12}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Data and space in the DADT model}}{21}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces DADT views}}{21}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Difference between physical and logical neighborhoods}}{22}
-\contentsline {figure}{\numberline {2.9}{\ignorespaces The JiST System Architecture}}{27}
-\contentsline {figure}{\numberline {2.10}{\ignorespaces SWANS architecture}}{28}
-\contentsline {figure}{\numberline {2.11}{\ignorespaces The Squawk Split VM Architecture}}{31}
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Types of Sun SPOT applications}}{32}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Programming models on the WSN protocol stack}}{13}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Data and space in the DADT model}}{22}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces DADT views}}{22}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Difference between physical and logical neighborhoods}}{23}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces The JiST System Architecture}}{28}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces SWANS architecture}}{29}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces The Squawk Split VM Architecture}}{32}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Types of Sun SPOT applications}}{33}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces DADT/LN application workflow}}{34}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces WSN in DADT/LN prototype }}{35}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Operation of the DADT/LN prototype on Controller}}{40}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Operation of the DADT/LN prototype on sensor device,angle=90}}{41}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces DADT/LN application workflow}}{35}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces WSN in DADT/LN prototype }}{36}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Operation of the DADT/LN prototype on Controller}}{41}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Operation of the DADT/LN prototype on sensor device,angle=90}}{42}

@@ -1,5 +1,22 @@
 \chapter{Implementation} \label{chap:Implementation}
 
+%intro words
+
+This chapter then presents the concepts underlying Distributed Abstract Data
+Types (DADTs), a short description of existing DADT prototype
+\cite{migliavacca_DADT:2006}, and an outline of the limitations of the current
+prototype.
+
+, and how LNs can be used to eliminate the
+limitations inherent in the DADT prototype
+
+The chapter then concludes 
+with a description of the simulation environment \cite{barr_JIST:2005}, \cite{barr_SWANS} underlying the 
+implementation, and the hardware platform - Sun Small Programable Object
+Technology (SPOT) \cite{simon_squawk:2006} - used during the course of this work
+to experimentally validate the simulated implementation in a
+real-world environment. 
+
 
 \section{Contribution}
 
@@ -31,10 +48,10 @@ This work makes the following contributions:
 \subsection{Overview}
 \begin{figure}
 \centering
-\label{Fig:DADTLN_architecture}
 \includegraphics[width=\textwidth]{img/DADTLN_architecture.eps} 
 \caption[DADT/LN application workflow]{Workflow for development of an application that uses
 the DADT/LN prototype}
+\label{Fig:DADTLN_architecture}
 \end{figure} 
 The overview of the workflow involved in using DADTs to enable WSN application
 programming is as shown in Figure \ref{Fig:DADTLN_architecture}. The user writes
@@ -59,10 +76,9 @@ the aforementioned simulator
 
 \begin{figure}
 \centering
-\label{Fig:DADTLN_glossary}
 \includegraphics[scale=0.55]{img/DADTLN_glossary.eps} 
 \caption[WSN in DADT/LN prototype]{Schematic Representation of the WSN as abstracted in the DADT/LN prototype}
-
+\label{Fig:DADTLN_glossary}
 \end{figure} 
 
 This section explains the terms used in the DADT/LN prototype developed as part
@@ -196,26 +212,137 @@ performed on-device (see Section
 sensor ADT instance that fits into the DADT Data view. 
 
 If the application layer requires that a reply be sent, the LN implementation in
-the lower layer of the protocol stack is used as can be seen on the bottom right
-section of Figure \ref{Fig:SeqDiagram_Sensornode}.
+the lower layer of the protocol stack is used as it can be seen on the bottom
+right section of Figure \ref{Fig:SeqDiagram_Sensornode}.
 
 \begin{sidewaysfigure}[htbp]
 \centering
-\label{Fig:SeqDiagram_PCnode}
 \includegraphics[width=\textwidth]{img/SeqDiagram_PCnode.eps}
 \caption[Operation of the DADT/LN prototype on Controller]{Operation of the DADT/LN prototype on Controller}
+\label{Fig:SeqDiagram_PCnode}
 \end{sidewaysfigure}
 
 
 \begin{sidewaysfigure}[htbp]
 \centering
-\label{Fig:SeqDiagram_Sensornode}
 \includegraphics[width=\textwidth]{img/SeqDiagram_Sensornode.eps}
 \caption[Operation of the DADT/LN prototype on sensor device]{Operation of the DADT/LN prototype on sensor device}
+\label{Fig:SeqDiagram_PCnode}
 \end{sidewaysfigure}
 
+\section{The DADT/LN prototype in the simulated environment}
+\subsection {JiST/SWANS} \label{sec:jistswans}
 
-\section{Simulation using JiST/SWANS}
+As the simulator used in this work is a discrete event simulator, this section 
+begins with a short description of discrete event simulators. 
+This is followed by a discussion on a particular discrete event simulator
+called JiST, and the SWANS network simulator built on top of JiST.
+
+\subsubsection{Discrete Event Simulator}
+
+A discrete event simulator allows for the simulated execution of a process (that
+may be either deterministic or stochastic), and consists of the following
+components \cite{Shankar_DiscreteEventSim}:
+
+\begin{itemize}
+  \item \emph{Simulation variables:} These variables keep track of simulation 
+  time, the list of events to be simulated, the (evolving) system state, and 
+  performance indicators.
+  \item \emph{Event handler:} The event handler schedules events for execution 
+  at specific points in simulation time (and unschedules them if necessary), 
+  and additionally updates the state variables and performance indicators.
+\end{itemize}
+ 
+\subsubsection{Java In Simulation Time (JiST)} \label{subsec:jist}
+
+JiST \cite{barr_JIST:2005} is a discrete event simulator that is 
+efficient (compared to existing simulation systems), 
+transparent (simulations are automatically translated to run with the 
+simulation time semantics), and standard (simulations use a
+conventional programming language, i.e., Java).
+
+JiST simulation code is written in Java, and converted to run over the JiST 
+simulation kernel using a bytecode-level rewriter\footnote{N.B.: The bytecode 
+rewriter and the simulation kernel are both written in Java},  as it can be
+seen in Figure \ref{Fig:JiST_architecture}.
+
+The execution of a JiST program can be understood by considering example as
+shown in Listing \ref{listing:JiSTExample}
+
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Example JiST program (reproduced from \cite{barr_JIST:2005}, label = listing:JiSTExample]  
+import jist.runtime.JistAPI;  
+class hello implements JistAPI.Entity { 
+  public static void main(String[] args) { 
+    System.out.println("Simulation start"); 
+    hello h = new hello(); 
+    h.myEvent(); 
+  } 
+  public void myEvent() { 
+    JistAPI.sleep(1); 
+    myEvent(); 
+    System.out.println("hello world, " + JistAPI.getTime()); 
+  }} 
+\end{lstlisting}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{img/JiST_architecture.eps} 
+\caption[The JiST System Architecture]{The JiST system architecture (reproduced from
+\cite{barr_JIST:2005})}
+\label{Fig:JiST_architecture}
+\end{figure}  
+ 
+This program is then compiled and executed in the JiST simulation
+kernel, using the following commands:
+
+  
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Execution of the
+program in the JiST, label = listing:JiST ]  
+javac hello.java
+java jist.runtime.Main hello
+\end{lstlisting}
+
+
+The simulation kernel is loaded upon execution of this command. This kernel
+installs into the JVM a class loader that performs the rewrite of the bytecode.
+The JistAPI functions used in the example code are used to perform the
+code transformations. The method call to myEvent is now scheduled and executed
+by the simulator in simulation time. Simulation time differs from ``actual''
+time in that the advancement of actual time is independent of application
+execution. 
+ 
+\subsubsection{Scalable Wireless Ad hoc Network Simulator (SWANS)}
+SWANS is a wireless network simulator developed in order to provide efficient
+and scalable simulations without compromising on simulation detail \cite{barr_SWANS},
+and is built upon the JiST discrete event simulator described in Section \ref{subsec:jist}. 
+It is organised a a collection of independent, relatively simple, event driven
+components that are encapsulated as JiST entities. 
+  
+SWANS has the following capabilities \cite{barr_SWANS}:
+
+\begin{itemize}
+\item The use of
+interchangeable components enables the construction of a protocol stack for the
+network, and facilitates parallelism, and execution in a distributed environment.
+\item Can execute unmodified Java network applications on the
+simulated network (in simulation time), by virtue of its being built over
+JiST.Using a harness, the aforementioned Java code is automatically rewritten to
+run on the simulated network.  
+\end{itemize}
+   
+The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{img/SWANS_architecture.eps} 
+\caption[SWANS architecture]{SWANS architecture}
+\label{Fig:SWANS_architecture}
+\end{figure} 
+
+
+\subsection{Simulation using JiST/SWANS}
 
 The DADT/LN prototype was tested on the SWANS WSN simulator, that is buit upon
 the JiST discrete event simulator (see Section \ref{subsec:jist}). 
