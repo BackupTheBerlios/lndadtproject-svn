@@ -14,7 +14,7 @@ allowed use of DADT concepts in the real-world WSNs. This is folowed by a presen
 that were used. The chapter concludes with discussion of prototype's performance
 evaluation and points out possible extensions of the prototype.
 
-\section {The DADT prototype}
+\section {The DADT Prototype}
 
 Use of DADTs can be applied to the context-aware distributed applications, as
 it was discussed in the Section \ref{sec:DADT}. This section provides reader with
@@ -216,25 +216,30 @@ contains only sensor nodes with temperature sensors for which evaluation of
 the property \emph{isActive} returns \emph{true}. The data view definitions are
 used to restrict  the scope of the DADT operations.
 
-In a similar way, space views can be defined. 
+
+\subsection{Limitations of DADT Prototype}
+
+\cite{migliavacca_DADT:2006} presented a prototype that enabled the use of DADTs
+to facilitate distributed application programming. While this approach is
+clearly applicable to WSNs, the prototype itself did not support WSN
+abstractions, and there were several limitations to it:
+
+\begin{itemize}
+  \item The lack of a routing mechanism.
+  \item Limitations in portability to real WSN nodes.
+\end{itemize}
+
+
 
 \section{The DADT/LN Prototype}
 
 \subsection{Motivation}
 
-The prototype presented in \cite{migliavacca_DADT:2006} was developed as a proof of 
-DADT concept. It showed the use of DADTs to facilitate development of the distributed
-applications. 
-
-This approach is clearly applicable to the WSNs application development, but
-the prototype presented in \cite{migliavacca_DADT:2006} did not support WSN
-abstractions and has several critical limitations that prevent its use in WSN
-simulators or real nodes. 
-
-Among those is the lack of support for communication on the lower levels of
-protocol stack, i.e. rounting mechanisms, instead it uses IP milticast
-techniques for simulation of those. Additionaly, there exist limitations of
-portability of the code to real WSN nodes.
+The prototype presented in \cite{migliavacca_DADT:2006} showed that DADT approach
+is clearly applicable to the WSNs application development, but the prototype
+presented in \cite{migliavacca_DADT:2006} did not support WSN abstractions and
+has several critical limitations that prevent its use in WSN simulators or real
+nodes.
 
 This work makes the following contributions:
 
@@ -546,7 +551,6 @@ The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}.
 \caption[SWANS architecture]{SWANS architecture}
 \label{Fig:SWANS_architecture}
 \end{figure} 
-
 
 \subsubsection{Simulation using JiST/SWANS}
 
