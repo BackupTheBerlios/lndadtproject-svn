@@ -8,27 +8,25 @@ hardware platforms that were used during the course of this work. This
 chapter begins with an introduction to programming abstractions, and contibues
 with discussion of their applications in WSN programming.
 
-This chapter then presents the concepts underlying
+This chapter further presents the concepts underlying
 Distributed Abstract Data Types (DADTs). This is followed by a presentation of
 the Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism that
 enables routing and scoping in WSNs. The chapter then concludes 
 with a description of the hardware platform - Sun Small Programable Object
 Technology (SPOT) \cite{simon_squawk:2006} - used during the course of this work
-to experimentally validate the simulated implementation in a
+to experimentally validate the implemented prototype in a
 real-world environment. 
 
 \section {Programming models for WSNs}
 
-\textcolor{green}{regarding the node centricity...you might want to mention, that this was a requirement because of the resource constraints  but that nodes  are 1) a bit more performant now, 2) the abstraction techniques a getting better in projecting high level descriptions on the hardware. and that this second point is, where you focus more then }
-
 Current WSN programming paradigms are predominantly node-centric, wherein
 applications are monolithic and tightly coupled with the protocols and algorithms
 used in the lower layers of the protocol stack. 
-The main reason for this is the strict limit of resources on the sensor node, as
-it was discussed in the Setion \ref{subsec:sensornodes}.
+The main reason for this is a strict limit of resources on the sensor node, as
+it was discussed in the Section \ref{subsec:sensornodes}.
 
-The primary problem with this approach is that most WSN applications are developed at an extremely low level of abstraction, 
-which requires the programmer to be knowledgeable in the field of
+The primary problem with a node-centric approach is that most WSN applications
+are developed at an extremely low level of abstraction, which requires the programmer to be knowledgeable in the field of
 embedded systems programming. This stunts the growth in the use of WSNs in the
 large space of application domains where it may be used
 \cite{mottola_middleware:2008}. 
@@ -40,8 +38,6 @@ empowered to develop WSN applications at a higher level of abstraction. This
 can be achieved using programming models which engineer a shift in focus
 towards the system and its results, as opposed to sensor node functionality
 itself \cite{mottola_middleware:2008}. 
-
-\subsection{Benefits of using programming models}
 
 According to Yu et al \cite{yu_issuesMiddleware:2004}, the use of such
 programming models is beneficial for WSN applications because:
@@ -159,7 +155,6 @@ identified. Typically, there are two kinds of addressing schemes used:
 
 \begin{itemize}
   \item Physical addressing
-  \item \textcolor{green}{Data-centric addressing}
   \item Logical addressing
 \end{itemize}
 
@@ -167,14 +162,12 @@ In \emph{physical addressing} schemes nodes are identified using unique
   identifiers. The same address always identifies the same node (or nodes, if
   duplicate  identifiers exist) at any time during the execution of the
   application.
-\textcolor{green}{data-centric addressing you don'T talk to specific nodes at all I mean it is sort of logical addresses} 
-
-\textcolor{green}{the logical addresses can combine group addresses and geographic addresses but also independent (like dht like) data addresses }
 
 When \emph{logical addressing} mechanism is used, nodes are identified on the
-basis of predicates specified by the application programmer. Therefore, the same
-  address (i.e., set of predicates) can identify different node(s) at different
-  times.
+basis of application-level properties specified by the application
+programmer. Therefore, the same address (i.e., set of
+application-level predicates) can identify different node(s) at different
+times.
 
 \subsubsection{Communication Abstraction}
 
@@ -202,8 +195,7 @@ computation span provided by a given abstraction can be:
   \item \emph{Node}, when the effect of any instruction is restricted to a
   single node.
   \item \emph{Group}, where the programmer is provided with constructs that
-  could affect a subset of nodes. \textcolor{green}{node is also a special case
-  of group ;)}
+  could affect a subset of nodes. 
   \item \emph{Global} present an extreme case of previous type, a single
   instruction can impact every node in the WSN.
 \end{itemize}
@@ -237,332 +229,83 @@ include:
   communication such as RF communication.
 \end{itemize}
 
-\textcolor{blue}{The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see Section \ref{LNDescription}) provides the functionality of the Data Link Layer and the Network Layer. The concept of Distributed Abstract
-Data Types (see Section \ref{sec:DADT}) is restricted to the application layer, and the focus of this work thus lies primarily within the application layer.}
-
-
 \section {Distributed Abstract Data Types} \label{sec:DADT}
 
 Distributed Abstract Data Types is a new programming language construct used to
-support distributed and context-aware applications. \cite{migliavacca_DADT:2006}
-introduces the concept of DADTs, and presents a prototype that implements it.
-The rest of this section discusses the concepts and the background, and
-provides the reader with an understanding of the prototype \footnote{Every code snippet provided as an example is a code snippet based on
-the DADT prototype described in \cite{migliavacca_DADT:2006}}.
+support distributed and context-aware applications. The concept of DADTs was
+introduced in \cite{migliavacca_DADT:2006}. The rest of this section discusses the concepts and provides the reader with the relevant background\footnote{Code snippets provided as examples are
+were described in \cite{migliavacca_DADT:2006}}.
 
 \subsection{Abstract Data Types}
 
-\textcolor{green}{you seem to have been either more sleepy, more stressed or otherwise coming to this part...
-the sentences and paragraphs become shorter}
+An Abstract Data Type (ADT) is the depiction of a model that
+presents an abstract view to the problem at hand. This model of a problem
+usually defines the affected data and the identified operations associated with
+those.
 
-An Abstract Data Type (ADT) is the representation of a model that presents an
-abstract view to the problem at hand. The model of a problem defines the
-affected data and the identified operations.
+The set of the data values and associated operations, independent of any
+specific implementation, is called an ADT \cite{NIST_website}. From the the
+application developer's point of view, use of ADTs allows to separate
+interfaces from the specific implementations.
 
-This set of the data values and associated operations, independent of any
-specific implementation, is called an ADT \cite{NIST_website}. Generally
-speaking, use of ADTs allows to separate interfaces from the specific
-implementations.
-
-One of the simplest example of an ADT could be a stack, which
-consists of the stacked data, and set of defined operations that include
-\emph{push(data), pop(),} and \emph{top()}. It is intuitively clear that
+One can consider \emph{stack} as a simple example of an ADT \cite{guttag_ADTs:1977}. It
+can be represented through the stacked data, and a set of defined
+operations that include \emph{push(data), pop(),} and \emph{top()}. It is intuitively clear that
 several different implementations of an ADT may be defined from the proposed specification.
 
-\subsubsection{ADTs in WSNs} \label{subsubsec:ADTsinWSN}
+The concept of ADTs has been already sucessfully used in the different areas of science. 
+The rest of this section focuses on the application and extension of ADT
+concept to be used in WSNs.
 
-A WSN, as defined earlier, consists of several sensor nodes. Each sensor node
+\subsection{ADTs in WSNs} \label{subsubsec:ADTsinWSN}
+
+A WSN, as defined earlier, consists of number of sensor nodes. Each sensor node
 may include several sensors. By defining each sensor as
-an ADT instance, the concept of ADTs can be used in WSNs. The code snippet
-below (see Listing \ref{listing:ADTSpec}) shows the specification of a sensor ADT .   
-
-\textcolor{green}{egarding the listings
-I think this should go to implementation
-or at least some of it
-you should focus more on the concepts in the background chapter. point is, the
-background chapter is not supposed to be ahowto for programming sth already}
-  
-\lstset{language = Java}  
- \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label = listing:ADTSpec ]
-class Sensor {
-  //data properties of the sensor 
-    int sensorType;
-    double[] sensorReading;
-  //operations that can be performed on the sensor  
-	public Sensor(type){
-	  type = sensorType;
-	  if (type == TEMPERATURE){
-		sensorReading = new double[2];
-	  }	else if (type == HUMIDITY){
-		sensorReading = new double[1];
-	  }
-	}
-    public double read(){ //read the sensor value(s).
-	  ...
-	} 
-	public void reset(){ //reset the sensor
-	  ...
-	}
-}
-\end{lstlisting}
-
-This specification declares that a Sensor ADT instance should provide the
-following properties:
-\begin{itemize}
-\item An integer value to define the sensor type.   
-\item An array of double values that holds the sensor reading. Depending on the
-type of the sensor, the number of values read varies.
-\end{itemize}
-
-and the following operations:
-\begin{itemize}
-  \item A \emph{read} operation, that reads the sensor readings.
-  \item A \emph{reset} operation, that resets it.
-\end{itemize}
-
-It is possible to define multiple such instances of this specification (for
-example, the specification may be defined as a Java interface that has to
-be implemented in order to create an ADT instance).
-
-The ADT instances for a given sensor node that has two kinds of
-sensors - (a) a temperature sensor, that senses the atmospheric and in-device
-  temperature readings, and (b) A humidity sensor, that senses a single value -
-  may be defined using the ADT specification described above as shown in
-  Listing \ref{listing:ADTInstances}. This is quite similar to the declaration
-  of the object of a class.  
-
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
-listing:ADTInstances]
-  // Temperature sensor ADT instance
-  Sensor temperatureSensor = new Sensor(TEMPERATURE);
-  ...
-  // Humidity sensor ADT instance  
-  Sensor humiditySensor = new Sensor(HUMIDITY);
-\end{lstlisting}
-
-Thus, multiple ADTs can be used to abstract the nature of the
-sensor node, as well as the sensors therein, from the programmer. 
-
-\subsubsection{Data and space ADTs} \label{subsubsec:DataAndSpaceADTs}
-
-As a WSN consists of a collection of sensor nodes that are distributed in
-space, ADTs can also be used to describe the spatial location of a given
-sensor node. Thus, ADTs used in WSNs are of two types:
-
-\begin{itemize}
-  \item \emph{Data ADTs} are ``conventional'' ADTs which encode
-  application logic (for example, allowing access to sensor data).
-  \item \emph{Space ADTs}, also known as \emph{sites}, are ADTs that provide an
-  abstraction of the computational environment (in the case of a WSN, a sensor
-  node) that ``hosts the data ADT'' \cite{migliavacca_DADT:2006}. The space ADT
-  may use different notions of space, such as physical location or netwo
- rk topology, depending on application requirements as determined by the
- programmer. A very limited notion of space is built into the DADT prototype in
- \cite{migliavacca_DADT:2006}, by means of a superclass called \emph{Site} which
- every Space ADT specification inherits from.
-\end{itemize}
-
-The ADTs presented in the previous section are examples of data ADTs. Space
-ADTs are defined and implemented in a similar manner, except for changes in
-their properties and operations (see Listing \ref{listing:SpaceADTSpec} for the
-specification of a Space ADT).  
- 
- \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor Space ADT specification (reproduced from \cite{migliavacca_DADT:2006}), label=listing:SpaceADTSpec]
-class SensorLoc extends Site {
-  //space properties of the sensor 
-	location l;
-  //operations that can be performed on the sensor
-	public SensorLoc(Location l){
-	  this.l = l;
-	}
-	public double[] getLocation(){ //read the sensor value(s).
-	  ...
-	}
-	public void getBatteryLevel(){ //reset the sensor
-	  ...
-	}
-}
-\end{lstlisting}
- 
-\subsubsection{Placement}
- 
-As described in Section \ref{subsubsec:DataAndSpaceADTs}, a space ADT defines
-the computing environment that ``hosts'' the data ADT. A data ADT can be
-associated with the corresponding space ADT using a placement operation\footnote{the placement operation is
-performed explicitly by the application programmer.} as it can be seen in Figure
-\ref{Fig:DADTs}. A Sensor data ADT
-instance can be ``placed'' in a SensorLoc space ADT instance as shown in Listing
-\ref{listing:placement}. 
-
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, basicstyle=\ttfamily\footnotesize, breaklines, caption = ADT placement, label = listing:placement ]
-  tempSensor = new Sensor(TEMPERATURE);
-  sensorLoc = new SensorLoc(sensorGPSLocation);
-  
-  place(tempSensor, sensorLoc)
-\end{lstlisting}
-
-\subsection{DADTs as an extension of ADTs}
-An extension of ADTs - a class of Distributed ADTs (DADTs), have applications 
-in distributed programming models. The state of multiple ADTs in a distributed
-system are made collectively available using the interface of a DADT
-\cite{migliavacca_DADT:2006}. 
-
-Using properties that are applied over multiple ADT instances, DADTs can be
-used to define views over the distributed state. Views allow for the dynamic
-restriction of the scope of distributed operations that the application
-requires to perform. 
-
-They can be used when the distributed state 
-of the system is the primary issue of importance. Similar to ADTs, DADTs 
-provide specifications for distributed data, distributed operators, and 
-constraints.
-
-The notion of space is extended to DADTs, and therefore DADTs can either be:
-
-\begin{itemize}
-  \item \emph{Space DADT:} allows distributed access to a collection of space
-  ADTs. 
-  \item \emph{Data DADT:} allows distributed access to a collection of data ADTs.
-\end{itemize}
-
-The rest of this section presents the use of DADTs, specifically in relation to
-the DADT prototype \cite{migliavacca_DADT:2006}.
-
-\subsubsection{DADT specification and instantiation} \label{subsubsec:dadtspecandinst}
-
-DADT specifications can be best understood by carrying forward the example
-described in Section \ref{subsubsec:ADTsinWSN}. To allow for collective access
-to multiple ADT instances of the type specified in Listing
-\ref{listing:ADTSpec}, a DADT \emph{DSensor} may be defined as shown in Listing
-\ref{listing:DADTSpec}.   
- 
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Data DADT 
-specification (reproduced from \cite{migliavacca_DADT:2006}), label = 
-listing:DADTSpec]
-datatype DSensor distributes Sensor with {
-  operations:
-	void resetAll();
-	double average();
-}
-\end{lstlisting}
-
-The DADT specification allows two operations to be performed on multiple data 
-ADTs of type Sensor:  
-\begin{itemize}
-\item \emph{resetAll():} Resets every sensor in the DADT view.
-\item \emph{average():} Calculate the average of readings of every sensor in the
-view.
-\end{itemize}
-
-DADT specifications can be instantiated as an object of a class would, and can
-be used to perform distributed operations (see Listing \ref{listing:DADTInstance}).
-
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = DADT Instantiation 
-(reproduced from \cite{migliavacca_DADT:2006}), label = listing:DADTInstance ]
-DSensor ds = new DSensor();
-double v = ds.average();
-\end{lstlisting}
-
-As it can be seen from the listing, the distributed nature of the DADT can be
-abstracted from the application programmer.
-
-\subsubsection{Binding}
-
-The set of ADTs that are available for collective access using a DADT (in this
-case, the collection of ADTs of type Sensor) is called the \emph{member set} of
-the DADT.
-
-An ADT instance is made part of the member set by binding it to the DADT type. This is done using a dedicated
-programming construct as shown in Listing \ref{listing:binding}, where the
-Sensor ADT (see Listing \ref{listing:ADTSpec}) is bound to the DADT type \emph{DSensor}
-defined in Listing \ref{listing:DADTInstance}. 
- 
- 
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Binding ADT instances to a DADT instance, label = listing:binding ]
-bind(new Sensor(TEMPERATURE), ``DSensor");
-...
-bind(new Sensor(HUMIDITY), ``DSensor");
-\end{lstlisting} 
- 
-
-\subsubsection{Operators and Actions} \label{subsubsec:OperatorsAndActions}
-
-Operators are used to allow distributed access and operations to be performed on
-ADT instances bound to a given DADT type. Operators are executed on the DADT
-instance, and may be of the following types:
-
-\begin{itemize}
-  \item \emph{Selection Operators:} Selection operators allow for an operation
-  to be performed on a subset of the instances in the member set.
-  \item \emph{Conditional Operators:} Conditional operators make the code in the
-  DADT method dependent on a global condition on the member set. 
-  \item \emph{Iteration Operators:} These operators allow iterating over the ADT
-  instances in the target set, and thus permit access to individual ADT instances.
-\end{itemize}
-
-Actions are constructs defined in the DADT type that causes the execution of an
-operation on a remote ADT instance. This can be understood by looking at the
-following example.
-
-To perform a DADT read operation, an action is defined
-as shown in Listing
-\ref{listing:DADTAction}. 
- 
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Defining a DADT action, label = listing:DADTAction ]  
-public class DSensor_read_Action implements DADT.Action{
-
-  public Object evaluate(Object ADTInstance){
-	Sensor localSensor = (Sensor) ADTInstance;
-    return localSensor.read();
-  }
-}
-\end{lstlisting}
-
-This performs the operation on the ADT Instance of type \emph{Sensor} (see
-Listing \ref{listing:ADTSpec}).
-
-When the application programmer attempts to execute a DADT operation, such as
-for instance, the computation of the average
-across all sensors in its target set (see Listing \ref{listing:DADTInstance}),
-actions of the sort defined above are called\footnote{The details of the
-implementation of actions are outlined in Chapter \ref{chap:Implementation}.} 
-
-\subsubsection{Views} \label{subsubsec:views}
-
-The concept of views is summarised in Figure \ref{Fig:DADT_Views}.
-
-A \emph{property} is a DADT characteristic that is defined in terms of an ADT's
-data and operations, and is executed locally on the ADT instance
-\cite{migliavacca_DADT:2006}. Properties work on a principle similar to that of
-actions (see Section \ref{subsubsec:OperatorsAndActions}).
-
-The member set may be partitioned into \emph{DADT views} using properties. A
-DADT view may either be a (1) space view or a (2) data view. In the rest of this
-section, we focus on data views as space views are irrelevant to the
-understanding of this work. 
-
-To continue on the example running throughout this section, If the application
-programmer wished to partition the set of sensors bound to the DADT type
-\emph{DSensor} in Listing \ref{listing:binding} to refer to only those ADT
-instances that are temperature sensors, a Data View is defined as shown in Listing
-\ref{listing:views} 
-  
-\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Definition and use of DADT Data View, label = listing:views ]  
-DataView dv = new DataView(new DSensor_typeOf_Property(TEMPERATURE));
-
-double[] averageTemperatures = ds.average(dv);
-\end{lstlisting}
-
-The data view \emph{dv} specifies that the scope of the DADT operation
-\emph{average} is restricted to temperature sensors.
+an ADT instance, the concept of ADTs can be used in WSNs, as this is shown on
+the Figure \ref{Fig:MultipleADTs}.
 
 \begin{figure}
+\centering
+\includegraphics[scale=0.71]{img/ADTsMultipleInstances.eps}
+\caption[Abstraction of sensor node through multiple ADTs]{Abstraction of sensor node through multiple ADTs}
+\label{Fig:MultipleADTs}
+\end{figure} 
+  
+ADT instance \emph{Sensor} can be used to abstract different types of sensor
+that might be available on the sensor node. It specifies that a \emph{Sensor}
+provides the list of common properties and operations. 
+By declaration of multiple such ADT instances the nature of the
+wireless sensor node can be abstracted, as peresented by \emph{Sensor Node}, and
+be later used by the application developer\footnote{Further details about the ADT specification and intantiation
+is provided in the Section \ref{subsec:ADTSpecInst}}.
+
+\subsection{Data and space ADTs} \label{subsubsec:DataAndSpaceADTs}
+
+As a WSN consists of a collection of sensor nodes that are distributed in space,
+ADTs additionally can also express the spatial location of a given sensor node.
+Thus, ADTs used in WSNs can be of two types:
+
+\begin{itemize}
+  \item Data ADTs
+  \item Space ADTs 
+\end{itemize}
+
+\emph{Data ADTs} are ``conventional'' ADTs which encode application logic, such
+as, for instance, allowing access to sensor data.
+
+\emph{Space ADTs}, also known as \emph{sites}, are ADTs that provide an
+abstraction of the computational environment (in the case of a WSN, a sensor
+node) that ``hosts the data ADT'' \cite{migliavacca_DADT:2006}. The space ADT may
+use different notions of space, such as physical location or network topology,
+depending on application requirements as determined by the programmer.
+
+\subsection{DADTs as an extension of ADTs} \label{subsec:DADTsConcepts}
+An extension of ADTs - a class of Distributed ADTs (DADTs), have applications 
+in distributed programming models. The state of multiple homogenious ADTs in a
+distributed system are made collectively available using the interface of a DADT
+\cite{migliavacca_DADT:2006}. 
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.65]{img/DADTs.eps} 
 \caption[Data and space in the DADT model]{Data and space in the DADT model (reproduced from 
@@ -570,30 +313,74 @@ The data view \emph{dv} specifies that the scope of the DADT operation
 \label{Fig:DADTs}
 \end{figure}
 
+DADTs can be used when the distributed state of the system is the primary issue of importance. Similar to ADTs, DADTs 
+provide specifications for distributed data, distributed operators, and 
+constraints. The notion of space is extended to DADTs, and therefore DADTs can
+either be (as it is shown in the Figure \ref{Fig:DADTs}):
+
+\begin{itemize}
+  \item \emph{Data DADT} that provide distributed access to a collection of data
+  ADTs.
+  \item \emph{Space DADT} that allows distributed access to a collection of
+  space ADTs. 
+\end{itemize}
+
+The set of ADTs that are available for collective access using a DADT is called the \emph{member set} of
+the DADT.
+
+\subsubsection{DADT Operators and Actions} \label{subsubsec:OperatorsAndActions}
+
+Operators are used in DADTs to declare distributed reference for
+the ADTs in the DADT member set. This reference conceals identities of the ADT
+instances from the application programmer. 
+
+DADT operators may belong to one of the following types:
+
+\begin{itemize}
+  \item \emph{Selection Operators}, or \emph{Selectors}, that allow to perform
+  distributed operation on a subset of the instances in the member set.
+  \item \emph{Conditional Operators} that make the code in the
+  DADT method dependent on a global condition on the member set. 
+  \item \emph{Iteration Operators} that allow iterating over the
+  ADT instances in the target set, and thus permit access to individual ADT instances.
+\end{itemize}
+
+DADT actions are special DADT programming constructs. They are defined in the
+DADT type, but are executed as an operation on remote ADT instances. 
+
+
+\subsubsection{Views} \label{subsubsec:views}
+
+DADT Views allow to defines the scope of distributed operations
+that the application requires to perform. This approach is particularly useful
+when a distributed operation has to be executed only on a subset of the
+member set of ADT instances.
+
+The member set may be partitioned into \emph{DADT views} using properties. A
+\emph{property} is a DADT characteristic that is defined in terms of an ADT's
+data and operations, and is executed locally on the ADT instance
+\cite{migliavacca_DADT:2006}.
+DADT view may either be:
+\begin{itemize}
+  \item Data View, or
+  \item Space View.
+\end{itemize}
+
+The concept of DADT Views is summarised in Figure \ref{Fig:DADT_Views}.
+
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{img/DADT_Views.eps} 
+\includegraphics[scale=0.71]{img/DADT_Views.eps} 
 \caption[DADT views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
 \label{Fig:DADT_Views}
 \end{figure}
-
-\subsection {DADT prototype limitations}
-
-The prototype presented in \cite{migliavacca_DADT:2006} was developed as a proof of 
-concept. The prototype uses IP multicast to simulate the lower layers of the 
-protocol stack, thereby preventing its use in simulators or real nodes. This 
-work sets out to correct this limitation by combining the DADT prototype with 
-an implementation of logical neighborhoods. %?????Additionally, the full
-%??? ASK functionality of  space DADTs has not been implemented in the
-%??? prototype.
 
 \section {Logical neighbourhoods} \label{LNDescription}
 
 Typically, communication between WSN nodes is based on routing 
 information between nodes by exploiting the communication radius of each node.
 Thus, the notion of a node's physical neighbourhood - the set of nodes in the
-network
-that fall within the communication range of a given node - is central to this.
+network that fall within the communication range of a given node - is central to this.
 
 However, in heterogenous WSN applications, the developer might require to
 communicate with a specific subset of the network that is defined logically and
@@ -605,8 +392,10 @@ The sensors at the entrance form a logical neighbourhood in this case. However,
 as the entrances may be widely separated, it is not necessary that this subset
 of nodes is part of a single physical neighbourhood. The use of current WSN
 programming techniques to enable a mechanism of this nature entails additional
-programming effort, increased complexity, and less reliable code
-\cite{mottola_LN:2006}.  
+programming effort, because the developer has to deal not only with
+the application logic, but also with identifying the system portions to be
+involved and ways those should be reached. This might lead to an increased
+complexity of the code \cite{mottola_LN:2006}.  
 
 \begin{figure} 
 \centering
@@ -620,21 +409,20 @@ of) the node's logical neighborhood} (reproduced from
 \end{figure} 
 
 Mottola and Picco \cite{mottola_LN:2006} suggest the addressing of the
-aforementioned issues by using \emph{Logical Neighbourhoods (LNs)}, an abstraction
-that replaces the node's physical neighbourhood with a logical notion of
+mentioned above issues by using \emph{Logical Neighbourhoods (LNs)}, an
+abstraction that replaces the node's physical neighbourhood with a logical notion of
 proximity (See example above, and Figure \ref{Fig:LN_physical_vs_logical}). Using this abstraction, programmers
 can communicate
 with members of a LN using a simple message passing API,
-thereby allowing for logical broadcasts. The implementation of the aforementioned API is
+thereby allowing for logical broadcasts. The implementation of this API is
 supported by means of a novel routing mechanism devised specifically to support
 LN communication.
 
-The rest of this section discusses the LN abstraction and the
-underlying routing mechanism in greater detail.
+
+The rest of this section discusses the LN abstractions and provides further
+details of the underlying routing mechanism.
 
 \subsection{The LN Abstraction}
-
-\subsubsection{Specification}
 
 LNs can be specified using a declarative language such as SPIDEY
 \cite{mottola_LN:2006, mottola_LNScoping:2006}\footnote{The LN prototype used as
@@ -647,7 +435,7 @@ characterstics that are used for the specification of an LN. Nodes are defined
 in a \emph{node template} and are subsequently instantiated, as shown in Listing \ref{listing:LN1}
    
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Node Definition and Instantiation, label = listing:LN1 ]  
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Node Definition and Instantiation, label = listing:LN1]  
 node template Sensor
   static Function
   static Type
@@ -655,8 +443,8 @@ node template Sensor
   dynamic Reading
 
 create node ts from Sensor
-  Function as ``Sensor''
-  Type as ``Temperature''
+  Function as "Sensor"
+  Type as "Temperature"
   Reading as getTempReading()
   BatteryPower as getBatteryPower()
 \end{lstlisting}
@@ -666,34 +454,35 @@ in the
 node template. The neighbourhood is defined using a neighbourhood
 template, and subsequently instantiated. 
 
-Listing \ref{Listing:LN2} shows the definition and
+Listing \ref{listing:LN2} shows the definition and
 instantiation of a
-neighbourhood - based on the node template defined in Listing \ref{Listing:LN1}
+neighbourhood - based on the node template defined in Listing \ref{listing:LN1}
 - which selects all temperature sensors where the reading exceeds a threshold.
  
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Neighbourhood Definition and Instantiation, label = listing:LN2 ]  
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Neighbourhood Definition and Instantiation, label = listing:LN2]  
 neighbourhood template HighTempSensors(threshold)
-  with Function = ``Sensor'' and Type  = ``Temperature'' and Reading > Threshold
+  with Function = "Sensor" 
+      and Type  = "Temperature" 
+      and Reading > Threshold
+
 
 create neighbourhood HigherTemperatureSensors
   from HighTempSensors(threshold:45)
 \end{lstlisting}
-
-\subsubsection{Communication}
 
 Communication using LNs is performed using a simple API which overrides the
 traditionally used broadcast facility and makes it dependent on the (logical)
 neighbourhood the message is addressed to \cite{mottola_LN:2006}. The routing mechanism described in
 the next section enables LN commmunication.
 
-\subsection{Routing}
+\subsection{LN Routing}
 
 The routing approach used in LNs is structure-less, and uses a local search
 mechanism based on a distributed state space built by the periodic updation of
 node profiles. The routing mechanism can be divided into two phases \cite{mottola_LNAbstraction}:
 
-\subsubsection{Phase 1: Construction of a distributed state space}
+\subsection{Construction of a distributed state space}
 Each node periodically transmits a \emph{profile advertisement} that contains
 information on the attribute-value pairs defined in the node template. This message
 causes an
@@ -708,7 +497,7 @@ Additionally, passive listening to profile advertisements for attribute-value
 pairs with higher costs than what is entered in the SDD is used to construct
 increasing paths.
 
-\subsubsection{Phase 2: Routing through Local Search}
+\subsection{ Routing through Local Search}
 When a message has to be sent to a particular LN, the sending node sends the
 message to any node in its SSD whose attribute-value pairs match the LN
 predicates. The message is associated with a specific set of \emph{credits} from
@@ -758,9 +547,17 @@ section, built a sensor device
 called the Sun Small Programmable Object Technology (Sun SPOT) that uses a
 on-board JVM to allow for WSN programming using Java.
 
-The Sun SPOT uses an ARM-9 processor, has 512 KB of RAM and 4 MB of flash
-memory, uses a Chipcon CC 2420 IEEE 802.15.4 compliant radio to enable
-wireless RF communication between nodes, and allows for pluggable sensors.
+The Sun SPOT (see Figure \ref{Fig:SunSpot}) uses an ARM-9 processor, has 512 KB of RAM
+and 4 MB of flash memory, uses a 2.4GHz radio with an integrated antenna on the board. The radio
+is a TI CC2420 (formerly ChipCon) and is IEEE 802.15.4 compliant.
+
+\begin{figure} 
+\centering
+\includegraphics[scale=0.50]{img/sunspot1.eps} 
+\caption[Sun SPOT device]{Sun SPOT device}
+\label{Fig:SunSpot}
+\end{figure} 
+
 
 \subsection{The Squawk JVM}
 
@@ -776,7 +573,6 @@ following features \cite{simon_squawk:2006}:
   \item It does not require an underlying OS, as it runs directly on the Sun
   SPOT hardware. This reduces memory consumption.
   \item It allows for inter-device application migration.
-  \item It authenticates deployed applications.
   \item It supports the execution of multiple applications on one VM,
   representing each one as an object.
 \end{itemize}
@@ -818,24 +614,28 @@ Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
 
 \subsection{Sun SPOT applications} \label{subsec:sunspotapps}
 
-Sun SPOT applications can be of two kinds \cite{sun_developer:2008}:
+Sun SPOT applications are divided into two classes:
+\cite{sun_developer:2008}:
 
 \begin{itemize}
-  \item \emph{On-SPOT applications:} these applications are deployed and
-  executed on a remote Sun SPOT that communicates untethered. On-SPOT
-  applications is a Java program that runs on the Squawk VM, and is compliant
-  with Java ME. 
-  \item \emph{On-Host applications:} these applications run on the host machine
-  (typically a PC), and communicate with the network of Sun SPOTs through a base
-  station node that serves no purpose other than to facilitate Sun SPOT-host
-  machine communication. 
-  The base station node, which is a Sun SPOT itself, communicates with other
-  nodes in the network using RF communication and with the host machine via a
-  USB link (see Figure \ref{Fig:SunSPOTS_applications}. The host application is a Java 2 Standard
-  Edition (J2SE) program.
-
+  \item On-SPOT applications
+  \item On-Host applications
 \end{itemize}
 
+\emph{On-SPOT applications} are are deployed and
+executed on a remote Sun SPOT that communicates untethered. On-SPOT
+applications is a Java program that runs on the Squawk VM, and is compliant
+with Java ME. 
+
+\emph{On-Host applications}run on the host machine
+(typically a PC), and communicate with the network of Sun SPOTs through a base
+station node that serves no purpose other than to facilitate Sun SPOT-host
+machine communication. 
+  
+The base station node, which is a Sun SPOT itself, communicates with other
+nodes in the network using RF communication and with the host machine via a
+USB link (see Figure \ref{Fig:SunSPOTS_applications}. The host application is a Java 2 Standard
+Edition (J2SE) program.
   
 \begin{figure}
 \centering
@@ -844,4 +644,12 @@ Sun SPOT applications can be of two kinds \cite{sun_developer:2008}:
 \cite{sun_developer:2008})}
 \label{Fig:SunSPOTS_applications}
 \end{figure}   
+
+\textcolor{green}{Some conclusions about what has been discussed learned and
+what is next}
+
+
+\textcolor{blue}{The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see Section \ref{LNDescription}) provides the functionality of the Data Link Layer and the Network Layer. The concept of Distributed Abstract
+Data Types (see Section \ref{sec:DADT}) is restricted to the application layer, and the focus of this work thus lies primarily within the application layer.}
+
   

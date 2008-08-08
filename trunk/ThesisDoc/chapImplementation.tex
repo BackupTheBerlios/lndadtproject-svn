@@ -1,39 +1,245 @@
-\chapter{Implementation} \label{chap:Implementation}
+\chapter{Distributed Programming Abstractions for WSNs}
+\label{chap:Implementation}
 
 %intro words
 
-This chapter then presents the concepts underlying Distributed Abstract Data
-Types (DADTs), a short description of existing DADT prototype
+\textcolor{green}{re-write! probably the sequence is outdated}
+
+This chapter begins with implementation details underlying Distributed Abstract
+Data Types (DADTs), a short description of existing DADT prototype
 \cite{migliavacca_DADT:2006}, and an outline of the limitations of the current
-prototype.
+prototype. The chapter then provides information about author's contribution
+and gives details concerning implementation of the DADT/LN prototype which
+allowed use of DADT concepts in the real-world WSNs. This is folowed by a presentation of the simulation environment and simulating tools
+that were used. The chapter concludes with discussion of prototype's performance
+evaluation and points out possible extensions of the prototype.
 
-, and how LNs can be used to eliminate the
-limitations inherent in the DADT prototype
+\section {The DADT prototype}
 
-The chapter then concludes 
-with a description of the simulation environment \cite{barr_JIST:2005}, \cite{barr_SWANS} underlying the 
-implementation, and the hardware platform - Sun Small Programable Object
-Technology (SPOT) \cite{simon_squawk:2006} - used during the course of this work
-to experimentally validate the simulated implementation in a
-real-world environment. 
+Use of DADTs can be applied to the context-aware distributed applications, as
+it was discussed in the Section \ref{sec:DADT}. This section provides reader with
+further details of DADT concepts, a presentation of the existing DADT
+prototype \cite{migliavacca_DADT:2006} and discusses its limitations.
 
+\subsection{ADTs specification and instantiation} \label{subsec:ADTSpecInst}
 
-\section{Contribution}
+As it was mentioned in the Section \ref{subsubsec:ADTsinWSN}, each sensor node
+in WSNs can be abstracted though a multiple number of ADT instances (see
+Figure \ref{Fig:MultipleADTs}) and therefire hide the details of sensor node
+abstraction from the application developer. Code snippets below are provided to present this idea in further detail.
 
-\cite{migliavacca_DADT:2006} presented a prototype that enabled the use of DADTs
-to facilitate distributed application programming. While this approach is
-clearly applicable to WSNs, the prototype itself did not support WSN
-abstractions, and there were several limitations to it:
+The specification for such ADTs\footnote{According to
+our classification in the Section \ref{subsubsec:DataAndSpaceADTs} this is an
+example of the Data ADT} could be defined as Java interface as presented
+in the Listing \ref{listing:ADTSpec}
 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
+listing:ADTSpec]
+class Sensor {
+  //data properties of the sensor 
+    int sensorType;
+    double sensorReading;
+    boolean active; 
+  //operations that can be performed on the sensor  
+    public double read(){ //read the sensor value.
+	  ...
+	} 
+	public void reset(){ //reset the sensor
+	  ...
+	}    
+\end{lstlisting}
+
+This specification declares that a Sensor ADT instance should provide the following properties:
 \begin{itemize}
-  \item The lack of a routing mechanism.
-  \item Limitations in portability to real WSN nodes.
+\item An integer value to define the sensor type.   
+\item A double values that holds the sensor reading. 
+\item A boolean value that stores information about sensor's state of activity
 \end{itemize}
+
+and the operations \emph{read} sensor readings and \emph{reset} sensor.
+
+Therefore, it is possible to define multiple such instances of this
+specification, for example, the ADT instances for a given sensor node that has two kinds of sensors - (a) a
+temperature sensor and (b) a light sensor - may be defined using the ADT
+specification described above as shown in the Listing
+\ref{listing:ADTInstances}. 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
+listing:ADTInstances]
+  // Temperature sensor ADT instance
+  Sensor temperatureSensor = new Sensor(TEMPERATURE);
+  ...
+  // Humidity sensor ADT instance  
+  Sensor lightSensor = new Sensor(LIGHT);
+\end{lstlisting}
+
+\subsection{DADT specification and instantiation} \label{subsubsec:dadtspecandinst}
+
+The concept of DADTs was introduced in the Section \ref{sec:DADT} and will be
+extended with examples of DADT specifications and instances in this chapter.
+ 
+DADT specifications can be best understood by carrying forward the example
+described in Section \ref{subsec:ADTSpecInst}. To allow for collective access
+to multiple ADT instances of the type specified in Listing
+\ref{listing:ADTSpec}, a DADT \emph{DSensor} may be defined as shown in Listing
+\ref{listing:DADTSpec}.   
+ 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Data DADT 
+specification (reproduced from \cite{migliavacca_DADT:2006}), label = 
+listing:DADTSpec]
+class DSensor{
+  // type of ADTs
+    Class distributes = Sensor.class;	
+  // distributed operations:
+	void resetAll();
+	double average();
+}
+\end{lstlisting} 
+ 
+The DADT specification allows two simple distributed operations to be performed
+on multiple data ADTs of type \emph{Sensor}:  
+\begin{itemize}
+\item \emph{resetAll()} that is used to reset every sensor in the DADT member
+set, or subset of ADT instances defined by a DADT view (see Section
+\ref{subsubsec:views}).
+\item \emph{average()} that allows to calculate the average of readings of every
+sensor in the member set or subset defined by DADT view.
+\end{itemize}
+ 
+DADT specifications can be instantiated as an object of a class, and can be
+used to perform allowed distributed operations mentioned above (see Listing
+\ref{listing:DADTInstance}).
+
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = DADT Instantiation 
+(adapted from \cite{migliavacca_DADT:2006}), label = listing:DADTInstance ]
+DSensor ds = new DSensor();
+ds.resetAll();
+\end{lstlisting}
+
+\subsubsection{Binding}
+
+As it was specified in the Section \ref{subsec:DADTsConcepts}, a DADT member set
+of is being built by the set of ADTs that are available for collective
+access, in this case, the collection of ADTs of type \emph{Sensor}.
+
+An ADT instance is made part of the member set by binding it to the DADT type.
+This can be done using a dedicated programming construct as shown in Listing
+\ref{listing:binding}, where the Sensor ADT (see Listing \ref{listing:ADTSpec}) is bound to the DADT type \emph{DSensor}
+defined in Listing \ref{listing:DADTInstance}. 
+ 
+ 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Binding ADT instances to a DADT instance, label = listing:binding]
+bind(new Sensor(TEMPERATURE), "DSensor");
+...
+bind(new Sensor(LIGHT), "DSensor");
+\end{lstlisting} 
+
+
+\subsubsection{DADT Operators and Actions}
+\label{subsubsec:OperatorsAndActionsImpl}
+
+The Section \ref{subsubsec:OperatorsAndActions} has already introduced the
+definitions of DADT Operators and DADT Actions, hence, in this chapter the
+implementation details will be presented. 
+
+Use of DADT selection operator \emph{all} can be explained through the
+extended example of DADT Specification (see Listing \ref{listing:DADTSpec]})
+which uses pseudolanguage. This code snippet is shown in the
+Listing \ref{listing:DADTOperator}.
+
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Defining a DADT action, label = listing:DADTOperator]  
+class DSensor {
+  ...
+  public void resetAll(){
+	 (all in targetset).reset();
+  }
+}
+\end{lstlisting}
+
+Distributed operation \emph{resetAll} exploits selector \emph{all} in order to
+get an access to all ADT instances of the DADT target set, and
+subsequently invokes aperation \emph{reset} on the ADT instance, as it was
+declared by the ADT specification (see Listing \ref{listing:ADTSpec}).
+
+\textcolor{red}{rewrite here }
+
+To perform a DADT read operation, an action is defined
+as shown in Listing
+\ref{listing:DADTAction}. 
+ 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Defining a DADT action, label = listing:DADTAction ]  
+public class DSensor_read_Action implements DADT.Action{
+
+  public Object evaluate(Object ADTInstance){
+	Sensor localSensor = (Sensor) ADTInstance;
+    return localSensor.read();
+  }
+}
+\end{lstlisting}
+
+This performs the operation on the ADT Instance of type \emph{Sensor} (see
+Listing \ref{listing:ADTSpec}).
+
+When the application programmer attempts to execute a DADT operation, such as
+for instance, the computation of the average
+across all sensors in its target set (see Listing \ref{listing:DADTInstance}),
+actions of the sort defined above are called\footnote{The details of the
+implementation of actions are outlined in Chapter \ref{chap:Implementation}.} 
+
+\subsubsection{DADT Views} \label{subsubsec:viewsImpl}
+
+DADT Views an effective tool for the application developer to define scope
+of the distributed operation. As it was mentioned in the Section
+\ref{subsubsec:views}, the concept of DADT Views is based on the definition of
+\emph{DADT Property}.
+
+To continue on the example running throughout this section, If the application
+programmer wished to partition the set of sensors bound to the data DADT type
+\emph{DSensor} (See Listing \ref{listing:DADTSpecData}) to refer to only those
+data ADT instances that are temperature sensors, a data view can be delared
+as shown in the Listing \ref{listing:views} 
+  
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Definition of DADT Data View, label = listing:views ]  
+dataview temperature on DSensor as isSensorType(TEMPERATURE) && isActive(); 
+\end{lstlisting}
+
+The DADT name \emph{DSensor} in this case refers to its member set, and 
+the data view \emph{temperature} is defined as a subset of this member set and
+contains only sensor nodes with temperature sensors for which evaluation of
+the property \emph{isActive} returns \emph{true}. The data view definitions are
+used to restrict  the scope of the DADT operations.
+
+In a similar way, space views can be defined. 
+
+\section{The DADT/LN Prototype}
+
+\subsection{Motivation}
+
+The prototype presented in \cite{migliavacca_DADT:2006} was developed as a proof of 
+DADT concept. It showed the use of DADTs to facilitate development of the distributed
+applications. 
+
+This approach is clearly applicable to the WSNs application development, but
+the prototype presented in \cite{migliavacca_DADT:2006} did not support WSN
+abstractions and has several critical limitations that prevent its use in WSN
+simulators or real nodes. 
+
+Among those is the lack of support for communication on the lower levels of
+protocol stack, i.e. rounting mechanisms, instead it uses IP milticast
+techniques for simulation of those. Additionaly, there exist limitations of
+portability of the code to real WSN nodes.
 
 This work makes the following contributions:
 
 \begin{itemize}
-  \item Extension of the DADT prototype for use in WSNs by extending it to run
+  \item Enhance the DADT prototype for use in WSNs by extending it to run
   on simulators as well as devices in a real-world environment.
   \item Interfacing the LN mechanism presented in \cite{mottola_LNAbstraction}
   to enable abstracted communication between groups of nodes in the WSN defined
@@ -42,7 +248,7 @@ This work makes the following contributions:
   layer.
 \end{itemize}
 
-\section{The DADT/LN Architecture}
+\subsection{Architecture}
 
 % FILL THIS IN LATER.
 \subsection{Overview}
@@ -72,7 +278,7 @@ the aforementioned simulator
 (see Section \ref{sec:sunspots}) to execute the application on real sensor nodes.
 \end{itemize}
 
-\subsection{Explanation of terms used}
+\subsubsection{Explanation of terms used}
 
 \begin{figure}
 \centering
@@ -99,7 +305,7 @@ devices as shown in Figure \ref{Fig:DADTLN_glossary}:
   \end{itemize}
 \end{itemize}
 
-\subsection{Execution Details}
+\subsection{Implementation Details}
 
 This section attempts to explain the operation of the DADT/LN prototype
 developed as part of this work by considering the sequence of method calls made
@@ -230,15 +436,15 @@ right section of Figure \ref{Fig:SeqDiagram_Sensornode}.
 \label{Fig:SeqDiagram_PCnode}
 \end{sidewaysfigure}
 
-\section{The DADT/LN prototype in the simulated environment}
-\subsection {JiST/SWANS} \label{sec:jistswans}
+\subsection{The DADT/LN prototype in the simulated environment}
+\subsubsection {JiST/SWANS} \label{sec:jistswans}
 
 As the simulator used in this work is a discrete event simulator, this section 
 begins with a short description of discrete event simulators. 
 This is followed by a discussion on a particular discrete event simulator
 called JiST, and the SWANS network simulator built on top of JiST.
 
-\subsubsection{Discrete Event Simulator}
+\paragraph{Discrete Event Simulator}
 
 A discrete event simulator allows for the simulated execution of a process (that
 may be either deterministic or stochastic), and consists of the following
@@ -253,7 +459,7 @@ components \cite{Shankar_DiscreteEventSim}:
   and additionally updates the state variables and performance indicators.
 \end{itemize}
  
-\subsubsection{Java In Simulation Time (JiST)} \label{subsec:jist}
+\paragraph{Java In Simulation Time (JiST)} \label{subsec:jist}
 
 JiST \cite{barr_JIST:2005} is a discrete event simulator that is 
 efficient (compared to existing simulation systems), 
@@ -313,7 +519,7 @@ by the simulator in simulation time. Simulation time differs from ``actual''
 time in that the advancement of actual time is independent of application
 execution. 
  
-\subsubsection{Scalable Wireless Ad hoc Network Simulator (SWANS)}
+\paragraph{Scalable Wireless Ad hoc Network Simulator (SWANS)}
 SWANS is a wireless network simulator developed in order to provide efficient
 and scalable simulations without compromising on simulation detail \cite{barr_SWANS},
 and is built upon the JiST discrete event simulator described in Section \ref{subsec:jist}. 
@@ -342,7 +548,7 @@ The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}.
 \end{figure} 
 
 
-\subsection{Simulation using JiST/SWANS}
+\subsubsection{Simulation using JiST/SWANS}
 
 The DADT/LN prototype was tested on the SWANS WSN simulator, that is buit upon
 the JiST discrete event simulator (see Section \ref{subsec:jist}). 
@@ -366,7 +572,7 @@ the simulator.
 The simulation was run on networks of upto 50 nodes to empirically verify the
 robustness of the work done as part of this thesis.
 
-\section{The DADT/LN prototype on Sun SPOTs}
+\subsection{The DADT/LN prototype on Sun SPOTs}
 
 For further experimental validation of the implementation produced as part of 
 this thesis,
@@ -378,27 +584,7 @@ PC), while the other Sun SPOTs ran the Sensor Device implementation as on-SPOT
 applications (see Section \ref{subsec:sunspotapps} for a description of host and on-SPOT
 applications).
 
-\section{Challenges}
 
-
-\section{Future Work}
-
-This section presents a list of possible extensions to the work implemented as
-part of this thesis. These include:
-
-\begin{itemize}
-  \item \emph{Support for DADT selection operators:} The current prototype
-  supports the selection of all ADT instances that match a defined DADT Data
-  view, but does not enable the selection of a subset of the aforementioned
-  collection of ADT instances. This arises due to limitations in the current LN implementation.
-  \item \emph{Extending support for Space DADTs:} Currently, the prototype does
-  not use the notion of space. Therefore, a possible avenue for future work
-  could include the implementation of Space DADTs, and the definition of Space
-  views that are analogous to Data views.
-  \item \emph{Extending the prototype for networks of heterogenous nodes:}
-  The current prototype, by virtue of it being implemented in Java, cannot be
-  used on a wide variety of different nodes. 
-\end{itemize}
 
 \section{Evaluation}
 
@@ -436,8 +622,27 @@ the part of the application programmer to produce WSN applications with and
 without the use of programming abstractions. To this end, a simple WSN
 application was written on the Sun SPOTs to calculate the distributed average.
 
-The difference in the number of lines was *SDDS*.
+The difference in the number of lines was **.
 
-\section{Analysis of Results}
+\section{Future Work}
+
+This section presents a list of possible extensions to the work implemented as
+part of this thesis. These include:
+
+\begin{itemize}
+  \item \emph{Support for DADT selection operators:} The current prototype
+  supports the selection of all ADT instances that match a defined DADT Data
+  view, but does not enable the selection of a subset of the aforementioned
+  collection of ADT instances. This arises due to limitations in the current LN implementation.
+  \item \emph{Extending support for Space DADTs:} Currently, the prototype does
+  not use the notion of space. Therefore, a possible avenue for future work
+  could include the implementation of Space DADTs, and the definition of Space
+  views that are analogous to Data views.
+  \item \emph{Extending the prototype for networks of heterogenous nodes:}
+  The current prototype, by virtue of it being implemented in Java, cannot be
+  used on a wide variety of different nodes. 
+\end{itemize}
+
+\section{Conclusions}
 
 %HERE MORE BLAH BLAH
