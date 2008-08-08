@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: thesis.aux
+A level-1 auxiliary file: chapIntro.aux
+A level-1 auxiliary file: chapIntroWSN.aux
+A level-1 auxiliary file: chapBackground.aux
+A level-1 auxiliary file: chapImplementation.aux
+The style file: acm.bst
+Database file #1: references.bib
+Warning--to sort, need author or key in NIST_website
+You've used 25 entries,
+            2253 wiz_defined-function locations,
+            683 strings with 8819 characters,
+and the built_in function-call counts, 7338 in all, are:
+= -- 654
+> -- 441
+< -- 0
++ -- 181
+- -- 156
+* -- 583
+:= -- 1269
+add.period$ -- 73
+call.type$ -- 25
+change.case$ -- 151
+chr.to.int$ -- 0
+cite$ -- 26
+duplicate$ -- 257
+empty$ -- 552
+format.name$ -- 156
+if$ -- 1469
+int.to.chr$ -- 0
+int.to.str$ -- 25
+missing$ -- 21
+newline$ -- 126
+num.names$ -- 48
+pop$ -- 156
+preamble$ -- 1
+purify$ -- 127
+quote$ -- 0
+skip$ -- 147
+stack$ -- 0
+substring$ -- 220
+swap$ -- 52
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 98
+warning$ -- 1
+while$ -- 56
+width$ -- 27
+write$ -- 240
+(There was 1 warning)
