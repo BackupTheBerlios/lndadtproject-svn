@@ -1,17 +1,17 @@
 \chapter{Introduction to Wireless Sensor Networks}
 
-This chapter begins with an introduction to wireless sensor nodes. This is followed
-by a presentation of Wireless Sensor Networks (WSNs) and discussion of their
-main features.This is further followed by an introduction of the WSN protocol
-stack. The chapter concludes with a presentation of the programming models for
-WSNs and benefits of their use.
 
-Wireless Sensor Networks (WSNs) are typically deployed randomly in a possibly
-large area where phenomena are required to be monitored, and consist of the
-large number of the light-weighted and tiny devices (sensor nodes) that can be
-easily deployed. 
+
+This chapter gives a brief introduction into Wireless Sensor Networks (WSNs)
+and its components - wireless sensor nodes. Additionaly, it presents WSN protocol stack 
+and gives a short overview over WSN routing techniques.
+
 
 \section{Sensor Nodes} \label{subsec:sensornodes}
+WSNs are typically deployed randomly in a possibly
+large area where phenomena are required to be monitored, and consist of the
+large number of the light-weighted and tiny devices that can be
+easily deployed, called \emph{Sensor Nodes}. 
 
 Typically, a sensor node consists of the following elements (as it can be seen
 from the Figure \ref{Fig:SensorNodeArch})
@@ -39,7 +39,7 @@ which affect the WSN built on top of it, among those are \cite{yao:qps}:
 \begin{itemize}
   \item \emph{Power consumption constraint} due to the fact that sensor nodes
   have limited energy supply, therefore energy conservation is the main concern when
-  WSN application are implemented.
+  WSN applications are implemented.
   \item \emph{Computation restriction} which is caused by the limited memory
   capacity and processing power available on the sensor node, thus possibilities to
   use data processing algorithms on a node are seriously limited. 
@@ -58,8 +58,15 @@ redeployment of additional sensor nodes at any time during operation.
 
 \section{WSN Protocol Stack} \label{sec:WSNProtStack}
 
-The WSN protocol stack that was presented in \cite{SensorSurveyAkyildiz:2002} is
-adapted generic protocol stack \cite{ComputerNetworksTannenbaum:2003}. As
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{img/ProtStack.eps}
+\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
+\label{Fig:ProtStack}
+\end{figure}
+
+The WSN protocol stack that was presented in \cite{SensorSurveyAkyildiz:2002}
+is an adapted generic protocol stack \cite{ComputerNetworksTannenbaum:2003}. As
 it can be seen from the Figure \ref{Fig:ProtStack}, the WSN protocol stack consists of the following layers:
 
 \begin{itemize}
@@ -72,13 +79,5 @@ supports error checking mechanisms.
 \item \emph{Application Layer}, where the application software is resided.
 \end{itemize}
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.65]{img/ProtStack.eps}
-\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
-\label{Fig:ProtStack}
-\end{figure}
-
-
 \section {Routing in WSNs}
-\textcolor{red}{we need sth here}
+\textcolor{red}{add brief overview of routing techniques}

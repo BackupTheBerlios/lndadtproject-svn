@@ -5,8 +5,8 @@
 
 This chapter presents a brief discussion of the concepts, algorithms, and 
 hardware platforms that were used during the course of this work. This
-chapter begins with an introduction to programming abstractions, and contibues
-with discussion of their applications in WSN programming.
+chapter begins with an introduction to programming abstractions, and continues
+with a discussion of their applications in WSN programming.
 
 This chapter further presents the concepts underlying
 Distributed Abstract Data Types (DADTs). This is followed by a presentation of
@@ -107,8 +107,7 @@ course of this work belongs to the latter class of programming abstractions.
 Programming abstractions may also be classified on the basis of the
 nature of the language constructs made available to the WSN programmer
 \cite{mottola_middleware:2008}. Some of the metrics used for classification
-are\footnote{Only relevant to this work classification bases
-were selected from \cite{mottola_middleware:2008} for discussion}:
+are \cite{mottola_middleware:2008}:
 
 \begin{itemize}
   \item Communication span
@@ -233,8 +232,10 @@ include:
 
 Distributed Abstract Data Types is a new programming language construct used to
 support distributed and context-aware applications. The concept of DADTs was
-introduced in \cite{migliavacca_DADT:2006}. The rest of this section discusses the concepts and provides the reader with the relevant background\footnote{Code snippets provided as examples are
-were described in \cite{migliavacca_DADT:2006}}.
+introduced in \cite{migliavacca_DADT:2006}. 
+The rest of this section discusses the concepts and provides the reader with
+the relevant background and examples\footnote{Provided examples are
+adapted from \cite{migliavacca_DADT:2006}}.
 
 \subsection{Abstract Data Types}
 
@@ -253,16 +254,14 @@ can be represented through the stacked data, and a set of defined
 operations that include \emph{push(data), pop(),} and \emph{top()}. It is intuitively clear that
 several different implementations of an ADT may be defined from the proposed specification.
 
-The concept of ADTs has been already sucessfully used in the different areas of science. 
-The rest of this section focuses on the application and extension of ADT
-concept to be used in WSNs.
+The concept of ADTs has been sucessfully used in the different areas of
+science. The rest of this section focuses on the application and
+extension of the concept of ADTs for use in WSNs.
 
 \subsection{ADTs in WSNs} \label{subsubsec:ADTsinWSN}
 
-A WSN, as defined earlier, consists of number of sensor nodes. Each sensor node
-may include several sensors. By defining each sensor as
-an ADT instance, the concept of ADTs can be used in WSNs, as this is shown on
-the Figure \ref{Fig:MultipleADTs}.
+A WSN as described earlier, usually consists of a number of sensor node. Each
+sensor node may include several sensors.
 
 \begin{figure}
 \centering
@@ -275,9 +274,10 @@ ADT instance \emph{Sensor} can be used to abstract different types of sensor
 that might be available on the sensor node. It specifies that a \emph{Sensor}
 provides the list of common properties and operations. 
 By declaration of multiple such ADT instances the nature of the
-wireless sensor node can be abstracted, as peresented by \emph{Sensor Node}, and
-be later used by the application developer\footnote{Further details about the ADT specification and intantiation
-is provided in the Section \ref{subsec:ADTSpecInst}}.
+wireless sensor node can be abstracted, as presented by \emph{Sensor Node} in
+the Figure \ref{Fig:MultipleADTs}, and be later used by the application
+developer\footnote{Further details of ADT specification and
+intantiation is provided in the Section \ref{subsec:ADTSpecInst}}.
 
 \subsection{Data and space ADTs} \label{subsubsec:DataAndSpaceADTs}
 
@@ -286,8 +286,8 @@ ADTs additionally can also express the spatial location of a given sensor node.
 Thus, ADTs used in WSNs can be of two types:
 
 \begin{itemize}
-  \item Data ADTs
-  \item Space ADTs 
+  \item \emph{Data ADTs}
+  \item \emph{Space ADTs} 
 \end{itemize}
 
 \emph{Data ADTs} are ``conventional'' ADTs which encode application logic, such
@@ -337,12 +337,12 @@ instances from the application programmer.
 DADT operators may belong to one of the following types:
 
 \begin{itemize}
-  \item \emph{Selection Operators}, or \emph{Selectors}, that allow to perform
+  \item \emph{Selection Operators} that allow to perform
   distributed operation on a subset of the instances in the member set.
   \item \emph{Conditional Operators} that make the code in the
   DADT method dependent on a global condition on the member set. 
   \item \emph{Iteration Operators} that allow iterating over the
-  ADT instances in the target set, and thus permit access to individual ADT instances.
+  ADT instances in the set, and thus permit access to individual ADT instances.
 \end{itemize}
 
 DADT actions are special DADT programming constructs. They are defined in the
@@ -351,27 +351,27 @@ DADT type, but are executed as an operation on remote ADT instances.
 
 \subsubsection{Views} \label{subsubsec:views}
 
-DADT Views allow to defines the scope of distributed operations
+\emph{DADT Views} allow to defines the scope of distributed operations
 that the application requires to perform. This approach is particularly useful
 when a distributed operation has to be executed only on a subset of the
 member set of ADT instances.
 
-The member set may be partitioned into \emph{DADT views} using properties. A
-\emph{property} is a DADT characteristic that is defined in terms of an ADT's
+The member set may be partitioned into DADT Views by using properties. A
+\emph{Property} is a DADT characteristic that is defined in terms of an ADT's
 data and operations, and is executed locally on the ADT instance
 \cite{migliavacca_DADT:2006}.
-DADT view may either be:
+DADT View may either be:
 \begin{itemize}
-  \item Data View, or
-  \item Space View.
+  \item \emph{Data View},
+  \item \emph{Space View}.
 \end{itemize}
 
-The concept of DADT Views is summarised in Figure \ref{Fig:DADT_Views}.
+The concept of DADT Views is presented in Figure \ref{Fig:DADT_Views}.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.71]{img/DADT_Views.eps} 
-\caption[DADT views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
+\caption[DADT Views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
 \label{Fig:DADT_Views}
 \end{figure}
 
@@ -394,8 +394,8 @@ of nodes is part of a single physical neighbourhood. The use of current WSN
 programming techniques to enable a mechanism of this nature entails additional
 programming effort, because the developer has to deal not only with
 the application logic, but also with identifying the system portions to be
-involved and ways those should be reached. This might lead to an increased
-complexity of the code \cite{mottola_LN:2006}.  
+involved and ways those should be reached, which might lead to an
+increased complexity of the code \cite{mottola_LN:2006}.  
 
 \begin{figure} 
 \centering
@@ -432,7 +432,7 @@ involves the definition and instantiation of the \emph{node} and the
 
 Nodes are a logical representation of the subset of a sensor node's state and
 characterstics that are used for the specification of an LN. Nodes are defined
-in a \emph{node template} and are subsequently instantiated, as shown in Listing \ref{listing:LN1}
+in a node template and are subsequently instantiated, as shown in Listing \ref{listing:LN1}
    
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Node Definition and Instantiation, label = listing:LN1]  
@@ -466,7 +466,6 @@ neighbourhood template HighTempSensors(threshold)
       and Type  = "Temperature" 
       and Reading > Threshold
 
-
 create neighbourhood HigherTemperatureSensors
   from HighTempSensors(threshold:45)
 \end{lstlisting}
@@ -479,31 +478,30 @@ the next section enables LN commmunication.
 \subsection{LN Routing}
 
 The routing approach used in LNs is structure-less, and uses a local search
-mechanism based on a distributed state space built by the periodic updation of
+mechanism based on a distributed state space built by the periodic update of
 node profiles. The routing mechanism can be divided into two phases \cite{mottola_LNAbstraction}:
 
 \subsection{Construction of a distributed state space}
 Each node periodically transmits a \emph{profile advertisement} that contains
-information on the attribute-value pairs defined in the node template. This message
-causes an
-update in its physical neighbours' \emph{State Space Descriptors (SSDs)} if (a)
-no
-entry exists for any given attribute-value pair specified in the profile
-advertisement, or (b) the \emph{transmit cost} is lower than the costs for any
-existing SSD entry for a particular attribute-value pair. If any such change
-occurs, the profile advertisement is rebroadcast with an updated cost. 
+information on the attribute-value pairs defined in the node template. This
+message causes an update in its physical neighbours' \emph{State Space
+Descriptors (SSDs)} if (a) no entry exists for any given attribute-value pair
+specified in the profile advertisement, or (b) the \emph{transmit cost} is lower
+than the costs for any existing SSD entry for a particular attribute-value pair.
+If any such change occurs, the profile advertisement is rebroadcast with an
+updated cost.
 
 Additionally, passive listening to profile advertisements for attribute-value
 pairs with higher costs than what is entered in the SDD is used to construct
 increasing paths.
 
 \subsection{ Routing through Local Search}
-When a message has to be sent to a particular LN, the sending node sends the
+When a message has to be sent to a particular LN, the sending node transmits the
 message to any node in its SSD whose attribute-value pairs match the LN
 predicates. The message is associated with a specific set of \emph{credits} from
 which the cost to send to the node is deducted. This process continues until the
-message is received at node(s) in the LN along the reverse of the path
-determined during the first phase. This path is called a \emph{decreasing path}.
+message is received at node(s) in the LN along the reverse of the path, called
+a \emph{decreasing path}, which is determined during the first phase. 
 
 However, to ensure that messages are received by every nodes that belongs to the
 neighbourhood (and the algorithm is not trapped in local state-space minima),
@@ -532,7 +530,7 @@ upon the use of managed runtime languages such as Java
 \cite{simon_squawk:2006}. Therefore, currently prevalent WSN programming practice
 trades developer efficiency for memory efficiency. 
 
-However, Simon et al \cite{simon_squawk:2006} state the benefits accrued from
+However, Simon et al \cite{simon_squawk:2006} state the benefits resulted from
 using a managed runtime language for WSN programming as follows:
 
 \begin{itemize}
@@ -581,7 +579,16 @@ following features \cite{simon_squawk:2006}:
 
 As resource constrained devices are incapable of loading class files on-device
 by virtue of their limited memory, a VM architecture known as the ``split VM
-architecture'' is used (See Figure \ref{Fig:SquawkVM_architecture}. 
+architecture'' is used, as it is shown in the Figure
+\ref{Fig:SquawkVM_architecture}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.61]{img/Squawk_architecture.eps} 
+\caption[The Squawk Split VM Architecture]{The Squawk
+Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
+\label{Fig:SquawkVM_architecture}
+\end{figure}  
 
 The Squawk split VM architecture uses a class file preprocessor (known as the
 suite creator) that converts the \emph{.class} bytecode into a more compact
@@ -602,15 +609,6 @@ The Squawk bytecodes are converted into a \emph{.suite} file created by
 serialising and saving into a file the internal object memory representation.
 These files are loaded on to the device, and subsequently interpreted by the
 on-device VM.
-  
-\begin{figure}
-\centering
-\includegraphics[scale=0.61]{img/Squawk_architecture.eps} 
-\caption[The Squawk Split VM Architecture]{The Squawk
-Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
-\label{Fig:SquawkVM_architecture}
-\end{figure}   
-  
 
 \subsection{Sun SPOT applications} \label{subsec:sunspotapps}
 
@@ -618,32 +616,34 @@ Sun SPOT applications are divided into two classes:
 \cite{sun_developer:2008}:
 
 \begin{itemize}
-  \item On-SPOT applications
-  \item On-Host applications
+  \item \emph{On-SPOT applications}
+  \item \emph{On-Host applications}
 \end{itemize}
 
-\emph{On-SPOT applications} are are deployed and
-executed on a remote Sun SPOT that communicates untethered. On-SPOT
-applications is a Java program that runs on the Squawk VM, and is compliant
-with Java ME. 
-
-\emph{On-Host applications}run on the host machine
-(typically a PC), and communicate with the network of Sun SPOTs through a base
-station node that serves no purpose other than to facilitate Sun SPOT-host
-machine communication. 
-  
-The base station node, which is a Sun SPOT itself, communicates with other
-nodes in the network using RF communication and with the host machine via a
-USB link (see Figure \ref{Fig:SunSPOTS_applications}. The host application is a Java 2 Standard
-Edition (J2SE) program.
-  
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{img/SunSPOTS_applications.eps} 
 \caption[Types of Sun SPOT applications]{Types of Sun SPOT applications (adapted from
 \cite{sun_developer:2008})}
 \label{Fig:SunSPOTS_applications}
-\end{figure}   
+\end{figure}  
+
+\emph{On-SPOT applications} are are deployed and
+executed on a remote Sun SPOT that communicates untethered. On-SPOT
+applications is a Java program that runs on the Squawk VM, and is compliant
+with Java ME. 
+
+\emph{On-Host applications} run on the host machine
+(typically a PC), and communicate with the network of Sun SPOTs through a base
+station node that serves no purpose other than to facilitate Sun SPOT-host
+machine communication. 
+  
+The base station node, which is a Sun SPOT itself, communicates with other
+nodes in the network using RF communication and with the host machine via a
+USB link (see Figure \ref{Fig:SunSPOTS_applications}). The host application is
+a Java 2 Standard Edition (J2SE) program.
+  
+ 
 
 \textcolor{green}{Some conclusions about what has been discussed learned and
 what is next}
