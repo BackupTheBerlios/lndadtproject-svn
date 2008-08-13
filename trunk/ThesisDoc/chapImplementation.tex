@@ -274,10 +274,10 @@ This work makes the following contributions:
 \includegraphics[width=\textwidth]{img/DADTLN_workflow.eps} 
 \caption[DADT/LN application workflow]{Workflow for development of an application that uses
 the DADT/LN prototype}
-\label{Fig:DADTLN_architecture}
+\label{Fig:DADTLN_workflow}
 \end{figure} 
 The overview of the workflow involved in using DADTs to enable WSN application
-programming is shown in Figure \ref{Fig:DADTLN_architecture}. The application
+programming is shown in Figure \ref{Fig:DADTLN_workflow}. The application
 developer provides an application layer code for the WSN using a DADT
 language in a series of \emph{.dadt} files (see Section
 \ref{subsec:DADTlanguage} for further details). A preprocessor is used to
@@ -323,7 +323,44 @@ manager, and a network layer entity which is represented by the LN implementatio
 
 \subsection{Architecture}
 
-% FILL THIS IN LATER.
+The architecture of the DADT/LN prototype presented in the Figure
+\ref{Fig:DADTLN_architecture} and contains a few logical layers.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.65]{img/DADTLN_architecture.eps} 
+\caption[DADT/LN architecture]{Architecture of the DADT/LN prototype}
+\label{Fig:DADTLN_architecture}
+\end{figure} 
+
+Upper layer presents distributed application code implemented by an application
+developer. It is written in the DADT specification language (see Section
+\ref{subsec:DADTlanguage}) and later is translated into executable Java code,
+which uses the DADT runtime resided in the next layer as API.
+
+The layer below holds DADT runtime library which provides handling of ADTs and
+DADTs. In particular, the class \emph{DADTMgr} manages binding and unbinding of
+ADT instances into DADT type, provides support for space ADTs through the
+\emph{Site} class, and handles other relevant aspects. 
+The abstract classes \emph{Property} and \emph{Action} represent the
+corresponding concepts, described in the Section \ref{subsec:DADTsConcepts}.
+The class \emph{View} provides support for data and space DADT Views, and
+contains the set of \emph{Property} objects, that define the scope of the
+operations. Properties are organised into an abstract tree which provides the
+logical predicate defining the view, with the leaves representing DADT
+properties and the nodes specifying boolean operators used to compose it.
+
+\textcolor{green}{to be expanded a bit more, 13/08}
+
+The lower layer provides support for interfacing DADT runtime and LN runtime.
+This is achived by using instances of the \emph{LNNodeManager} on each sensor
+device and \emph{LNDistrNodeManager} instance on the controller node. 
+
+Communication between sensor devices and controller node is handled by LN
+runtime layer and from the application's view achieved by use of 
+\emph{RequestMsg} and \emph{ReplyMsg} messages.
+
+
 
 \subsection{DADT specification language} \label{subsec:DADTlanguage}
  
