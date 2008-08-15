@@ -105,8 +105,6 @@ public class SensorNode extends MIDlet implements LNDeliver {
 	} 
 	
 	private CompleteView getReqView(LNSupportRequestMsg msg){
-		
-		
 		return null;
 	}
 

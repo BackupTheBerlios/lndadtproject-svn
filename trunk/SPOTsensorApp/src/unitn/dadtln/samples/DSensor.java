@@ -31,7 +31,7 @@ public class DSensor {
 	 * @return average value of sensor readings
 	 */
 	
-	public Vector average(ExpressionTree expTree) {
+	public double average(ExpressionTree expTree) {
 		
 		//=== DADT request ===
 		
@@ -47,61 +47,22 @@ public class DSensor {
 		
 		// after request was sent into WSN, we wait over a timeout to collect replies from the distributed sensors 
 		// we assume that within the timeout all nodes in the neighbourhood can reply
-			try {
-				Thread.sleep(150);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}		
+		try
+		{
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}		
 		
-		HashMap tempRes = new HashMap();	
-			
-		if (readings != null) {
-
-			Object mapKey = null;
-			int count = 0;
-			double sensorReading = 0;
-			
-			for (Enumeration e = readings.elements(); e.hasMoreElements(); ) 
-			{	
-				ResultData r = (ResultData)e.nextElement();
-				
-				mapKey = r.getSource();
-				
-				if (tempRes.containsKey(mapKey)) 
-				{	
-					count = (Integer) ((Object[]) tempRes.get(mapKey))[0] + 1;
-					sensorReading = (Double) ((Object[]) tempRes.get(mapKey))[1] + (Double) r.getData();
-					
-				}	
-				else
-				{
-					count = 1;
-					sensorReading = (Double)r.getData();
-				}
-				
-				tempRes.put(mapKey, new Object[]{count, sensorReading});
-			}
-			
-			try {
-				Vector results = new Vector();
-
-				for (Object k:tempRes.keySet()){
-					
-					System.out.println("debug info: " + (Double) ((Object[]) tempRes.get(k))[1] + ", " + (Integer) ((Object[]) tempRes.get(k))[0]);
-					
-					double averageValue = (Double) ((Object[]) tempRes.get(k))[1] / (Integer) ((Object[]) tempRes.get(k))[0];
-					results.addElement(new ResultData(averageValue, (String)k));
-				}
-				return results;
-			}
-			catch (Exception e) {
-				return null;
-			}
-			
+		
+		if (readings != null) 
+		{
+			return processCollectedData();
 		}
-		else {
+		else 
+		{
 			System.out.println("DADT request of average over dataview didn't receive any sensor readings");	// [*]
-			return null;
+			return Integer.MIN_VALUE;
 		}
 	}
 	
@@ -145,6 +106,26 @@ public class DSensor {
 		{
 			readings.removeAllElements();
 		}	
+	}
+	
+	private double processCollectedData(){
+	
+		
+		double sensorReading = 0;
+		
+		for (Enumeration e = readings.elements(); e.hasMoreElements(); ) 
+		{	
+			sensorReading += ((ResultData)e.nextElement()).getData();
+		}
+		
+		try 
+		{
+			return sensorReading / readings.size();
+		}
+		catch (Exception e) 
+		{
+			return Integer.MIN_VALUE;
+		}
 	}
 	
 }

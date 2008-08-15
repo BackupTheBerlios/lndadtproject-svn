@@ -67,15 +67,11 @@ public class ClientNode implements LNDeliver {
 			
 			ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP));
 					
-			Vector reqResult = ds.average(expTree); 
+			double reqResult = ds.average(expTree); 
 			
-			if( reqResult != null) {
-				System.out.println("DADT request returned:");			
-				
-				for (Enumeration e = reqResult.elements(); e.hasMoreElements(); ) {
-					ResultData elem = (ResultData) e.nextElement();
-					System.out.println("Sensor type = " + elem.getSource() + ", average value = " + elem.getData());
-				}
+			if( reqResult != Integer.MIN_VALUE) {
+				System.out.println("DADT request returned average value = " + reqResult);			
+
 				ds.clearReadings();													
 			}
 			else
