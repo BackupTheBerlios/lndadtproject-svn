@@ -1,53 +1,102 @@
 package unitn.dadt.LNSupport;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Vector;
 
-
-//import java.io.Serializable;
-//import java.util.LinkedList;
-
-/*import DADT.ResultData;*/
+import unitn.dadt.internals.ResultData;
 
 /**
  * This class defines a message in the sample application
  * It just contains a selector of adt instances (all, any, specific number).
  * 
  */
-public class LNSupportReplyMsg /*implements Serializable*/ {
+public class LNSupportReplyMsg {
    
 	    
 	private static final long serialVersionUID = 1L;
-		
 	private int source;
-	// javeME deosn't support LinkedLists
-	 //private LinkedList/*<ResultData>*/ readings;
-	 
-	 private Vector readings;
+	private Vector readings;
 
+	public LNSupportReplyMsg(DataInputStream deserializer) {
+	
+		try {
+			this.source = deserializer.readInt();
+			
+			this.readings = toResultData(deserializer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Creates a new message.
 	 * 
 	 */
-	 //javaME doen't support LinkedList
-	//public LNSupportReplyMsg(int sourceNodeId, LinkedList/*<ResultData>*/ readings) {
 	 public LNSupportReplyMsg(int sourceNodeId, Vector readings) {
 		this.source = sourceNodeId;
 		this.readings = readings;
-		
-	}
+	 }
 
-	/**
-	 * @return sensor readings stored in this message.
-	 */
-	// javaME doesn't suppot LinkedList 
-	//public LinkedList/*<ResultData>*/ getReadings() {
-	 public Vector getReadings() {
-		System.out.println("getReadings");
-		 return readings;
+	public byte[] toByteArray(){
+		
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream serializer = new DataOutputStream(byteStream);
+		
+		try
+		{	
+			serializer.writeUTF("LNSupportReplyMsg");	// message type
+			serializer.writeInt(source);				// sensor node Id
+			serializer.writeInt(readings.size());		// number of readings sent
+			
+	        for (Enumeration e = readings.elements(); e.hasMoreElements(); ){ 
+		        	
+	        	ResultData el = (ResultData) e.nextElement(); 
+	        	if (el != null){
+		        	
+	        		serializer.writeUTF(el.getSource());	// ADT instance Id
+	        		serializer.writeDouble(el.getData());	// ADT instance reading
+	        	}
+			}
+			serializer.flush();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return byteStream.toByteArray();
 	}
 	
-	public int getReadingsSender() {
-		System.out.println("getReadingsSender");
-		return source;
+	private Vector toResultData(DataInputStream deserializer){
+		Vector resultList = null;
+		
+		try {
+			int vectorSize = deserializer.readInt();
+			if (vectorSize > 0)
+			{
+				resultList = new Vector();
+				for (int i = 0; i < vectorSize; i ++){
+					String ADTInstanceId = deserializer.readUTF();
+					double reading = deserializer.readDouble();
+					
+				    resultList.addElement(new ResultData(reading, ADTInstanceId)); 		
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return resultList;
+	}
+	
+	public Vector getReadings(){
+		return this.readings;
+	}
+	
+	public int getSource(){
+		return this.source;
 	}
 }

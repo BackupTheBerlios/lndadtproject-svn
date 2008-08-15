@@ -22,4 +22,8 @@ public class DSensor_read_Action implements /*Serializable, */ Action  {
 		}
 	}
 	
+	public String toString(){
+		return "DSensor_read_Action()";
+	}
+	
 }

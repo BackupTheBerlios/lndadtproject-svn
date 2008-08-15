@@ -4,11 +4,10 @@
  */
 package unitn.dadt.LNSupport;
 
-/*
 import polimi.ln.nodeAttributes.Node;
+import polimi.ln.runtime.LNDeliver;
 import polimi.ln.runtime.LogicalNeighborhoods;
-*/
-import java.io.IOException;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -22,6 +21,7 @@ import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.ResultData;
 import unitn.dadt.internals.Action;
 import unitn.dadt.internals.DADTMgr;
+import unitn.dadtln.samples.SensorNode;
 
 /**
  * Node manager (ADTs) that provides link between DADT layer and LN communication layer on the nodes. 
@@ -30,16 +30,28 @@ import unitn.dadt.internals.DADTMgr;
 public class NodeMgr extends DADTMgr{
     
 	protected LNADTIdentification adtMgrID; 					// ID of the ADT instance
-	    
 	protected NodeMgr spaceMgr;
+
+	private int sensorNodeId;
+	private LogicalNeighborhoods ln;
 	
 	
 	/**
 	 * Constructor of the node manager
 	 * Specifies ID of the ADT instance
 	 */
-	public NodeMgr(){
+	public NodeMgr(SensorNode sensorNodeAbstraction){
 		adtMgrID = new LNADTIdentification();
+		
+		sensorNodeId = System.getProperty("IEEE_ADDRESS").hashCode();
+		
+		
+		// Instantiating the logical node
+		Node sensorDevice = new Node(sensorNodeId, sensorNodeAbstraction.setLNAttributes(), 1);
+		// Setting up the LN run-time using the logical node instance
+		// previously instantiated
+		ln = new LogicalNeighborhoods(sensorDevice);
+		ln.setReceiver(sensorNodeAbstraction);
 	}
 	
 	public NodeMgr(boolean isSpaceADTsAvailable) {
@@ -85,65 +97,28 @@ public class NodeMgr extends DADTMgr{
      * @param ln Logical neighbourhood object
 	 * @param nodeInfo debug information about simulated node
 	 */
-    public void processRequestMsg(Object reqMsg /*, Vector ADTinstances */, RadiogramConnection rCon, Datagram dg, Datagram dgReply) {
+    public void processRequestMsg(Object reqMsg, Action reqAction, CompleteView DADTview ) {
     								
     	try
     	{							
+    		// read requested DADT
+    		String DADTClassName = 	((LNSupportRequestMsg)reqMsg).getDADTClassName();		
 			
-			Vector resultList = new Vector();
-			
-			// collect parameters of the request
-			Action reqAction = ((LNSupportRequestMsg)reqMsg).getAction();					// action to be executed
-				//System.out.println("reqAction = " + reqAction.toString());
-			
-			CompleteView DADTview = ((LNSupportRequestMsg)reqMsg).getDADTView();						// defined DADT dataview
-				//System.out.println("dataview = " + dataview.toString());
-			
-			String DADTClassName = 	((LNSupportRequestMsg)reqMsg).getDADTClassName();					// requested DADT
-				//System.out.println("DADTClassName = " + DADTClassName);
-			
-				
-			Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		//ADT instances which satisfy the given DADT
-			
-			
-			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
-			    resultList.addElement((ResultData) reqAction.evaluate(e.nextElement())); 		// perform action over selected ADT instances
-			}	
+    		//filter ADT instances which satisfy the given DADT View
+			Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
 
-			
-		    /*//temporary while LN is not available
-		    sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList); //, ln, nodeInfo);	// send reply message
-		    */			
-			
-			dgReply.reset();
-			dgReply.setAddress(dg);
-        	
-			Enumeration en = resultList.elements();
+			//perform required DADT Action for the selected ADT instances
+			Vector resultList = null;
+			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
+			    resultList = new Vector();
+				resultList.addElement((ResultData) reqAction.evaluate(e.nextElement())); 		
+			}	
 			   
-			if (en.hasMoreElements()) {
-				
-		        for (Enumeration e = resultList.elements(); e.hasMoreElements(); ){ 
-		        	
-		        	ResultData el = (ResultData) e.nextElement(); 
-		        	if (el != null){
-			        	double data = el.getData();
-			        	String src = el.getSource();
-	
-			        	System.out.println("Sending: " + data + ", " + src);
-			        	
-			            dgReply.writeDouble(data);		            	
-			            dgReply.writeUTF(src);
-		        	}
-		     	}
-		        //rCon.send(dgReply);
-		        
-			}
-			else {
-				System.out.println("Nothing to send");
+			// if DADT Action requires sending a reply - proceed with constructing reply message 
+			if (resultList != null) {
+				sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList, ln);	// send reply message
 			}
 		
-	  		
-
     	} catch (Exception e) {
     		System.out.println("processRequestMsg " + e.getMessage());
     	}
@@ -157,8 +132,8 @@ public class NodeMgr extends DADTMgr{
 	 * @param 
 	 */
     
-    /*
-    private void sendReplyMsg(int destNodeId, Vector resultList , LogicalNeighborhoods ln, Node nodeInfo) {
+    
+    private void sendReplyMsg(int destNodeId, Vector resultList, LogicalNeighborhoods ln) {
 		
 		//---- debug message
 		for(Enumeration e = resultList.elements(); e.hasMoreElements(); )
@@ -168,10 +143,12 @@ public class NodeMgr extends DADTMgr{
 		}
 		//----
 		
+		// construct reply message
+		LNSupportReplyMsg replyMsg = new LNSupportReplyMsg(sensorNodeId, resultList); 
 		
-		ln.sendReply(new LNSupportReplyMsg(nodeInfo.getMyId(), resultList), destNodeId);	// send reply message over LN
-		
+		// send reply message over LN
+		ln.sendReply(replyMsg.toByteArray(), destNodeId);	
 	}
-	*/
+	
 	
 }

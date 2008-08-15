@@ -86,6 +86,5 @@ public abstract class CompleteView implements OperatorFactory /*, Serializable*/
      * @see DADT.OperatorFactory#getOperator(java.lang.String, DADT.Action, java.lang.Object)
      */
     public abstract Operator getOperator(String operator, Action action, Object operatorParameter);
-    //public abstract DIterator getIterator(String iterator, Object operatorParameter);
-
+   
 }

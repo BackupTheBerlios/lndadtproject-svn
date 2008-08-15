@@ -20,5 +20,8 @@ public class DSensor_reset_Action implements /*Serializable, */ Action  {
 			return null;
 		}
 	}
+	public String toString(){
+		return "DSensor_reset_Action()";
+	}
 	
 }

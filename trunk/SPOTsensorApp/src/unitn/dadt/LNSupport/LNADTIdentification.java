@@ -26,17 +26,6 @@ import unitn.dadt.internals.RuntimeReference;
 public class LNADTIdentification implements Identificator {
 
 	
-	///---- re-use
-    //We need to use maps as it should be fast in both ways (and also the code is nicer ;-)
-    //we need to go fromIDtoADTs whenever we use an operator that address the single instance
-    //we need to go fromADTsToIDs whenever we return values from invocation (as IDs are contained in ResultData)
-    
-	/*
-	 * javaME doesn't support Map
-	Map fromIDtoADTs = new HashMap() ;
-    Map fromADTsToIDs = new HashMap();
-    */
-    ///----
 	Hashtable fromIDtoADTs = new Hashtable() ;
 	Hashtable fromADTsToIDs = new Hashtable();
     
@@ -55,7 +44,6 @@ public class LNADTIdentification implements Identificator {
 	/**
 	 * @see DADT.Identificator#getADT(java.io.Serializable)
 	 */
-	//public Object getADT(Serializable adtId) {
 	public Object getADT(Object adtId) {
 
         Object object = fromIDtoADTs.get(adtId);
@@ -66,7 +54,6 @@ public class LNADTIdentification implements Identificator {
 	/**
 	 * @see DADT.Identificator#getID(java.lang.Object)
 	 */
-	//public Serializable getID(Object adtInstance) {
 	public Object getID(Object adtInstance) {
 		
 		RuntimeReference runtimeRef = new RuntimeReference(this);

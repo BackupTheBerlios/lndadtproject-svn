@@ -10,8 +10,18 @@ import polimi.ln.neighborhoodDefs.ConjunctiveNeighborhood;
 import polimi.ln.neighborhoodDefs.Neighborhood;
 */
 
+import java.util.Vector;
+
+import polimi.ln.neighborhoodDefs.ConjunctiveNeighborhood;
+import polimi.ln.neighborhoodDefs.Neighborhood;
+import polimi.ln.neighborhoodDefs.Predicate;
+import polimi.ln.nodeAttributes.Node;
+import polimi.ln.runtime.LogicalNeighborhoods;
 import unitn.dadt.internals.Action;
+import unitn.dadt.internals.DataView;
+import unitn.dadt.internals.ExpressionTree;
 import unitn.dadt.internals.Operator;
+import unitn.dadt.internals.Property;
 import unitn.dadt.LNSupport.LNCompleteView;
 
 
@@ -21,37 +31,56 @@ import unitn.dadt.LNSupport.LNCompleteView;
  * @author G.Khasanova
  */
 public class DistrNodeMgr {
-    
+    private int clientNodeId = 0;
+	
 	private Operator selector;
+	private LogicalNeighborhoods ln;
 	
 	/**
  	 * @param predicates 
  	 * @param dataview 
  	 * @param pcNodeId
- 	 * @param action 
+ 	 * @param DADTaction 
  	 */
-	/*
- 	public void requestData(String selectorDescr, AtomicPredicate[] predicates, LNCompleteView DADTview, int pcNodeId, Action action, String DADTClassName) {
+	
+ 	public void performDADTRequest(String selectorDescr, ExpressionTree expTree, Action DADTaction, String DADTClassName) {
  		
- 		selector = DADTview.getOperator(selectorDescr, action, null);
  		
- 		selector.performRemoteLN(DADTview, (Neighborhood)(new ConjunctiveNeighborhood (predicates)), DADTClassName, pcNodeId);
+		// define DADT dataview over given ExpressionTree						
+		LNCompleteView lnView = new LNCompleteView(new DataView(expTree));
+		
+		// define LN predicates over DADT dataview
+		Predicate[] LNpredicates = defineLNPredicates(expTree);
+ 		
+ 		// specify a selector
+ 		selector = lnView.getOperator(selectorDescr, DADTaction, null);
+ 		
+ 		// perform a remote execution of DADT action over nodes in the constructed LN
+ 		selector.performRemoteLN(lnView, (Neighborhood)(new ConjunctiveNeighborhood (LNpredicates)), DADTClassName, getLN(), clientNodeId);
 
  	}
- 	*/
  	
+	// Setting up the LN run-time using the logical node instance
+ 	private LogicalNeighborhoods getLN(){
+		
+ 		if (ln == null){
+ 			ln = new LogicalNeighborhoods(new Node(clientNodeId, null, 1));
+ 		}
+ 		return ln;
+ 	}
 	
+ 	
     /**
 	 * @param expTree
 	 * @param masterProperty 
 	 * @return
 	 */
- 	/*
-	public static AtomicPredicate[] definePredicates(ExpressionTree expTree, Property masterProperty){
+ 	
+	public static Predicate[] defineLNPredicates(ExpressionTree expTree){
 		
-		ArrayList predicates =  expTree.traverseExpTree(new ArrayList(), null, masterProperty.getClassName());
-		return (AtomicPredicate[]) predicates.toArray(new AtomicPredicate[predicates.size()]);  
-
+		Predicate[] LNpredicates =  expTree.traverseExpTree(new Vector());
+		
+		return LNpredicates;  
 	}
-	*/
+	
 }

@@ -6,6 +6,10 @@ package unitn.dadt.LNSupport;
 
 import java.util.Vector;
 
+import polimi.ln.neighborhoodDefs.Neighborhood;
+import polimi.ln.nodeAttributes.Node;
+import polimi.ln.runtime.LogicalNeighborhoods;
+
 /*
 import polimi.ln.examples.swans.SimulationReferences;
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
@@ -34,25 +38,15 @@ public class SelectorAll extends SelectionOperator {
      * @return an Object containing a Collection <ResultData>
      */
 
-    /*
-    public Object performRemoteLN(CompleteView view, Neighborhood nodes, String DADTClassName, int simNodeId) {
+    
+    public Object performRemoteLN(CompleteView view, Neighborhood nodes, String DADTClassName, LogicalNeighborhoods ln, int senderId) {
         try 
         {
-            
-        	// get reference to the logical neighborhood 
-    		LogicalNeighborhoods ln = SimulationReferences.getLN(simNodeId);		//[*]
-    		SimulationReferences.getNodeInfo(simNodeId).debugPrint("Request is sent");		//[*]
-
-    		
-    		SimulationReferences.getNodeInfo(simNodeId).debugPrint("DADT class name is " + DADTClassName);		//[*]
-
-    		
-    		// PC-node sends request message into logical neighborhood (WSN)
-    		ln.send(new LNSupportRequestMsg(simNodeId, 
-    										view, 
-    										action,
-    										DADTClassName), 
-    										new Neighborhood[] { nodes });
+        	// create request message
+        	LNSupportRequestMsg reqMsg = new LNSupportRequestMsg(senderId, view, action.toString(), DADTClassName);
+					
+        	// send message over logical neighbourhood
+    		ln.send(reqMsg.toByteArray(), new Neighborhood[] { nodes });
             
             return null;
             
@@ -63,7 +57,7 @@ public class SelectorAll extends SelectionOperator {
         }
         return null;
     }
-*/
+
 
 	public Vector performActionLocally(Vector ADTs) {
 		return super.evaluateAction(ADTs);

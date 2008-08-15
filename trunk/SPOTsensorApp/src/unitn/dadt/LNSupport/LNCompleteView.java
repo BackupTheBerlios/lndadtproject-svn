@@ -13,7 +13,7 @@ import unitn.dadt.internals.DataView;
 import unitn.dadt.internals.Operator;
 
 
-public class LNCompleteView extends CompleteView /*implements Serializable*/{
+public class LNCompleteView extends CompleteView {
 
 
     /**

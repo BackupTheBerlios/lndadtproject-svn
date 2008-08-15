@@ -22,25 +22,19 @@
 
 package unitn.dadtln.samples;
 
-//import org.sunspotworld.demo.AccelMonitor;
-import org.sunspotworld.demo.util.*;
 
-/*
-import polimi.ln.runtime.messages.ReplyMsg;
-*/
+import polimi.ln.runtime.LNDeliver;
+
 import unitn.dadt.internals.Action;
-import unitn.dadt.internals.ExpressionTree;
+import unitn.dadt.internals.CompleteView;
+
 
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ITriColorLED;
-import com.sun.spot.sensorboard.peripheral.LEDColor;
-
-import com.sun.spot.io.j2me.radiogram.*;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.microedition.io.*;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -59,17 +53,12 @@ import unitn.dadt.LNSupport.NodeMgr;
 import unitn.dadt.LNSupport.LNSupportRequestMsg;
 import unitn.dadt.internals.DataView;
 
-public class SensorNode extends MIDlet implements //LNDeliver,
-        			PacketTypes {
+public class SensorNode extends MIDlet implements LNDeliver {
     
 	ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
 	  
     public Vector ADTinstances = new Vector(); // collection of ADT instances belonging to the sensor node
-    private NodeMgr ADTmgr = new NodeMgr(); // ADT manager that coordinates sensors' readings of ADT instances  
-    
-    RadiogramConnection rCon = null;
-    Datagram dg = null;
-    Datagram dgReply = null;
+    private NodeMgr ADTmgr = new NodeMgr(this); // ADT manager that coordinates sensors' readings of ADT instances  
     
     public void init(){
   
@@ -84,78 +73,18 @@ public class SensorNode extends MIDlet implements //LNDeliver,
 
 
 
-    /**
-     * Main application run loop. Called by Spotlet.
-     */
-    public void run() {
-    	rCon = null;
-        dg = null;
-        
-        try {
-            // Open up a broadcast connection to the host port
-            // where the 'on Desktop' portion of this demo is listening
-            rCon = (RadiogramConnection) Connector.open("radiogram://:" + BROADCAST_PORT);
-            dg = rCon.newDatagram(rCon.getMaximumLength());  // only sending 12 bytes of data
-            dgReply = rCon.newDatagram(rCon.getMaximumLength()); 
-            
-           // Main data collection loop
-        	while (true) {
-            
-        		
-                // Read sensor sample received over the radio
-                rCon.receive(dg);
-                	// create replyMsg for DADT //
-               	leds[7].setColor(LEDColor.GREEN);
-               	leds[7].setOn();
-               	
-               	handlePacket(SEND_TEMP_DATA_REQ, dg);
-            
-        	}
-            
-        } catch (Exception e) {
-            System.err.println("Caught " + e + " in connection initialization.");
-            System.exit(1);
-        }
-    }
-
     public void deliver(Object msg) {
 		if (msg instanceof LNSupportRequestMsg) 
 		{
-			//get sensor readings (perform specified action) from ADTinstances 
+			Action action = getReqAction((LNSupportRequestMsg) msg);
+			CompleteView view = getReqView((LNSupportRequestMsg)msg); 
 			
-			ADTmgr.processRequestMsg(msg/*, ADTinstances*/, rCon, dg, dgReply); //, ln, info); // process request message 
+			ADTmgr.processRequestMsg(msg, action, view); // process request message 
 			leds[7].setOff();
 		} 
 	}
 
 	
-	// TEMPORARY, before LN will be available
-	public void handlePacket(byte type, Datagram pkt) {
-
-		
-		DataView tempDV = new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-										.and(new ExpressionTree(new DSensor_isActive_Property()).not()));
-			
-						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-						//	.and((new ExpressionTree(new DSensor_isActive_Property())).not())
-		   				//	.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
-		   				//	.and((new ExpressionTree(new DSensor_isActive_Property())).not())));
-						
-						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-						//			.and(new ExpressionTree(new DSensor_isActive_Property()))); 
-						
-						//new DataView(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
-		
-		LNCompleteView tempCompleteView = new LNCompleteView(tempDV); 
-		
-		Action tempAction = new DSensor_reset_Action(); //new DSensor_read_Action();
-		String DADTClassName = "unitn.dadtln.samples.DSensor";
-		
-		LNSupportRequestMsg tempMsg = new LNSupportRequestMsg(pkt.getAddress(), tempCompleteView, tempAction, DADTClassName);
-		deliver(tempMsg);
-	
-	}
-
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {
 		// TODO Auto-generated method stub
 		
@@ -169,7 +98,56 @@ public class SensorNode extends MIDlet implements //LNDeliver,
 
 	protected void startApp() throws MIDletStateChangeException {
 		init();
-		run();
+	}
+	
+	private Action getReqAction(LNSupportRequestMsg msg){
+		// this method can't be hided in NodeMgr, because it is application specific (to be generated by JADT preprocessor)
+		String actionName = msg.getAction();
+		if (actionName == "DSensor_read_Action")
+		{	
+			return new DSensor_read_Action();
+		}		
+		else if (actionName == "DSensor_reset_Action"){
+			return new DSensor_reset_Action();
+		}
+		return null;
+	} 
+	
+	private CompleteView getReqView(LNSupportRequestMsg msg){
+		
+		
+		return null;
 	}
 
+
+	/**
+	 * Specifies attributes of the ADT instances (over LN)
+	 */
+	public Vector setLNAttributes() {
+		return null;
+		/*
+		Vector attributes = new Vector(); // attributes of the sensor node (and its instances) to be used by LN layer
+	
+		Object[] onBoardSensors = new Object[ADTinstances.size()];
+	
+		int idx = 0;
+		for (Object s : ADTinstances) 
+		{
+	    	((Sensor)s).collectAttributesForLN(attributes);	// collects all attributes among all ADT instances of SensorNode
+		
+	    	onBoardSensors[idx] = Sensor.typeToStr(((Sensor)s).type);
+			idx ++;
+		}
+		
+		attributes.add(new SetAttribute("OnBoardSensors", onBoardSensors));
+    	
+		return attributes;
+		*/
+	}
+
+	public void deliver(byte[] data) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

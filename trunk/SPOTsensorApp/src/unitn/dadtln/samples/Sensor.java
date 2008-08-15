@@ -160,9 +160,10 @@ public class Sensor {
     public boolean isActive() {
     	
     
-    	
+    	this.active = false;
+    	/*
     	this.active = (generateNextValue() >= 0.25); 
-    	
+    	*/
     	
     	if (this.active) 
     		System.out.println("Sensor is active (sensor type is = " + this.type + ")");

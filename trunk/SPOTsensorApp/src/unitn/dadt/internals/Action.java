@@ -12,4 +12,6 @@ package unitn.dadt.internals;
  */
 public interface Action {
     public Object evaluate(Object o);
+    
+    public String toString();
 }

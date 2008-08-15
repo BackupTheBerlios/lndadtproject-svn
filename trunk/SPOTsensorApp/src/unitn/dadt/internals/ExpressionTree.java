@@ -6,21 +6,14 @@ package unitn.dadt.internals;
 
 import java.util.Vector;
 
-/* javaME doesn't support any of these
- 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-*/
-
-/*import polimi.ln.neighborhoodDefs.AtomicPredicate;*/
+import polimi.ln.neighborhoodDefs.Predicate;
 
 
 
 /**
  * @author migliava, G.Khasanova
  */
-public class ExpressionTree /*implements Serializable */{
+public class ExpressionTree{
     
     //
 	private static final long serialVersionUID = 8524266403127534553L;
@@ -36,8 +29,7 @@ public class ExpressionTree /*implements Serializable */{
     
     ExpressionTree op1;
     ExpressionTree op2;
-    
-    public String[] propertyDescription; // 
+
     
     protected ExpressionTree(int boolOp) { this.boolOp = boolOp; }
     
@@ -100,38 +92,29 @@ public class ExpressionTree /*implements Serializable */{
 	 * @param masterPropertyName presents a name of the property class (to define "master" predicate)
 	 * @return generated list of atomic predicates, that is used to build Logical Neighbourood.
 	 */
-	public  Vector traverseExpTree(Vector predicateList, Property masterProperty, String masterPropertyName) {
+	public Predicate[] traverseExpTree(Vector predicateList) {
+		
 		switch(boolOp) 
 		{
 			case(LEAF): 
 			{
-				predicateList = processLeaf(predicateList, property, masterProperty, masterPropertyName);
-				return predicateList;  
+				predicateList = processLeaf(predicateList, property);
+				Predicate[] resPredicateList = null;
+				predicateList.copyInto(resPredicateList);  
 			}
-			case(AND) :
+			case(AND): case(OR): case (NOT): 
 			{
-				//"master" predicate can be defined in AND-branches, and in this case it may take its sibling as a child predicate
+				op1.traverseExpTree(predicateList);
 				if (op2 != null)
 				{
-					Property neighbProperty = op2.property;
-					op1.traverseExpTree(predicateList, neighbProperty, masterPropertyName);
-					op2.traverseExpTree(predicateList, op1.property, masterPropertyName);
+					op2.traverseExpTree(predicateList);
 				}
-				else
-					op1.traverseExpTree(predicateList, null, masterPropertyName);
-				return predicateList;      
-			}
-			case(OR): case (NOT):
-			{
-				op1.traverseExpTree(predicateList, null, masterPropertyName);
-				if (op2 != null)
-				{
-					op2.traverseExpTree(predicateList, null, masterPropertyName);
-				}
-				return predicateList;  
+				Predicate[] resPredicateList = null;
+				predicateList.copyInto(resPredicateList);  
 			}
 
 		}
+		
 		return null;		
 	}
 
@@ -146,20 +129,8 @@ public class ExpressionTree /*implements Serializable */{
 	 * @param  masterPropertyName name of the "master" property class
 	 * @return list of predicates
 	 */
-	private Vector processLeaf(Vector predicateList, Property property, Property masterProperty, String masterPropertyName)
+	private Vector processLeaf(Vector predicateList, Property property)
 	{
 		return predicateList;
-		//STUB
 	}
-	/*
-	private ArrayList processLeaf(ArrayList predicateList, Property property, Property masterProperty, String masterPropertyName){
-		
-		if ((masterProperty != null) && (masterProperty.getClassName() == masterPropertyName))
-			predicateList.add(masterProperty.getDescriptionForLN((Object)property));
-		else
-			predicateList.add(property.getDescriptionForLN(null));
-			
-		return predicateList; 
-	}
-	*/
 }
