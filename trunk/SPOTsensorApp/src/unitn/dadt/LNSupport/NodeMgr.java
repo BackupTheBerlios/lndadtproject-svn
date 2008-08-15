@@ -97,16 +97,18 @@ public class NodeMgr extends DADTMgr{
      * @param ln Logical neighbourhood object
 	 * @param nodeInfo debug information about simulated node
 	 */
-    public void processRequestMsg(Object reqMsg, Action reqAction, CompleteView DADTview ) {
+    public void processRequestMsg(LNSupportRequestMsg reqMsg, Action reqAction, CompleteView DADTview ) {
     								
     	try
     	{							
     		// read requested DADT
-    		String DADTClassName = 	((LNSupportRequestMsg)reqMsg).getDADTClassName();		
+    		String DADTClassName = 	reqMsg.getDADTClassName();		
 			
     		//filter ADT instances which satisfy the given DADT View
-			Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
-
+			//Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
+    		Vector reqADTInstances = super.getInstances(DADTClassName);
+    		
+    		
 			//perform required DADT Action for the selected ADT instances
 			Vector resultList = null;
 			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
@@ -116,7 +118,7 @@ public class NodeMgr extends DADTMgr{
 			   
 			// if DADT Action requires sending a reply - proceed with constructing reply message 
 			if (resultList != null) {
-				sendReplyMsg(((LNSupportRequestMsg) reqMsg).getSender(), resultList, ln);	// send reply message
+				sendReplyMsg(reqMsg.getSender(), resultList, ln);	// send reply message
 			}
 		
     	} catch (Exception e) {

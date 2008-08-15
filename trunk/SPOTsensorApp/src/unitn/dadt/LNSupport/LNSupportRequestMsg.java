@@ -2,7 +2,9 @@ package unitn.dadt.LNSupport;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
 import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.Action;
@@ -32,6 +34,18 @@ public class LNSupportRequestMsg {
 		this.action = action;
 
 		this.DADTClassName = DADTClassName;
+	}
+	
+	public LNSupportRequestMsg(DataInputStream deserializer) {
+		
+		try {
+			this.sender = deserializer.readInt();
+			this.action = deserializer.readUTF();
+			this.DADTClassName = deserializer.readUTF();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

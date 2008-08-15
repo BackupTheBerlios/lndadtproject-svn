@@ -5,6 +5,12 @@
 package unitn.dadtln.samples;
 
 import java.util.Random;
+import java.util.Vector;
+
+import polimi.ln.nodeAttributes.DoubleAttribute;
+import polimi.ln.nodeAttributes.IntegerAttribute;
+import polimi.ln.nodeAttributes.BooleanAttribute;
+import polimi.ln.nodeAttributes.dynamic.DynamicBooleanAttribute;
 
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ILightSensor;
@@ -14,11 +20,7 @@ import com.sun.spot.sensorboard.peripheral.LEDColor;
 import com.sun.spot.util.Utils;
 
 
-/*
-import polimi.ln.nodeAttributes.DoubleAttribute;
-import polimi.ln.nodeAttributes.DynamicBooleanAttribute;
-import polimi.ln.nodeAttributes.SetMapAttribute;
-*/
+
 
 /**
  * @author G.Khasanova
@@ -185,20 +187,18 @@ public class Sensor {
      */
     //TODO: we can't have a sensor node with sensors of the same type in this case! 
     
-    /*
-    public Vector collectAttributesForLN(Vector attributes) {
+    public void collectAttributesForLN(Vector attributes) {
+    	
+    	attributes.addElement(new IntegerAttribute("type", type));
+    	attributes.addElement(new DoubleAttribute("precision", precision));
+		attributes.addElement(new DynamicBooleanAttribute("isActive", new LNSensorIsActiveProvider(this)));
 
-    	attributes.add(new SetMapAttribute(typeToStr(type)+"_precision", new DoubleAttribute("precision", precision)));
-		attributes.add(new SetMapAttribute(typeToStr(type)+"_isActive", new DynamicBooleanAttribute("isActive", new LNSensorIsActiveProvider(this))));
-
-		return attributes;
     }
-    */
     
     /**
      * Generate symbolic name of the sensor type
      * @param type sensor type
-     * @return name of teh sensor type
+     * @return name of the sensor type
      */
     public static String typeToStr(int type) {
     	switch (type) {

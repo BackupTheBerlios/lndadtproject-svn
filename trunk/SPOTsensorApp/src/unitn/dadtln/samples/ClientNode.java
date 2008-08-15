@@ -55,12 +55,8 @@ public class ClientNode implements LNDeliver {
 
 	public static void main(String[] args)  {
 
-		//---
-		InitClientNodeSimData();
-		//---
-		
 		ds = new DSensor(); 						// distributed Sensor data type (DADT)
-		ds.clearReadings();													// [*]
+		ds.clearReadings();							
 
 		
 		//runRequest();
