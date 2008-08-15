@@ -22,7 +22,15 @@ public abstract class SelectionOperator implements Operator {
         this.action = a;
     }
 
-    /**
+
+    
+    public SelectionOperator() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	/**
      * This utility function is used to invoke the action of the operator to the
      * adt instances passed as a parameter and return the ResultData[] of the invocation
      * 

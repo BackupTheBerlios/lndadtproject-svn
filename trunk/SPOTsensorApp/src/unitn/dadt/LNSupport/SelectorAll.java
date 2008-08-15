@@ -25,12 +25,21 @@ import unitn.dadt.internals.SelectionOperator;
 
 public class SelectorAll extends SelectionOperator {
 	
+	String actionId;
 	/**
      * @param action
+	 * @return 
      */
+	
     public SelectorAll(Action action) {
-        
-    	super(action);						// initialise with a defined action
+        super(action);
+    }
+
+	
+    public SelectorAll(String actionId) {
+    	super();						// Initialize with a defined action
+    	this.actionId = actionId;
+    	
     }
     
     /** 
@@ -43,7 +52,7 @@ public class SelectorAll extends SelectionOperator {
         try 
         {
         	// create request message
-        	LNSupportRequestMsg reqMsg = new LNSupportRequestMsg(senderId, view, action.toString(), DADTClassName);
+        	LNSupportRequestMsg reqMsg = new LNSupportRequestMsg(senderId, view, actionId, DADTClassName);
 					
         	// send message over logical neighbourhood
     		ln.send(reqMsg.toByteArray(), new Neighborhood[] { nodes });

@@ -56,7 +56,7 @@ public class LNCompleteView extends CompleteView {
 	 * (non-Javadoc)
 	 * @see DADT.CompleteView#getOperator(java.lang.String, DADT.Action, java.lang.Object)
 	 */
-	public Operator getOperator(String operatorDescr, Action action, Object operatorParameter) {
+	public Operator getOperator(String operatorDescr, String action, Object operatorParameter) {
 		if (operatorDescr == "all")
  		{	
  			return new SelectorAll(action);
@@ -66,6 +66,13 @@ public class LNCompleteView extends CompleteView {
  			// return new SelectorAny(action); 
  		}
 		System.out.println("Operator " + operatorDescr + " is not supported by the prototype");
+		return null;
+	}
+
+
+	public Operator getOperator(String operator, Action action,
+			Object operatorParameter) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

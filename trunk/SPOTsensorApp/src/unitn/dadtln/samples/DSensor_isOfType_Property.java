@@ -1,19 +1,12 @@
 package unitn.dadtln.samples;
 
-/* javaME doesn't support these
-import java.io.Serializable;
-import java.util.ArrayList;
-*/
 
-import unitn.dadt.internals.Property;
-/*
-import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.IntegerSimplePredicate;
-import polimi.ln.neighborhoodDefs.SetMapMembershipPredicate;
-import polimi.ln.neighborhoodDefs.SetMembershipPredicate;
-*/
+import polimi.ln.neighborhoodDefs.Predicate;
+import unitn.dadt.internals.Property;
 
-public class DSensor_isOfType_Property implements /*Serializable,*/ Property {
+
+public class DSensor_isOfType_Property implements Property {
 
 	public Class getDADTClass() {
 		return null;//return DSensor.class;
@@ -35,36 +28,20 @@ public class DSensor_isOfType_Property implements /*Serializable,*/ Property {
 	/*
 	 * To be used later in LN simulation to create predicates
 	 */
-	/*
-	public AtomicPredicate getDescriptionForLN(Object o) {
+	
+	public Predicate getDescriptionForLN() {
 		
-		
-		if (o == null)
-		{
-			return(new SetMembershipPredicate(Sensor.typeToStr(type), 
+/*
+		return(new SetMembershipPredicate(Sensor.typeToStr(type), 
 							SetMembershipPredicate.IS_IN,
 							"OnBoardSensors"));
-		}
-		else 
-		{
-			
-		
-			AtomicPredicate predicateValue = null;
-			String attrName = Sensor.typeToStr(type);
-			
-			predicateValue =  ((Property)o).getDescriptionForLN(null);
-			attrName = attrName + "_" + ((Property)o).getClassName();
-						
-			return(new SetMapMembershipPredicate(predicateValue, 
-											  SetMembershipPredicate.IS_IN, 
-											  attrName));
-		}
+*/
 
-		//return( new IntegerSimplePredicate ("type", IntegerSimplePredicate.EQUAL, type));
+		return( new IntegerSimplePredicate ("type", IntegerSimplePredicate.EQUAL, type));
 	} 
-	*/
+	
     public String toString() {
-        return "isOfType_Property (type is " + type + ")";
+        return "DSensor_isOfType_Property";
     }
     
     public String getClassName()

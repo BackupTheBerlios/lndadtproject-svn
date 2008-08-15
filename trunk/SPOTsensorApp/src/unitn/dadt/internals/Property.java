@@ -4,8 +4,8 @@
  */
 package unitn.dadt.internals;
 
-/*import polimi.ln.neighborhoodDefs.AtomicPredicate;*/
 
+import polimi.ln.neighborhoodDefs.Predicate;
 
 /**
  * @author migliava
@@ -17,6 +17,6 @@ public interface Property {
     public boolean evaluate(Object o);
     public Class getDADTClass();
     
-    //*public AtomicPredicate getDescriptionForLN(Object o); //this method is used to support communication over LN 
+    public Predicate getDescriptionForLN(); //this method is used to support communication over LN 
     public String getClassName(); 				  
 }

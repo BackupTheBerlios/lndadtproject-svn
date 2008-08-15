@@ -10,9 +10,11 @@ import java.util.HashMap;
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.BooleanSimplePredicate;
 */
+import polimi.ln.neighborhoodDefs.BooleanSimplePredicate;
+import polimi.ln.neighborhoodDefs.Predicate;
 import unitn.dadt.internals.Property;
 
-public class DSensor_isActive_Property implements /*Serializable,*/ Property {	
+public class DSensor_isActive_Property implements Property {	
 	
 	
 	public Class getDADTClass() {
@@ -34,16 +36,16 @@ public class DSensor_isActive_Property implements /*Serializable,*/ Property {
 	/*
 	 * To be used later in LN simulation to create predicates
 	 */
-	/*
-	public AtomicPredicate getDescriptionForLN(Object o) {
+	
+	public Predicate getDescriptionForLN() {
 		
 		return(new BooleanSimplePredicate ("isActive", BooleanSimplePredicate.EQUAL, true));
 		
 	} 
-	*/
-
+	
+	
     public String toString() {
-        return "isActive_Property ";
+        return "DSensor_isActive_Property";
     }
     
     public String getClassName()

@@ -45,10 +45,6 @@ public class LNSupportRequestMsg {
 		return view;
 	}
 	
-	/**
-	 * @return the original message sender (used to reply back).
-	 */
-	
 	public int getSender() {
 		return sender;
 	}
@@ -58,12 +54,19 @@ public class LNSupportRequestMsg {
 	}
 	
 	public byte[] toByteArray(){
+		
+		//TODO send information about DADT View
+		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		try
 		{
 			DataOutputStream serializer = new DataOutputStream(byteStream);
-			serializer.writeUTF("Hello there!");
-			serializer.writeInt(0);
+			
+			serializer.writeUTF("LNSupportRequestMsg");
+			serializer.writeInt(sender);
+			serializer.writeUTF(action);
+			serializer.writeUTF(DADTClassName);
+			
 			serializer.flush();
 		} catch (Exception e) {
 			e.printStackTrace();

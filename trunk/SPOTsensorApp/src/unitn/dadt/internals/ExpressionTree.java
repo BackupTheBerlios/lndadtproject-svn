@@ -23,6 +23,10 @@ public class ExpressionTree{
     public final static int AND = 2;
     public final static int OR = 3;
     
+    
+    public final static int traverseLNPredicateDescr = 4;
+    public final static int traverseTreeDescr = 5;
+    
     int boolOp;
     
     Property property;
@@ -92,30 +96,46 @@ public class ExpressionTree{
 	 * @param masterPropertyName presents a name of the property class (to define "master" predicate)
 	 * @return generated list of atomic predicates, that is used to build Logical Neighbourood.
 	 */
-	public Predicate[] traverseExpTree(Vector predicateList) {
+	public Object[] traverseExpTree(Vector list, int traverseType) {
+		
+		if (traverseType == traverseTreeDescr){
+			list.addElement(boolOp);
+		}
 		
 		switch(boolOp) 
 		{
 			case(LEAF): 
 			{
-				predicateList = processLeaf(predicateList, property);
-				Predicate[] resPredicateList = null;
-				predicateList.copyInto(resPredicateList);  
+				list = processLeaf(list, traverseType);
+				break;
 			}
 			case(AND): case(OR): case (NOT): 
 			{
-				op1.traverseExpTree(predicateList);
+				op1.traverseExpTree(list, traverseType);
 				if (op2 != null)
 				{
-					op2.traverseExpTree(predicateList);
+					op2.traverseExpTree(list, traverseType);
 				}
-				Predicate[] resPredicateList = null;
-				predicateList.copyInto(resPredicateList);  
+				break;
 			}
 
 		}
 		
-		return null;		
+		switch(traverseType){
+			case traverseLNPredicateDescr:
+			{
+				Predicate[] resArray = new Predicate[list.size()];
+				list.copyInto(resArray); 
+				return resArray;
+			}
+			case traverseTreeDescr:
+			{
+				String[] resArray = new String[list.size()];
+				list.copyInto(resArray); 
+				return resArray;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -123,14 +143,28 @@ public class ExpressionTree{
 	 * 
 	 * Process leaves of the expression tree, and generate relevant Logical neighbourhood predicates.
 	 * 
-	 * @param predicateList existing list of predicates which needs to be updated
+	 * @param list existing list of predicates which needs to be updated
 	 * @param property property that provides description of the associated predicate
 	 * @param masterProperty property that may contain other property in its predicate list
 	 * @param  masterPropertyName name of the "master" property class
 	 * @return list of predicates
 	 */
-	private Vector processLeaf(Vector predicateList, Property property)
+	private Vector processLeaf(Vector list, int traverseType)
 	{
-		return predicateList;
+		switch(traverseType)
+		{
+			case traverseLNPredicateDescr:
+			{
+				list.addElement(property.getDescriptionForLN());
+				break;
+			}
+			case traverseTreeDescr:
+			{
+				//list.addElement(property.getPropertyDescr());
+				break;
+			}
+		}
+		
+		return list;
 	}
 }

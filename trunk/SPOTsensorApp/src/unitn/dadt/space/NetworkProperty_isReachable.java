@@ -4,10 +4,8 @@
  */
 package unitn.dadt.space;
 
-/*import java.io.Serializable;*/
 
-/*import polimi.ln.neighborhoodDefs.AtomicPredicate;*/
-
+import polimi.ln.neighborhoodDefs.Predicate;
 import unitn.dadt.internals.Property;
 
 /**
@@ -16,7 +14,7 @@ import unitn.dadt.internals.Property;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class NetworkProperty_isReachable implements Property /*, Serializable */{
+public class NetworkProperty_isReachable implements Property{
     int hops;
     /**
      * @param hops
@@ -48,11 +46,11 @@ public class NetworkProperty_isReachable implements Property /*, Serializable */
 	/* (non-Javadoc)
 	 * @see DADT.Property#getDescriptionForLN(java.lang.Object)
 	 */
-	/*
-	public AtomicPredicate getDescriptionForLN(Object o) {
+	
+	public Predicate getDescriptionForLN() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	*/
+	
 
 }

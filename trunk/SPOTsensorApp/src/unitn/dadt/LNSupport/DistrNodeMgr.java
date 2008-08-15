@@ -43,7 +43,7 @@ public class DistrNodeMgr {
  	 * @param DADTaction 
  	 */
 	
- 	public void performDADTRequest(String selectorDescr, ExpressionTree expTree, Action DADTaction, String DADTClassName) {
+ 	public void performDADTRequest(String selectorDescr, ExpressionTree expTree, String DADTaction, String DADTClassName) {
  		
  		
 		// define DADT dataview over given ExpressionTree						
@@ -64,7 +64,8 @@ public class DistrNodeMgr {
  	private LogicalNeighborhoods getLN(){
 		
  		if (ln == null){
- 			ln = new LogicalNeighborhoods(new Node(clientNodeId, null, 1));
+ 			
+ 			ln = new LogicalNeighborhoods(new Node(clientNodeId, new Vector(), 1));
  		}
  		return ln;
  	}
@@ -78,7 +79,7 @@ public class DistrNodeMgr {
  	
 	public static Predicate[] defineLNPredicates(ExpressionTree expTree){
 		
-		Predicate[] LNpredicates =  expTree.traverseExpTree(new Vector());
+		Predicate[] LNpredicates =  (Predicate[]) expTree.traverseExpTree(new Vector(), expTree.traverseLNPredicateDescr);
 		
 		return LNpredicates;  
 	}

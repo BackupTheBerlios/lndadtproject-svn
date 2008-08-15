@@ -1,19 +1,12 @@
 package unitn.dadtln.samples;
-/* javaME doesn't support these
-import java.io.Serializable;
-import java.util.ArrayList;
-*/
 
+import polimi.ln.neighborhoodDefs.DoubleSimplePredicate;
+import polimi.ln.neighborhoodDefs.Predicate;
 import unitn.dadt.internals.Property;
 
-/*
-import polimi.ln.neighborhoodDefs.AtomicPredicate;
-import polimi.ln.neighborhoodDefs.BooleanSimplePredicate;
-import polimi.ln.neighborhoodDefs.DoubleSimplePredicate;
-*/
 
 
-public class DSensor_isPrecise_Property implements /*Serializable, */ Property {
+public class DSensor_isPrecise_Property implements  Property {
 
 	public Class getDADTClass() {
 		return null;
@@ -38,15 +31,15 @@ public class DSensor_isPrecise_Property implements /*Serializable, */ Property {
 	/*
 	 * To be used later in LN simulation to create predicates
 	 */
-	/*
-	public AtomicPredicate getDescriptionForLN(Object o) {
+	
+	public Predicate getDescriptionForLN() {
 		return(new DoubleSimplePredicate("precision", DoubleSimplePredicate.GREATER_THAN, this.precision));
 		
 	}
-*/
+
 	
 	public String toString() {
-		return "isPrecise_Property (precision is " + precision + ")";
+		return "DSensor_isPrecise_Property";
 	}
 	
     public String getClassName()
