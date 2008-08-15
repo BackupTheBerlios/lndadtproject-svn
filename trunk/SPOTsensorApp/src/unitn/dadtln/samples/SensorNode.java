@@ -32,6 +32,7 @@ import unitn.dadt.internals.CompleteView;
 
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ITriColorLED;
+import com.sun.spot.sensorboard.peripheral.LEDColor;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -115,7 +116,7 @@ public class SensorNode extends MIDlet implements LNDeliver {
 	public Vector setLNAttributes() {
 		Vector attributes = new Vector(); // attributes of the sensor node (and its instances) to be used by LN layer
 	
-		String[] onBoardSensors = new String[ADTinstances.size()];
+		//String[] onBoardSensors = new String[ADTinstances.size()];
 	
 		int idx = 0;
 		for (Enumeration e = ADTinstances.elements(); e.hasMoreElements();) 
@@ -123,17 +124,22 @@ public class SensorNode extends MIDlet implements LNDeliver {
 			
 	    	((Sensor)e.nextElement()).collectAttributesForLN(attributes);	// collects all attributes among all ADT instances of SensorNode
 		
-	    	onBoardSensors[idx] = Sensor.typeToStr(((Sensor)e.nextElement()).type);
-			idx ++;
+	    	//onBoardSensors[idx] = Sensor.typeToStr(((Sensor)e.nextElement()).type);
+			//idx ++;
 		}
 		
-		attributes.addElement(new StringSetAttribute("OnBoardSensors", onBoardSensors));
+		System.out.println("debug: " + attributes.toString());
+		
+		//attributes.addElement(new StringSetAttribute("OnBoardSensors", onBoardSensors));
     	
 		return attributes;
 		
 	}
 
 	public void deliver(byte[] data) {
+		
+		leds[7].setColor(LEDColor.GREEN);
+		leds[7].setOn();
 		
     	ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
 		DataInputStream deserializer = new DataInputStream(byteStream);

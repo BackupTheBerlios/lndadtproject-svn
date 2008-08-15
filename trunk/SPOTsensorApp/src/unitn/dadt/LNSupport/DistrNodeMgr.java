@@ -51,6 +51,11 @@ public class DistrNodeMgr {
 		
 		// define LN predicates over DADT dataview
 		Predicate[] LNpredicates = defineLNPredicates(expTree);
+		
+		
+		for (int i = 0; i < LNpredicates.length; i++)
+			System.out.println("debug: (predicate)" + LNpredicates[i].toString());
+		
  		
  		// specify a selector
  		selector = lnView.getOperator(selectorDescr, DADTaction, null);

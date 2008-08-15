@@ -3,7 +3,6 @@ package unitn.dadtln.samples;
 
 import unitn.dadt.internals.*;
 import unitn.dadt.LNSupport.DistrNodeMgr;
-import java.util.HashMap;
 import java.util.Enumeration;
 import java.util.Vector;
 

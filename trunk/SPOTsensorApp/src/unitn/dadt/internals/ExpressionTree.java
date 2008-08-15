@@ -98,9 +98,12 @@ public class ExpressionTree{
 	 */
 	public Object[] traverseExpTree(Vector list, int traverseType) {
 		
+		/*
 		if (traverseType == traverseTreeDescr){
 			list.addElement(boolOp);
 		}
+		*/
+		
 		
 		switch(boolOp) 
 		{
