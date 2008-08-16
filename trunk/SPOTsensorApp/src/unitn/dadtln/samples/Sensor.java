@@ -76,7 +76,8 @@ public class Sensor {
         		sensorMonitor = null;
         		break;
         	}
-        }
+        } 
+        
     }
     
     
@@ -112,7 +113,7 @@ public class Sensor {
 	    	        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
 	    	        for (int i = 0; i < leds.length; i ++)
 	    	        {
-	    	        	leds[i].setColor(LEDColor.WHITE);
+	    	        	leds[i].setColor(LEDColor.YELLOW);
 	    	        	leds[i].setOn();
 	    	            Utils.sleep(150);             
 	    	        	leds[i].setOff();
@@ -187,12 +188,16 @@ public class Sensor {
      */
     //TODO: we can't have a sensor node with sensors of the same type in this case! 
     
-    public void collectAttributesForLN(Vector attributes) {
+    public Vector collectAttributesForLN() {
+    	
+    	Vector attributes = new Vector();
     	
     	attributes.addElement(new IntegerAttribute("type", type));
     	attributes.addElement(new DoubleAttribute("precision", precision));
 		attributes.addElement(new DynamicBooleanAttribute("isActive", new LNSensorIsActiveProvider(this)));
-
+	
+		return attributes;
+		
     }
     
     /**

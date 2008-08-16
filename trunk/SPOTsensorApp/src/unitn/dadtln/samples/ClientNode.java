@@ -1,26 +1,19 @@
 package unitn.dadtln.samples;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Vector;
 
-
-import polimi.ln.runtime.LNDeliver;
-
-import unitn.dadt.LNSupport.*;
 import unitn.dadt.internals.ExpressionTree;
-import unitn.dadt.internals.ResultData;
+
 
 
 /*
  * PC-based aplication which requests sensor nodes in the WSN to provide data 
  * according to the DADT dataview definition
  */
-public class ClientNode implements LNDeliver {
+public class ClientNode {
 
+	
 	private static DSensor ds;
 	
 	//--- temp hacks
@@ -55,54 +48,19 @@ public class ClientNode implements LNDeliver {
 
 	public static void main(String[] args)  {
 
-		ds = new DSensor(); 						// distributed Sensor data type (DADT)
-		ds.clearReadings();							
-
 		
-		//runRequest();
+		ds = new DSensor(); 						// distributed Sensor data type (DADT)
+		
+		ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP));
 				
-		int requestsNum = 1;
- 
-		for (int i = 0; i < requestsNum; i++) {
-			
-			ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP));
-					
-			double reqResult = ds.average(expTree); 
-			
-			if( reqResult != Integer.MIN_VALUE) {
-				System.out.println("DADT request returned average value = " + reqResult);			
-
-				ds.clearReadings();													
-			}
-			else
-				System.out.println("DADT request was successfully executed");				
-		}	
+		double reqResult = ds.average(expTree); 
+		
+		if( reqResult != Integer.MIN_VALUE) 
+			System.out.println("DADT request returned average value = " + reqResult);			
+		else
+			System.out.println("DADT request was successfully executed");				
+		
 		System.exit(0);
 	}
 
-	public void deliver(byte[] data) {
-		
-		ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
-		DataInputStream deserializer = new DataInputStream(byteStream);
-		String msgType = null;
-		try {
-			msgType = deserializer.readUTF();
-			if (msgType == "LNSupportReplyMsg") 
-			{
-				// manual "serialization" of the recieved array of bytes
-				LNSupportReplyMsg replyMsg = new LNSupportReplyMsg(deserializer);
-			
-				System.out.println("Received a reply from " + replyMsg.getSource());
-				
-				// collection of reading to be used further
-				ds.collectReadings(replyMsg.getReadings(), replyMsg.getSource());
-			}
-			else 
-				System.out.println("Unknown message type");
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-    
 }

@@ -76,7 +76,7 @@ public class LNSupportRequestMsg {
 		{
 			DataOutputStream serializer = new DataOutputStream(byteStream);
 			
-			serializer.writeUTF("LNSupportRequestMsg");
+			serializer.writeInt(LNSupportMsgTypes.LNSupportRequestMsg);
 			serializer.writeInt(sender);
 			serializer.writeUTF(action);
 			serializer.writeUTF(DADTClassName);

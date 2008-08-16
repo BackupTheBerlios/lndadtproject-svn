@@ -52,6 +52,7 @@ public class NodeMgr extends DADTMgr{
 		// previously instantiated
 		ln = new LogicalNeighborhoods(sensorDevice);
 		ln.setReceiver(sensorNodeAbstraction);
+		System.out.println("(debug) ln = " + ln.toString());
 	}
 	
 	public NodeMgr(boolean isSpaceADTsAvailable) {
@@ -103,7 +104,9 @@ public class NodeMgr extends DADTMgr{
     	{							
     		// read requested DADT
     		String DADTClassName = 	reqMsg.getDADTClassName();		
-			
+    	
+    		
+    		
     		//filter ADT instances which satisfy the given DADT View
 			//Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
     		Vector reqADTInstances = super.getInstances(DADTClassName);
@@ -111,14 +114,25 @@ public class NodeMgr extends DADTMgr{
     		
 			//perform required DADT Action for the selected ADT instances
 			Vector resultList = null;
+			if (!reqADTInstances.isEmpty()){
+				resultList = new Vector();
+			}
+			
 			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
-			    resultList = new Vector();
-				resultList.addElement((ResultData) reqAction.evaluate(e.nextElement())); 		
+				Object element = e.nextElement();
+				
+				System.out.println("(debug) reqADTInstances.loop = " + element.toString());
+				
+				resultList.addElement((ResultData) reqAction.evaluate(element)); 		
 			}	
-			   
+			//System.out.println("(debug) resultList = " + resultList.toString());
+			
 			// if DADT Action requires sending a reply - proceed with constructing reply message 
 			if (resultList != null) {
+				
+				System.out.println("(debug) sendReplyMsg");
 				sendReplyMsg(reqMsg.getSender(), resultList, ln);	// send reply message
+				System.out.println("(debug) sendReplyMsg is sent");
 			}
 		
     	} catch (Exception e) {
@@ -138,18 +152,22 @@ public class NodeMgr extends DADTMgr{
     private void sendReplyMsg(int destNodeId, Vector resultList, LogicalNeighborhoods ln) {
 		
 		//---- debug message
-		for(Enumeration e = resultList.elements(); e.hasMoreElements(); )
+		/*
+    	for(Enumeration e = resultList.elements(); e.hasMoreElements(); )
 		{
 			System.out.println("I'm a sensor node and my reading is (" + ((ResultData)(e.nextElement())).getSource() + 
 								"," + ((ResultData)(e.nextElement())).getData() + ") ");
 		}
+		*/
 		//----
 		
+	
 		// construct reply message
 		LNSupportReplyMsg replyMsg = new LNSupportReplyMsg(sensorNodeId, resultList); 
 		
 		// send reply message over LN
 		ln.sendReply(replyMsg.toByteArray(), destNodeId);	
+		
 	}
 	
 	

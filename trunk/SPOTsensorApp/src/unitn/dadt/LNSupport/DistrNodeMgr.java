@@ -16,6 +16,7 @@ import polimi.ln.neighborhoodDefs.ConjunctiveNeighborhood;
 import polimi.ln.neighborhoodDefs.Neighborhood;
 import polimi.ln.neighborhoodDefs.Predicate;
 import polimi.ln.nodeAttributes.Node;
+import polimi.ln.runtime.LNDeliver;
 import polimi.ln.runtime.LogicalNeighborhoods;
 import unitn.dadt.internals.Action;
 import unitn.dadt.internals.DataView;
@@ -31,10 +32,12 @@ import unitn.dadt.LNSupport.LNCompleteView;
  * @author G.Khasanova
  */
 public class DistrNodeMgr {
-    private int clientNodeId = 0;
+
 	
 	private Operator selector;
-	private LogicalNeighborhoods ln;
+	public LogicalNeighborhoods ln;
+    public final static int lnClientNodeId = 0;
+	
 	
 	/**
  	 * @param predicates 
@@ -61,20 +64,10 @@ public class DistrNodeMgr {
  		selector = lnView.getOperator(selectorDescr, DADTaction, null);
  		
  		// perform a remote execution of DADT action over nodes in the constructed LN
- 		selector.performRemoteLN(lnView, (Neighborhood)(new ConjunctiveNeighborhood (LNpredicates)), DADTClassName, getLN(), clientNodeId);
+ 		selector.performRemoteLN(lnView, (Neighborhood)(new ConjunctiveNeighborhood (LNpredicates)), DADTClassName, ln, lnClientNodeId);
 
  	}
  	
-	// Setting up the LN run-time using the logical node instance
- 	private LogicalNeighborhoods getLN(){
-		
- 		if (ln == null){
- 			
- 			ln = new LogicalNeighborhoods(new Node(clientNodeId, new Vector(), 1));
- 		}
- 		return ln;
- 	}
-	
  	
     /**
 	 * @param expTree
