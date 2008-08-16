@@ -131,7 +131,6 @@ public class SensorNode extends MIDlet implements LNDeliver {
 		for (Enumeration e = ADTinstances.elements(); e.hasMoreElements();) 
 		{
 
-	    	/*
 	    	Vector instanceAttr = ((Sensor)e.nextElement()).collectAttributesForLN();	// collects all attributes among all ADT instances of SensorNode
 	    	
 	    	for (Enumeration i = instanceAttr.elements(); i.hasMoreElements();){
@@ -139,9 +138,7 @@ public class SensorNode extends MIDlet implements LNDeliver {
 	    		attributes.addElement(i.nextElement());	
 	    		
 	    	}
-	    	*/
-			e.nextElement();
-	    	attributes.addElement(new IntegerAttribute("type", 0));
+	    	
 
 	    	//onBoardSensors[idx] = Sensor.typeToStr(((Sensor)e.nextElement()).type);
 			//idx ++;

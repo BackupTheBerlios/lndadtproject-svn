@@ -78,6 +78,14 @@ public class Sensor {
         	}
         } 
         
+        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+        for (int i = 0; i < leds.length; i ++)
+        {
+        	leds[i].setColor(LEDColor.PUCE);
+        	leds[i].setOn();
+            Utils.sleep(100);             
+        	leds[i].setOff();
+        }	
     }
     
     
