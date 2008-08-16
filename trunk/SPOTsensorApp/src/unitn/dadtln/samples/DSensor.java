@@ -65,7 +65,7 @@ public class DSensor implements LNDeliver {
 		// we assume that within the timeout all nodes in the neighbourhood can reply
 		try
 		{
-			Thread.sleep(1500);
+			Thread.sleep(15000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		
