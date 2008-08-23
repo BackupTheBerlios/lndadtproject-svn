@@ -4,12 +4,15 @@
  */
 package unitn.dadt.internals;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Vector;
 
 /**
  * @author migliava
  */
-public class DataView /* implements Serializable */{
+public class DataView {
 
     ExpressionTree properties;
     
@@ -68,4 +71,8 @@ public class DataView /* implements Serializable */{
         return null;
     }
     */
+    
+    public void serialize(DataOutputStream outputStream) throws IOException{
+    	properties.serializeExpTree(outputStream);
+    }
 }

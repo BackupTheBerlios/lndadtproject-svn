@@ -6,6 +6,10 @@
 package unitn.dadt.internals;
 
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Vector;
+
 import unitn.dadt.space.SpaceView;
 
 /**
@@ -87,4 +91,11 @@ public abstract class CompleteView implements OperatorFactory /*, Serializable*/
      */
     public abstract Operator getOperator(String operator, Action action, Object operatorParameter);
    
+    
+    public void serialize(DataOutputStream outputStream) throws IOException
+    {
+    	// works only for data views
+    	if (dv != null)
+    		dv.serialize(outputStream);
+    }
 }

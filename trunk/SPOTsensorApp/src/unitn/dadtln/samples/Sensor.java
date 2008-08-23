@@ -4,12 +4,11 @@
  */
 package unitn.dadtln.samples;
 
-import java.util.Random;
 import java.util.Vector;
 
 import polimi.ln.nodeAttributes.DoubleAttribute;
 import polimi.ln.nodeAttributes.IntegerAttribute;
-import polimi.ln.nodeAttributes.BooleanAttribute;
+
 import polimi.ln.nodeAttributes.dynamic.DynamicBooleanAttribute;
 
 import com.sun.spot.sensorboard.EDemoBoard;
@@ -49,16 +48,18 @@ public class Sensor {
     private boolean active; 
     private Object sensorMonitor;
     
-    
-    Random rnd = new Random(); 		// a random value variable, which is used for the simulation purposes in generation of the sensor readings
-    
+    ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+   
     /**
      * Constructor for the Sensor class
      * @param type Sensor type
      * @param precision	Precision of the sensor
      */
     public Sensor(int type, double precision) {
-        this.precision = precision;
+
+    	
+    	
+    	this.precision = precision;
         this.active = true;        // by default sensor is active
     
         this.type = type;
@@ -78,14 +79,16 @@ public class Sensor {
         	}
         } 
         
-        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
+       
         for (int i = 0; i < leds.length; i ++)
         {
         	leds[i].setColor(LEDColor.PUCE);
         	leds[i].setOn();
             Utils.sleep(100);             
         	leds[i].setOff();
-        }	
+        }
+        System.out.println("Sensor constructor");
+        
     }
     
     
@@ -102,7 +105,6 @@ public class Sensor {
 	    			this.value = ((ITemperatureInput)sensorMonitor).getCelsius();
 	    			
 	    	        // for debug reasons //
-	    	        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
 	    	        for (int i = 0; i < leds.length; i ++)
 	    	        {
 	    	        	leds[i].setColor(LEDColor.BLUE);
@@ -118,7 +120,6 @@ public class Sensor {
 	    			this.value = (double)((ILightSensor)sensorMonitor).getAverageValue();
 	    			
 	    	        // for debug reasons //
-	    	        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
 	    	        for (int i = 0; i < leds.length; i ++)
 	    	        {
 	    	        	leds[i].setColor(LEDColor.YELLOW);
@@ -145,15 +146,16 @@ public class Sensor {
      * Reset sensor
      */
     public void reset() {
-        value = 0;
-
+       
+    	System.out.println("reset()");
+    	this.value = 0;
+        this.active = true;
         
         // for debug reasons //
-        ITriColorLED[] leds = EDemoBoard.getInstance().getLEDs();
-	    for (int j = 0; j < 2; j ++) {
+        for (int j = 0; j < 2; j ++) {
         	for (int i = 0; i < leds.length; i ++)
 	        {
-	        	leds[i].setColor(LEDColor.YELLOW);
+	        	leds[i].setColor(LEDColor.CHARTREUSE);
 	        	leds[i].setOn();
 	        }
 	        Utils.sleep(500);             
@@ -169,26 +171,11 @@ public class Sensor {
      * @return Current state of the sensor
      */ 
     public boolean isActive() {
-    	
+
+    	return this.active;
     
-    	this.active = false;
-    	/*
-    	this.active = (generateNextValue() >= 0.25); 
-    	*/
-    	
-    	if (this.active) 
-    		System.out.println("Sensor is active (sensor type is = " + this.type + ")");
-    	else
-    		System.out.println("Sensor is not active (sensor type is = " + this.type + ")");
-    	
-    	
-    	return (this.active);
-    	
     }
-    
-    private double generateNextValue() {
-    	return rnd.nextDouble();
-    }
+
     
     /**
      * Creates list of sensor's attributes described in terms of LN, mapped to a sesor type
@@ -208,18 +195,24 @@ public class Sensor {
 		
     }
     
-    /**
-     * Generate symbolic name of the sensor type
-     * @param type sensor type
-     * @return name of the sensor type
-     */
-    public static String typeToStr(int type) {
-    	switch (type) {
-    		case (int)TEMP: return "TEMP";
-    		case (int)HUMIDITY: return "HUMIDITY";
-    		case (int)LIGHT: return "LIGHT";
-    		case (int)PRESSURE: return "PRESSURE";
-    	}
-		return "";	
+    public void changeActiveState(int ledNum){
+    	this.active = !this.active;
     }
+    
+	public void debugShowErrorOnSPOT(LEDColor color){
+	       
+		  
+			for (int i = 0; i < leds.length; i ++)
+	        {
+	        	leds[i].setColor(color);
+	        	leds[i].setOn();
+	        }
+	        Utils.sleep(100);   
+	        for (int i = 0; i < leds.length; i ++)
+	        {
+	        	leds[i].setOff();
+	        }
+	        
+	}
+
 }

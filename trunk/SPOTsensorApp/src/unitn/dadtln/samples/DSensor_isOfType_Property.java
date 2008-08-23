@@ -1,6 +1,11 @@
 package unitn.dadtln.samples;
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Vector;
+
 import polimi.ln.neighborhoodDefs.IntegerSimplePredicate;
 import polimi.ln.neighborhoodDefs.Predicate;
 import unitn.dadt.internals.Property;
@@ -8,9 +13,6 @@ import unitn.dadt.internals.Property;
 
 public class DSensor_isOfType_Property implements Property {
 
-	public Class getDADTClass() {
-		return null;//return DSensor.class;
-	}
 	private int type;
 		
 	public DSensor_isOfType_Property(int type)  {
@@ -25,27 +27,27 @@ public class DSensor_isOfType_Property implements Property {
 		}
 	}
 
+	// TODO: to be added by JADT preprocessor
+	public String getDADTClass() {
+		return "DSensor";
+	}
+	
 	/*
 	 * To be used later in LN simulation to create predicates
 	 */
 	
 	public Predicate getDescriptionForLN() {
 		
-/*
-		return(new SetMembershipPredicate(Sensor.typeToStr(type), 
-							SetMembershipPredicate.IS_IN,
-							"OnBoardSensors"));
-*/
-
 		return( new IntegerSimplePredicate ("type", IntegerSimplePredicate.EQUAL, type));
 	} 
-	
-    public String toString() {
-        return "DSensor_isOfType_Property";
-    }
+
+	public void serialize(DataOutputStream stream) throws IOException {
+    	stream.writeUTF("DSensor_isOfType_Property");
+    	stream.writeUTF(Integer.toString(this.type));
+	}
     
-    public String getClassName()
-    {
-    	return "DSensor_isOfType_Property";
-    }
+	public Property deserialize(String strValue){
+		return new DSensor_isOfType_Property(Integer.valueOf(strValue).intValue());
+	}
+    
 }

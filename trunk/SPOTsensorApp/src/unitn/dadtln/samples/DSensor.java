@@ -3,7 +3,7 @@ package unitn.dadtln.samples;
 
 import unitn.dadt.internals.*;
 import unitn.dadt.LNSupport.DistrNodeMgr;
-import unitn.dadt.LNSupport.LNSupportMsgTypes;
+import unitn.dadt.LNSupport.LNSupportConsts;
 import unitn.dadt.LNSupport.LNSupportReplyMsg;
 
 import java.io.ByteArrayInputStream;
@@ -21,7 +21,7 @@ import polimi.ln.runtime.LogicalNeighborhoods;
 /**
  * This class describes behavior of the Distributed Sensor (DADTview on the WSN). 
  * Provides methods of aggregating sensor data
- * Uses Logical neighbourhood model to perform communication between distributed nodes (simulated in SWANS)
+ * Uses Logical neighborhood model to perform communication between distributed nodes (simulated in SWANS)
  *  
  */
 public class DSensor implements LNDeliver {
@@ -53,7 +53,7 @@ public class DSensor implements LNDeliver {
 		
 		// perform a request 
 		String action = "DSensor_read_Action";
-		
+
 		// get DADTClassName
 		String DADTClassName = this.getClass().getName();
 		
@@ -93,6 +93,13 @@ public class DSensor implements LNDeliver {
 		String DADTClassName = this.getClass().getName();
 		
 		dadtMgr.performDADTRequest("all", expTree, action, DADTClassName);
+		System.out.println("DADT request for resetAll was sent");	// [*]
+		try
+		{
+			Thread.sleep(200); 				// timeout for LN handling of data to be sent 
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}	
 	
 	}
 	
@@ -152,13 +159,13 @@ public class DSensor implements LNDeliver {
 		try {
 
 			msgType = deserializer.readInt();
-			if (msgType == LNSupportMsgTypes.LNSupportReplyMsg) 
+			if (msgType == LNSupportConsts.LNSupportReplyMsg) 
 			{
-				System.out.println("debug (deliver) 4");
+				
 				// manual "serialization" of the received array of bytes
 				LNSupportReplyMsg replyMsg = new LNSupportReplyMsg(deserializer);
 			
-				System.out.println("Received a reply from " + replyMsg.getSource());
+				//System.out.println("Received a reply from " + replyMsg.getSource());
 				
 				// collection of reading to be used further
 				collectReadings(replyMsg.getReadings(), replyMsg.getSource());

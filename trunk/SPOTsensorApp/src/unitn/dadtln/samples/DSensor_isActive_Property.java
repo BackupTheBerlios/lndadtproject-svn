@@ -10,19 +10,17 @@ import java.util.HashMap;
 import polimi.ln.neighborhoodDefs.AtomicPredicate;
 import polimi.ln.neighborhoodDefs.BooleanSimplePredicate;
 */
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Vector;
+
 import polimi.ln.neighborhoodDefs.BooleanSimplePredicate;
 import polimi.ln.neighborhoodDefs.Predicate;
 import unitn.dadt.internals.Property;
 
 public class DSensor_isActive_Property implements Property {	
 	
-	
-	public Class getDADTClass() {
-		return null; //return DSensor.class;
-	}
-	
-	
-		public DSensor_isActive_Property()  {
+	public DSensor_isActive_Property()  {
 		
 	}
 	
@@ -33,23 +31,25 @@ public class DSensor_isActive_Property implements Property {
 	
 	}
 
+	// TODO: to be added by JADT preprocessor
+	public String getDADTClass() {
+		return "DSensor";
+	}
+	
 	/*
 	 * To be used later in LN simulation to create predicates
 	 */
 	
 	public Predicate getDescriptionForLN() {
-		
 		return(new BooleanSimplePredicate ("isActive", BooleanSimplePredicate.EQUAL, true));
-		
 	} 
 	
-	
-    public String toString() {
-        return "DSensor_isActive_Property";
+    public void serialize(DataOutputStream stream) throws IOException {
+    	stream.writeUTF("DSensor_isActive_Property");
+    	stream.writeUTF("");
     }
     
-    public String getClassName()
-    {
-    	return "isActive";
-    }
+	public Property deserialize(String strValue){
+		return new DSensor_isActive_Property();
+	}
 }

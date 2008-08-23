@@ -12,7 +12,11 @@ public class LNSensorIsActiveProvider implements BooleanProvider {
 	
 	public boolean getValue() {
 		
-		return this.sensor.isActive();
+		boolean value = this.sensor.isActive();
+		
+		return value;
+		
+		
 	}
 
 }

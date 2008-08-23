@@ -16,12 +16,10 @@ public class DSensor_reset_Action implements /*Serializable, */ Action  {
 	public Object evaluate(Object o) {
 		Sensor local = (Sensor) o;
 		{
+			System.out.println("Evaluate DSensor_reset_Action, Sensor, type = " + local.type);
 			local.reset();
 			return null;
 		}
-	}
-	public String toString(){
-		return "DSensor_reset_Action()";
 	}
 	
 }

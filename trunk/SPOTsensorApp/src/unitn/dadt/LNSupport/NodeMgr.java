@@ -52,7 +52,6 @@ public class NodeMgr extends DADTMgr{
 		// previously instantiated
 		ln = new LogicalNeighborhoods(sensorDevice);
 		ln.setReceiver(sensorNodeAbstraction);
-		System.out.println("(debug) ln = " + ln.toString());
 	}
 	
 	public NodeMgr(boolean isSpaceADTsAvailable) {
@@ -108,8 +107,8 @@ public class NodeMgr extends DADTMgr{
     		
     		
     		//filter ADT instances which satisfy the given DADT View
-			//Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
-    		Vector reqADTInstances = super.getInstances(DADTClassName);
+			Vector reqADTInstances = DADTview.getDataView().filterMatchingInstances(super.getInstances(DADTClassName));		
+    		//Vector reqADTInstances = super.getInstances(DADTClassName);
     		
     		
 			//perform required DADT Action for the selected ADT instances
@@ -121,18 +120,13 @@ public class NodeMgr extends DADTMgr{
 			for (Enumeration e = reqADTInstances.elements(); e.hasMoreElements(); ) {
 				Object element = e.nextElement();
 				
-				System.out.println("(debug) reqADTInstances.loop = " + element.toString());
-				
 				resultList.addElement((ResultData) reqAction.evaluate(element)); 		
 			}	
-			//System.out.println("(debug) resultList = " + resultList.toString());
 			
 			// if DADT Action requires sending a reply - proceed with constructing reply message 
 			if (resultList != null) {
 				
-				System.out.println("(debug) sendReplyMsg");
 				sendReplyMsg(reqMsg.getSender(), resultList, ln);	// send reply message
-				System.out.println("(debug) sendReplyMsg is sent");
 			}
 		
     	} catch (Exception e) {

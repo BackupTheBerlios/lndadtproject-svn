@@ -48,15 +48,9 @@ public class LNSupportReplyMsg {
 		
 		try
 		{	
-			serializer.writeInt(LNSupportMsgTypes.LNSupportReplyMsg);	// message type
-			//System.out.println("debug (LNSupportReplyMsg) init");
-			
+			serializer.writeInt(LNSupportConsts.LNSupportReplyMsg);	// message type
 			serializer.writeInt(source);				// sensor node Id
-			//System.out.println("debug (LNSupportReplyMsg) source = " + source);
-			
 			serializer.writeInt(readings.size());		// number of readings sent
-			//System.out.println("debug (LNSupportReplyMsg) readings.size() = " + readings.size());
-			
 			
 	        for (Enumeration e = readings.elements(); e.hasMoreElements(); ){ 
 		        	

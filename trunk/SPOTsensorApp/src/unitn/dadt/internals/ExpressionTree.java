@@ -4,6 +4,8 @@
  */
 package unitn.dadt.internals;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Vector;
 
 import polimi.ln.neighborhoodDefs.Predicate;
@@ -18,16 +20,12 @@ public class ExpressionTree{
     //
 	private static final long serialVersionUID = 8524266403127534553L;
 
-	public final static int LEAF = 0;
-    public final static int NOT = 1;
-    public final static int AND = 2;
-    public final static int OR = 3;
-    
-    
-    public final static int traverseLNPredicateDescr = 4;
-    public final static int traverseTreeDescr = 5;
-    
-    int boolOp;
+	public final static byte LEAF = 0;
+    public final static byte NOT = 1;
+    public final static byte AND = 2;
+    public final static byte OR = 3;
+     
+    byte boolOp;
     
     Property property;
     
@@ -35,7 +33,7 @@ public class ExpressionTree{
     ExpressionTree op2;
 
     
-    protected ExpressionTree(int boolOp) { this.boolOp = boolOp; }
+    protected ExpressionTree(byte boolOp) { this.boolOp = boolOp; }
     
     public ExpressionTree(Property p) {
         boolOp = LEAF;
@@ -79,7 +77,7 @@ public class ExpressionTree{
         return false;
     }
     
-    public Class getDADTClass() {
+    public String getDADTClass() {
         if (boolOp != LEAF)
             return op1.getDADTClass();
         return property.getDADTClass();
@@ -91,54 +89,75 @@ public class ExpressionTree{
 	 * Allows to perform traverse along the expression tree that defines DADT view. 
 	 * Traverse results in a list of predicates, that are used to define Logical Neighbourhood
 	 *
-	 * @param predicateList List of LN predicates, it is being collected during the traverse 
-	 * @param masterProperty presents a property, that may be used to define "master" predicate that may contain predicates within itself
-	 * @param masterPropertyName presents a name of the property class (to define "master" predicate)
+	 * @param list List of LN predicates, it is being collected during the traverse 
 	 * @return generated list of atomic predicates, that is used to build Logical Neighbourood.
 	 */
-	public Object[] traverseExpTree(Vector list, int traverseType) {
-		
-		/*
-		if (traverseType == traverseTreeDescr){
-			list.addElement(boolOp);
-		}
-		*/
-		
-		
+	public Object[] traverseExpTree(Vector list) {
 		switch(boolOp) 
 		{
 			case(LEAF): 
 			{
-				list = processLeaf(list, traverseType);
+				list = processLeaf(list);
 				break;
 			}
 			case(AND): case(OR): case (NOT): 
 			{
-				op1.traverseExpTree(list, traverseType);
+				op1.traverseExpTree(list);
 				if (op2 != null)
 				{
-					op2.traverseExpTree(list, traverseType);
+					op2.traverseExpTree(list);
 				}
 				break;
 			}
 
 		}
 		
-		switch(traverseType){
-			case traverseLNPredicateDescr:
+		Predicate[] resArray = new Predicate[list.size()];
+		list.copyInto(resArray); 
+		return resArray;
+	}
+
+	/**
+	 * @author G.Khasanova
+	 * 
+	 * Process leaves of the expression tree, and generate relevant Logical neighbourhood predicates.
+	 * 
+	 * @param list existing list of predicates which needs to be updated
+	 * @return list of predicates
+	 */
+	private Vector processLeaf(Vector list)
+	{
+
+		list.addElement(property.getDescriptionForLN());
+
+		return list;
+	}
+	
+	/**
+	 * @author G.Khasanova
+	 * 
+	 * Allows to serialize expTree by traversing along its branches. 
+	 */
+	public void serializeExpTree(DataOutputStream stream) throws IOException {
+		switch(boolOp) 
+		{
+			
+			case(LEAF): 
 			{
-				Predicate[] resArray = new Predicate[list.size()];
-				list.copyInto(resArray); 
-				return resArray;
+				serializeLeaf(stream);
+				break;
 			}
-			case traverseTreeDescr:
+			case(AND): case(OR): case (NOT): 
 			{
-				String[] resArray = new String[list.size()];
-				list.copyInto(resArray); 
-				return resArray;
+				op1.serializeExpTree(stream);
+				if (op2 != null)
+				{
+					op2.serializeExpTree(stream);
+				}
+				stream.writeUTF(String.valueOf(boolOp));
 			}
 		}
-		return null;
+
 	}
 
 	/**
@@ -152,22 +171,10 @@ public class ExpressionTree{
 	 * @param  masterPropertyName name of the "master" property class
 	 * @return list of predicates
 	 */
-	private Vector processLeaf(Vector list, int traverseType)
-	{
-		switch(traverseType)
-		{
-			case traverseLNPredicateDescr:
-			{
-				list.addElement(property.getDescriptionForLN());
-				break;
-			}
-			case traverseTreeDescr:
-			{
-				//list.addElement(property.getPropertyDescr());
-				break;
-			}
-		}
+	private void serializeLeaf(DataOutputStream stream) throws IOException{
 		
-		return list;
+		property.serialize(stream);
+	
 	}
+	
 }

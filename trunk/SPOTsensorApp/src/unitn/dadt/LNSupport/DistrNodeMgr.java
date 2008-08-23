@@ -56,11 +56,7 @@ public class DistrNodeMgr {
 		Predicate[] LNpredicates = defineLNPredicates(expTree);
 		
 		
-		for (int i = 0; i < LNpredicates.length; i++)
-			System.out.println("debug: (predicate)" + LNpredicates[i].toString());
-		
- 		
- 		// specify a selector
+		// specify a selector
  		selector = lnView.getOperator(selectorDescr, DADTaction, null);
  		
  		// perform a remote execution of DADT action over nodes in the constructed LN
@@ -77,7 +73,7 @@ public class DistrNodeMgr {
  	
 	public static Predicate[] defineLNPredicates(ExpressionTree expTree){
 		
-		Predicate[] LNpredicates =  (Predicate[]) expTree.traverseExpTree(new Vector(), expTree.traverseLNPredicateDescr);
+		Predicate[] LNpredicates =  (Predicate[]) expTree.traverseExpTree(new Vector());
 		
 		return LNpredicates;  
 	}

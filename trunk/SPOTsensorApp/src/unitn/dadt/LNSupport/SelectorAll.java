@@ -7,16 +7,7 @@ package unitn.dadt.LNSupport;
 import java.util.Vector;
 
 import polimi.ln.neighborhoodDefs.Neighborhood;
-import polimi.ln.nodeAttributes.Node;
 import polimi.ln.runtime.LogicalNeighborhoods;
-
-/*
-import polimi.ln.examples.swans.SimulationReferences;
-import polimi.ln.neighborhoodDefs.AtomicPredicate;
-import polimi.ln.neighborhoodDefs.Neighborhood;
-import polimi.ln.runtime.LogicalNeighborhoods;
-*/
-
 
 import unitn.dadt.internals.Action;
 import unitn.dadt.internals.CompleteView;
@@ -51,13 +42,15 @@ public class SelectorAll extends SelectionOperator {
     public Object performRemoteLN(CompleteView view, Neighborhood nodes, String DADTClassName, LogicalNeighborhoods ln, int senderId) {
         try 
         {
+        	
+        	
         	// create request message
         	LNSupportRequestMsg reqMsg = new LNSupportRequestMsg(senderId, view, actionId, DADTClassName);
-					
+			
         	// send message over logical neighbourhood
     		ln.send(reqMsg.toByteArray(), new Neighborhood[] { nodes });
             
-            return null;
+    		return null;
             
         } 
         catch (Exception e) 

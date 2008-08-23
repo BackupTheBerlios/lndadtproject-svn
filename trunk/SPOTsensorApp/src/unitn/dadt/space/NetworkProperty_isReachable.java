@@ -14,7 +14,7 @@ import unitn.dadt.internals.Property;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class NetworkProperty_isReachable implements Property{
+public class NetworkProperty_isReachable /*implements Property*/{
     int hops;
     /**
      * @param hops
@@ -42,15 +42,5 @@ public class NetworkProperty_isReachable implements Property{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/* (non-Javadoc)
-	 * @see DADT.Property#getDescriptionForLN(java.lang.Object)
-	 */
-	
-	public Predicate getDescriptionForLN() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 
 }

@@ -17,8 +17,8 @@ public class DSensor_read_Action implements /*Serializable, */ Action  {
 	public Object evaluate(Object o) {
 		Sensor local = (Sensor) o;
 		{
-			System.out.println("Sensor, type = " + local.typeToStr(local.type) + ", precision = " + local.precision);
-			return new ResultData(local.read(), local.typeToStr(local.type));
+			System.out.println("Evaluate DSensor_read_Action, Sensor, type = " + local.type + ", precision = " + local.precision);
+			return new ResultData(local.read(), String.valueOf(local.type));
 		}
 	}
 	

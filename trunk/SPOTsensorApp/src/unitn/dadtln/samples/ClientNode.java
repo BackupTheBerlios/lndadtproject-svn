@@ -1,11 +1,7 @@
 package unitn.dadtln.samples;
 
 
-import java.util.Vector;
-
 import unitn.dadt.internals.ExpressionTree;
-
-
 
 /*
  * PC-based aplication which requests sensor nodes in the WSN to provide data 
@@ -15,30 +11,7 @@ public class ClientNode {
 
 	
 	private static DSensor ds;
-	
-	//--- temp hacks
-	private static Vector simDADTdataview = new Vector();
 
-    //---
-	
-	public static void InitClientNodeSimData() {
-			
-		simDADTdataview.addElement(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP)));
-	/*
-		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-							.or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))));
-		
-		simDADTdataview.add(new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-							.and(new ExpressionTree(new DSensor_isActive_Property())));
-		
-		
-		simDADTdataview.add((new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
-							.and(new ExpressionTree(new DSensor_isActive_Property()))
-						   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
-							.and(new ExpressionTree(new DSensor_isPrecise_Property(1.0))))));
-		*/
-	}
-	
 	
 	/**
 	 * Support for requests to WSN, has been tested in SWANS simulator
@@ -51,8 +24,19 @@ public class ClientNode {
 		
 		ds = new DSensor(); 						// distributed Sensor data type (DADT)
 		
-		ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP));
-				
+		//ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP));
+		ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT));
+		
+		//ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+		//							.and(new ExpressionTree(new DSensor_isActive_Property()));
+		
+		/*
+		ExpressionTree expTree = new ExpressionTree(new DSensor_isOfType_Property(Sensor.TEMP))
+		.and(new ExpressionTree(new DSensor_isActive_Property()))
+		   .or(new ExpressionTree(new DSensor_isOfType_Property(Sensor.LIGHT))
+			.and(new ExpressionTree(new DSensor_isPrecise_Property(1.0))));
+		*/
+		
 		double reqResult = ds.average(expTree); 
 		
 		if( reqResult != Integer.MIN_VALUE) 

@@ -5,9 +5,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import quicktime.io.IOConstants;
 
 import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.Action;
+
 
 /**
  * This class defines a message in the sample application
@@ -22,6 +27,8 @@ public class LNSupportRequestMsg {
 	private String DADTClassName;
 	private CompleteView view;
 	private String action;
+	
+	private Vector viewAsStringList;
 
 	/**
 	 * Creates a new message.
@@ -42,6 +49,7 @@ public class LNSupportRequestMsg {
 			this.sender = deserializer.readInt();
 			this.action = deserializer.readUTF();
 			this.DADTClassName = deserializer.readUTF();
+			this.viewAsStringList = createDADTView(deserializer);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,6 +65,10 @@ public class LNSupportRequestMsg {
 
 	public CompleteView getDADTView() {
 		return view;
+	}
+	
+	public Vector getDADTListView() {
+		return viewAsStringList;
 	}
 	
 	public int getSender() {
@@ -76,15 +88,35 @@ public class LNSupportRequestMsg {
 		{
 			DataOutputStream serializer = new DataOutputStream(byteStream);
 			
-			serializer.writeInt(LNSupportMsgTypes.LNSupportRequestMsg);
+			serializer.writeInt(LNSupportConsts.LNSupportRequestMsg);
 			serializer.writeInt(sender);
 			serializer.writeUTF(action);
 			serializer.writeUTF(DADTClassName);
+			view.serialize(serializer);
+			serializer.writeUTF("#");	// End Of Stream
 			
 			serializer.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return byteStream.toByteArray();
+	}
+	
+	private Vector createDADTView(DataInputStream deserializer) {
+		Vector list = new Vector();
+		
+		try {
+			String readStr = deserializer.readUTF();
+			
+			while (! readStr.equalsIgnoreCase("#")){
+				list.addElement(readStr);
+				readStr = deserializer.readUTF();
+			}
+		}
+		catch (IOException e){
+			System.err.println("nothing is left in the input stream");
+		}
+		
+		return list;
 	}
 }
