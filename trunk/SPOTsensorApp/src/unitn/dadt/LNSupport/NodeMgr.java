@@ -21,7 +21,7 @@ import unitn.dadt.internals.CompleteView;
 import unitn.dadt.internals.ResultData;
 import unitn.dadt.internals.Action;
 import unitn.dadt.internals.DADTMgr;
-import unitn.dadtln.samples.SensorNode;
+import unitn.dadtln.samples.SensorNodeOnSPOT;
 
 /**
  * Node manager (ADTs) that provides link between DADT layer and LN communication layer on the nodes. 
@@ -40,14 +40,14 @@ public class NodeMgr extends DADTMgr{
 	 * Constructor of the node manager
 	 * Specifies ID of the ADT instance
 	 */
-	public NodeMgr(SensorNode sensorNodeAbstraction){
+	public NodeMgr(LNDeliver sensorNodeAbstraction, Vector LNAttributes){
 		adtMgrID = new LNADTIdentification();
 		
 		sensorNodeId = System.getProperty("IEEE_ADDRESS").hashCode();
 		
 		
 		// Instantiating the logical node
-		Node sensorDevice = new Node(sensorNodeId, sensorNodeAbstraction.setLNAttributes(), 1);
+		Node sensorDevice = new Node(sensorNodeId, LNAttributes, 1);
 		// Setting up the LN run-time using the logical node instance
 		// previously instantiated
 		ln = new LogicalNeighborhoods(sensorDevice);
