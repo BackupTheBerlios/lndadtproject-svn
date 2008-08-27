@@ -1,0 +1,62 @@
+\chapter{Evaluation, Conclusions, and Future Work} \label{chap: Evaluation}
+ \section{Evaluation}
+
+The performance of the DADT/LN prototype was evaluated using the following
+metrics: 
+\begin{itemize}
+  \item Packet processing workload on the application layer.
+  \item Ease of implementation. 
+\end{itemize}
+
+The first metric was used to compare the performance of the DADT/LN prototype
+against that of the original DADT prototype used as the basis for this work
+\cite{migliavacca_DADT:2006}. In the original DADT prototype, a request message
+was replied to or discarded in the application layer on the basis of the
+evaluation of an abstract tree representing specified scope of the operation.
+In the implementation presented in this work, the integration with the LN approach results in unsuitable request messages being discarded on
+the basis of predicate evaluation in the network layer. 
+
+A series of simulations were run using the JiST/SWANS simulations to determine
+the number of request messages discarded at the network layer and the number
+passed on to the application layer by the LN predicate matching algorithm. The
+sum provides the total number of packets processed in the application layer of
+the original DADT prototype.
+
+It was found that the number of messages processed in the application layer was
+lower in the implementation produced as part of this work.
+
+%HOW CAN WE SAY LN PREDICATE EVAL IS MORE EFFICIENT THAN EXPRESSION TREE?
+
+%
+%The second metric used the number of lines of code required to implement a
+%simple distributed averaging application. While not an ideal metric, it
+%quantifies the difference in the order of magnitude of coding effort required
+%on the part of the application programmer to produce WSN applications with and
+%without the use of programming abstractions. To this end, a simple WSN
+%application was written on the Sun SPOTs to calculate the distributed average.
+
+%The difference in the number of lines was **.
+
+\section{Conclusions}
+
+%HERE MORE BLAH BLAH
+
+\section{Future Work}
+
+This section presents a list of possible extensions to the work implemented as
+part of this thesis. These include:
+
+\begin{itemize}
+  \item \emph{Support for DADT selection operators:} The current prototype
+  supports the selection of all ADT instances that match a defined DADT Data
+  view, but does not enable the selection of a subset of the aforementioned
+  collection of ADT instances. This arises from the limitations of the current
+  LN implementation.
+  \item \emph{Extending support for Space DADTs:} Currently, the prototype
+  provides a limited support for the notion of space. Therefore, a possible
+  avenue for future work could include the full support for Space DADTs
+  provided by the prototype.
+  \item \emph{Extending the prototype for networks of heterogenous nodes:}
+  The current prototype, by virtue of it being implemented in Java, cannot be
+  used on a wide variety of different nodes. 
+\end{itemize}

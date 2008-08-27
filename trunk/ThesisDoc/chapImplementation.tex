@@ -1,40 +1,27 @@
-\chapter{Distributed Programming Abstractions for WSNs}
+\chapter{Distributed Programming Abstractions for WSNs} \label{chap:Implementation}
 \label{chap:Implementation}
 
-%intro words
-
-\textcolor{green}{re-write! probably the sequence is outdated}
-
-This chapter begins with implementation details underlying Distributed Abstract
-Data Types (DADTs), a short description of existing DADT prototype
-\cite{migliavacca_DADT:2006}, and an outline of the limitations of the current
-prototype. The chapter then provides information about author's contribution and
-discusses architecture of implemented DADT/LN prototype. This is followed by the
-implementation details the DADT/LN prototype which allowed use of DADT concepts
-in the real-world WSNs. This is folowed by a presentation of the simulation
-environment, simulating tools that were used for verification of the
-implementation. This chapter further presents the evaluation results for the
-DADT/LN prototype run on the Sun SPOTs. The chapter concludes with discussion
-of possible extensions of the prototype.
+This chapter presents the details of the DADT/LN prototype implemented as part of this work. The chapter begins with a description of the DADT prototype \cite{migliavacca_DADT:2006}, and outlines its limitations. This is followed by a discussion on the architecture of the hybrid DADT/LN prototype th combines the DADT prototype with the LN routing mechanism, and extends the existing prototype to work on WSNs. This is followed by a description of the JiST/SWANS simulation environment used to verify the implementation, and the experimental validation performed using the SunSPOT hardware platform.
 
 \section {The DADT Prototype}
 
-Use of DADTs can be applied to the context-aware distributed applications, as
-it was discussed in the Section \ref{sec:DADT}. This section provides reader with
-further details of DADT concepts, a presentation of the existing DADT
-prototype \cite{migliavacca_DADT:2006} and discusses its limitations.
+The DADT prototype implemented by Migliavacca et al \cite{migliavacca_DADT:2006} was written in Java, and presents the design of a DADT specification language that extends Java.
+
+This section provides the reader with
+further details on the concepts central to DADTs\footnote{All the DADT concepts presented below
+are described using the DADT specification language.}, a description of the
+existing DADT prototype \cite{migliavacca_DADT:2006}, and a discussion on its limitations.
 
 \subsection{ADTs Specification and Instantiation} \label{subsec:ADTSpecInst}
 
-As it was mentioned in the Section \ref{subsubsec:ADTsinWSN}, each sensor node
-in WSNs can be abstracted though a multiple number of ADT instances (see
-Figure \ref{Fig:MultipleADTs}) and therefore conceal the details of sensor
-node's abstraction from the application developer. Code snippets below are
-provided to illustrate concepts in further detail.
+As was mentioned in Section \ref{subsubsec:ADTsinWSN}, each sensor node
+in a WSN can be abstracted using multiple ADT instances (see
+Figure \ref{Fig:MultipleADTs}), and therefore conceal the details of sensor
+node abstraction from the application developer. The code snippets below are
+provided to further illustrate these concepts.
 
-The specification for described ADTs\footnote{According to classification of
-ADTs this is an example of the Data ADT (see Section
-\ref{subsubsec:DataAndSpaceADTs})} could be defined as Java interface as presented in the Listing \ref{listing:ADTSpec}
+The specification for a described ADT\footnote{This is an example of the Data ADT (see Section
+\ref{subsubsec:DataAndSpaceADTs})} may be defined as a Java interface, as shown in Listing \ref{listing:ADTSpec}
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
@@ -59,13 +46,13 @@ This specification declares that a Sensor ADT instance should provide the follow
 \item a double value that holds the sensor data, 
 \item a boolean value that stores information about sensor's state of activity
 \end{itemize}
-and the operations that allow to \emph{Read} sensor data and to \emph{Reset}
-sensor.
+and operations that allow to \emph{Read} sensor data and to \emph{Reset}
+the sensor.
 
 It is possible to define multiple such instances of this
-specification, for example, the ADT instances for a given sensor node that has two kinds of sensors - (a) a
+specification; for example, the ADT instances for a given sensor node that has two kinds of sensors - (a) a
 temperature sensor and (b) a light sensor - may be defined using the ADT
-specification described above as shown in the Listing
+specification described as shown in Listing
 \ref{listing:ADTInstances}. 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b,
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Sensor ADT instances, label =
@@ -79,9 +66,11 @@ listing:ADTInstances]
 
 \subsection{DADT Specification and Instantiation} \label{subsubsec:dadtspecandinst}
 
-The concept of DADTs was first introduced in the Section \ref{sec:DADT} and will
-be extended with examples of DADT specifications and instances in this chapter.
- 
+The concept of DADTs was first introduced in Section \ref{sec:DADT}, and will
+be extended in this chapter with examples of DADT specification and
+instantiaton.
+
+\subsubsection{Specification}
 DADT specifications can be best understood by carrying forward the example
 described in Section \ref{subsec:ADTSpecInst}. To allow for collective access
 to multiple ADT instances of the type specified in Listing
@@ -90,26 +79,36 @@ to multiple ADT instances of the type specified in Listing
  
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Data DADT 
-specification (reproduced from \cite{migliavacca_DADT:2006}), label = 
-listing:DADTSpec]
-class DSensor{
-  // type of ADTs
-    Class distributes = Sensor.class;	
-  // distributed operations:
-	void resetAll();
-	double average();
+specification (reproduced from \cite{migliavacca_DADT:2006}), label = listing:DADTSpec]
+class DSensor distributes Sensor{	
+  	//properties:
+	property isSensorType(int type);
+	property isActive();
+
+	// distributed operations:
+     distributed double average()	
+	 distributed void resetAll();
 }
 \end{lstlisting} 
  
 The DADT specification allows two simple distributed operations to be performed
 on multiple data ADTs of type \emph{Sensor}:  
 \begin{itemize}
-\item \emph{resetAll()} that is used to reset every sensor in the DADT member
+\item \emph{resetAll()} 
+\item \emph{average()} 
+\end{itemize}
+
+The \emph{resetAll()} operation is used to reset every sensor in the DADT member
 set, or subset of ADT instances defined by a DADT View (see Section
 \ref{subsubsec:views}).
-\item \emph{average()} that allows to calculate the average of readings of every
+
+The \emph{average()} operation allows to calculate the average of readings of every
 sensor in the member set or subset defined by DADT view.
-\end{itemize}
+
+Additionally, the DADT specification  shown in listing \ref{listing:DADTSpec} declares two DADT Properties, which will
+be discussed shortly.
+
+\subsubsection{Instantiation}
 
 Listing \ref{listing:DADTInstance} shows how DADT specifications can be
 instantiated as an object of a Java class, and be used to perform defined
@@ -117,22 +116,21 @@ distributed operations.
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
 basicstyle=\ttfamily\footnotesize, breaklines, caption = DADT Instantiation 
-(adapted from \cite{migliavacca_DADT:2006}), label = listing:DADTInstance ]
+(reproduced from \cite{migliavacca_DADT:2006}), label = listing:DADTInstance ]
 DSensor ds = new DSensor();
 ds.resetAll();
 \end{lstlisting}
 
-\subsubsection{Binding}
+\subsection{Binding ADTs to DADTs}
 
-As it was specified in the Section \ref{subsec:DADTsConcepts}, a DADT member set
- is being built by the set of ADTs that are available for collective
-access, in the given example, the collection of ADTs of type \emph{Sensor}.
+As mentioned earlier in Section \ref{subsec:DADTsConcepts}, a DADT member set
+ consists the set of ADTs that are available for collective
+access, which, in the given example, is the collection of ADTs of type \emph{Sensor}.
 
 An ADT instance is made part of the member set by binding it to the DADT type.
-This can be done using a dedicated programming construct as shown in Listing
-\ref{listing:binding}, where the Sensor ADT (see Listing \ref{listing:ADTSpec}) is bound to the DADT type \emph{DSensor}
+This can be done using a dedicated programming construct \emph{bind} as shown in
+Listing \ref{listing:binding}, where the Sensor ADT (see Listing \ref{listing:ADTSpec}) is bound to the DADT type \emph{DSensor}
 defined in Listing \ref{listing:DADTSpec}.
- 
  
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Binding ADT instances to a DADT instance, label = listing:binding]
@@ -142,129 +140,156 @@ bind(new Sensor(LIGHT), "DSensor");
 \end{lstlisting} 
 
 
-\subsubsection{DADT Operators and Actions}
+\subsection{Implementing DADT Operators and Actions}
 \label{subsubsec:OperatorsAndActionsImpl}
 
-The Section \ref{subsubsec:OperatorsAndActions} has introduced the
-concept of DADT Operators and DADT Actions. 
+The concepts of DADT Operators and Actions were introduced in the previous chapte (see Section \ref{subsubsec:OperatorsAndActions}). This section describes the implementation of Operators and Actions in the DADT prototype \cite{migliavaccaDADT:2006}.
 
-Use of DADT selection operator \emph{all} can be explained through the
-extended example of DADT Specification (see Listing \ref{listing:DADTSpec]})
-which uses pseudolanguage. This code snippet is shown in the
-Listing \ref{listing:DADTOperator}.
+The use of the DADT selection operator \emph{all} can be understood by considering an extension to the
+ example first introduced in Listing \ref{listing:DADTSpec]}) (see Listing \ref{listing:DADTOperator}).
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Defining a DADT action, label = listing:DADTOperator]  
-class DSensor {
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Use of DADT Selection Operator, label = listing:DADTOperator]  
+class DSensor distributes Sensor{
   ...
-  public void resetAll(){
+  distributed void resetAll(){
 	 (all in targetset).reset();
   }
 }
 \end{lstlisting}
 
-Distributed operation \emph{resetAll} uses selection operator 
-\emph{all} for obtaining an access to all ADT instances of the DADT
-target set, and subsequently invokes aperation \emph{reset} on the ADT
-instance, which was defined in the ADT specification (see Listing
-\ref{listing:ADTSpec}).
+The distributed operation \emph{resetAll} uses the selection operator 
+\emph{all} in order to obtain access to all ADT instances in the DADT
+target set, and subsequently invokes the \emph{reset} operation on the ADT
+instance. The \emph{reset} operation was declared in the ADT specification
+(see Listing \ref{listing:ADTSpec}).
 
-\textcolor{red}{rewrite here }
+\textcolor{green}{However, the application developer may in some situations be constrained by the available
+operations defined in the ADT specification. One of the solutions could be use of
+DADT actions, which is defined in the DADT type, but executed entirely on the
+ADT instance. THIS DOES NOT MAKE SENSE. EXPLAIN IT TO ME - SID}
 
-To perform a DADT \emph{Read} operation, an action is defined
-as shown in Listing
-\ref{listing:DADTAction}. 
+DADT actions do not necessarily consist merely of single ADT operations, but can
+be possessed of far higher logical complexity. For instance, a
+\emph{reliableRead} action may be implemented, that is capable of handling
+sensor read failures by means of performing multiple read attempts, failing which
+a sensor node reset is performed.
+
+It is important to note that, though DADT actions are defined in the DADT type, they are executed \emph{locally} on the ADT
+instances.
  
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Defining a DADT action, label = listing:DADTAction ]  
-public class DSensor_read_Action implements DADT.Action{
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Use of DADT Action (reproduced from \cite{migliavacca_DADT:2006}), label = listing:DADTAction ]  
+THIS IS UNNECESSARY DETAIL!!!
+class DSensor distributes Sensor {
+  distributed double average(){
+    action double reliableRead(){
+      double reading;
+      int tries = 3;
+      while (tries > 0){
+        reading = local.read();  // use of ADT operation
+        if (reading == ERROR) --tries;
+        else break; 
+      }
+      if (reading == ERROR) {
+        local.reset();
+        reading = local.read();
+      }
+    }
 
-  public Object evaluate(Object ADTInstance){
-	Sensor localSensor = (Sensor) ADTInstance;
-    return localSensor.read();
-  }
+    double[] sensorReadings = (all in targetset).reliableRead();
+    ...
+    // evaluation of the average value based on received readings	
+    ...
+    }
 }
 \end{lstlisting}
 
-This results in the operation {Read} to be invoked on the given sADT
-instance of type \emph{Sensor} (see Listing \ref{listing:ADTSpec}).
+\subsection{DADT Views} \label{subsubsec:viewsImpl}
 
-When the application programmer attempts to execute a DADT operation, such as
-for instance, the computation of the average
-across all sensors in its target set (see Listing \ref{listing:DADTInstance}),
-actions of the sort defined above are called. 
+DADT Views are an effective tool for the application developer to
+define the scope of a distributed operation. As was described in the Section
+\ref{subsubsec:views}, DADT views are created by using DADT properties.
 
-\subsubsection{DADT Views} \label{subsubsec:viewsImpl}
-
-Concept of DADT Views is an effective tool for the application developer to
-define scope of the distributed operation. As it was described in the Section
-\ref{subsubsec:views}, this concept is based on the definition of DADT
-properties.
-
-To continue on the example running throughout this section, if the application
-programmer has to partition the subset of ADT instances among those bound to the
-DADT type \emph{DSensor} (See Listing \ref{listing:binding}), and refer to it
-as a subset of temperature sensors, a data view \emph{TempSensors}, 
-as shown in the Listing \ref{listing:views}, can be delared.
+To continue to use the example running throughout this section, if the application programmer wishes to refer to a subset of temperature sensors from among the member set of ADT instances bound to the DADT type \emph{DSensor}, a data view \emph{TempSensors}, 
+as shown in Listing \ref{listing:DADTview}, can be delared.
   
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
-basicstyle=\ttfamily\footnotesize, breaklines, caption = Definition of DADT Data View, label = listing:views ]  
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Definition of DADT Data View, label = listing:DADTview ]  
+
 dataview TempSensors on DSensor as isSensorType(TEMPERATURE) && isActive(); 
 \end{lstlisting}
 
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Definition of DADT Properties, label = listing:DADTProperty ]  
+
+class DSensor {
+  ...
+  property isSensorType(){
+	 return (local.type == type);
+  }
+  property isActive() {
+	return local.isActive();
+  }
+}
+
+\end{lstlisting}
+
 The DADT name \emph{DSensor} in this case refers to its member set, and 
-the data view \emph{temperature} is defined as a subset of this member set and
-contains only sensor nodes with temperature sensors for which evaluation of
-the property \emph{isActive} returns \emph{true}. The data view definitions are
-used to restrict  the scope of the DADT operations.
+the data view \emph{TempSensors} is defined as a subset of this member set and
+contains only sensor nodes with temperature sensors for which the evaluation of
+both DADT properties (See Listing \ref{listing:DADTProperty}) \emph{isActive}
+and \emph{isSensorType} return \emph{true}. 
 
 \subsection{Limitations of the DADT Prototype}
 
-The DADT prototype, proposed in \cite{migliavacca_DADT:2006}, enables the use of
+The DADT prototype proposed in \cite{migliavacca_DADT:2006} enables the use of
 DADTs to facilitate distributed application programming.
 
-It supports is a Java-based application development and consists of two parts:
+It supports Java-based application development, and consists of two parts:
 \begin{itemize}
-  \item \emph{Translator}, that proviides translation of Java program
-  extended with DADT programming constructs into conventional Java classes.
-  \item \emph{Run-time library} is used at translation step and allows to run
-  created Java classes in  JVM.
+  \item \emph{Translator}
+  \item \emph{Runtime library} 
 \end{itemize}
 
-Run-time library provides support for DADT constructions and methods, such as
+The \emph{translator} translates Java programs
+  extended with DADT programming constructs into conventional Java classes.
+
+The \emph{runtime library} is used during the translation stage, and allows for the execution of the Java classes on the JVM\footnote{The prototype runs on the full JVM, and not the Squawk JVM, which the DADT/LN prototype is capable of running on.}. It provides support for DADT constructions and methods, such as
 \emph{binding} ADTs to DADTs, \emph{DADT Views}, \emph{Actions} and
 \emph{Operators}. 
 
 The communication in the prototype is based on the IP Multicast principle, and
-allows to deliver information to the ADTs bound to a specific DADT, defined as
+allows to deliver information to ADTs bound to a specific DADT, defined as
 a multicast group.
 
-The DADT prototype has presented a proof of the DADT concept. While this
+The DADT prototype is a proof of the DADT concept. While this
 approach is clearly applicable to WSNs, the prototype itself did not support WSN
-abstractions, and besides has major limitations to it:
+abstractions, and besides has the following major limitations:
 
 \begin{itemize}
   \item The lack of a routing mechanism.
   \item Limitations in portability to real WSN nodes.
+  \item The use of IP multicast for communication is not efficient on WSNs that have simpler protocol stacks. \textcolor{blue}{CHECK THIS!}
 \end{itemize}
 
 \section{The DADT/LN Prototype}
 
 \subsection{Motivation}
 
-The DADT prototype proposed in \cite{migliavacca_DADT:2006} showed that the
-concept of DADTs can be possibly used for distributed WSN
-applications, but existing limitations prevent its use in WSN simulators or real nodes.
+The DADT prototype proposed in \cite{migliavacca_DADT:2006} proved that the
+concept of DADTs could possibly be applied to WSN
+applications, but existing limitations with the prototype prevent its use in WSN simulators or real nodes.
 
 This work makes the following contributions:
 
 \begin{itemize}
-  \item Enhance the DADT prototype for use in WSNs by extending it to run
+  \item Enhances the DADT prototype for use in WSNs by extending it to run
   on simulators as well as devices in a real-world environment.
-  \item Interfacing the LN mechanism presented in \cite{mottola_LNAbstraction}
+  \item Interfacing the LN mechanism presented in \cite{mottola_LNAbstraction} with the DADT prototype in order
   to enable abstracted communication between groups of nodes in the WSN defined
   by DADTs.
-  \item  Provides verification of the utility of DADT abstractions in the WSN
+  \item  Verifies the utility of DADT abstractions in the WSN
   application layer.
 \end{itemize}
 
@@ -279,17 +304,16 @@ the DADT/LN prototype}
 The overview of the workflow involved in using DADTs to enable WSN application
 programming is shown in Figure \ref{Fig:DADTLN_workflow}. The application
 developer provides an application layer code for the WSN using a DADT
-language in a series of \emph{.dadt} files (see Section
-\ref{subsec:DADTlanguage} for further details). A preprocessor is used to
-convert the code written by the application programmer into Java code that interfaces with the DADT infrastructure (extended from the prototype presented in
-\cite{migliavacca_DADT:2006}). In order to facilitate routing to LNs defined by DADT Views, the DADT infrastructure is interfaced with the a
+language in a series of \emph{.dadt} files, that is Java code extended by DADT
+constructs. The JADT preprocessor is used to convert the code written by the
+application programmer into Java code that interfaces with the DADT infrastructure (extended from the prototype presented in \cite{migliavacca_DADT:2006}). In order to facilitate routing to LNs defined by DADT Views, the DADT infrastructure is interfaced with the a
 previously developed implementation of LNs. 
 
 The application (including the implementation of layers lower in the protocol
 stack) is then loaded on to either:
 \begin{itemize}
-\item the JiST/SWANS simulator \cite{barr_JIST:2005, barr_SWANS} (Section
-\ref{sec:jistswans} provides implementation details of the simulator) 
+\item the JiST/SWANS simulator \cite{barr_JIST:2005, barr_SWANS} (See Section
+\ref{sec:jistswans} where implementation details of the simulator are provided) 
 \item a collection of Sun SPOT wireless sensor devices
 \cite{simon_squawk:2006} (see Section \ref{sec:sunspots}) to execute the given 
 application on real sensor nodes.
@@ -303,28 +327,28 @@ abstracted in the DADT/LN prototype}
 \label{Fig:DADTLN_glossary}
 \end{figure} 
 
-The WSN network in the DADT/LN prototype developed as part of
-this work consists of two types of devices as shown in Figure
+The WSN in the DADT/LN prototype developed as part of
+this work consists of two types of devices each of which conceal a number
+of objects on the different layers of the WSN stack, as shown in Figure
 \ref{Fig:DADTLN_glossary}:
 \begin{itemize}
   \item \emph{Controller}
   \item \emph{Sensor Device}
 \end{itemize}  
    
-\emph{Controller} is typically resided on PC. On the application layer this
+\emph{Controller} typically resides on a PC. On the application layer, this
 abstraction includes the distributed application code, the DADT
-instance, the DADT manager. Network layer entity con the LN implementation is
-used in the network layer.
+instance, and the DADT manager. The Network layer entity hosts the LN implementation.
   
-\emph{Sensor Device} is a ``hardware" sensor device such as a Sun SPOT, 
-which holds the entities of application Layer, which includes a Sensor Node
+\emph{Sensor Device} is a real-world sensor device such as a Sun SPOT, 
+which holds the entities of the application layer, which includes a Sensor Node
 abstraction consisting of multiple sensor ADT instances, and an ADT
 manager, and a network layer entity which is represented by the LN implementation.
 
 \subsection{Architecture}
 
-The architecture of the DADT/LN prototype presented in the Figure
-\ref{Fig:DADTLN_architecture} and contains a few logical layers.
+The architecture of the DADT/LN prototype is presented in Figure
+\ref{Fig:DADTLN_architecture}, and consists of the following logical layers.
 
 \begin{figure}
 \centering
@@ -333,46 +357,67 @@ The architecture of the DADT/LN prototype presented in the Figure
 \label{Fig:DADTLN_architecture}
 \end{figure} 
 
-Upper layer presents distributed application code implemented by an application
-developer. It is written in the DADT specification language (see Section
-\ref{subsec:DADTlanguage}) and later is translated into executable Java code,
-which uses the DADT runtime resided in the next layer as API.
+\subsubsection{Upper layer}
 
-The layer below holds DADT runtime library which provides handling of ADTs and
-DADTs. In particular, the class \emph{DADTMgr} manages binding and unbinding of
-ADT instances into DADT type, provides support for space ADTs through the
-\emph{Site} class, and handles other relevant aspects. 
+The upper layer consists of the following components:
+
+\begin{itemize}
+\item \emph {Distributed application}
+\item \emph{Sensor} and \emph{DSensor}
+\item \emph{DADT runtime layer}
+\item \emph{DADT manager}
+\item \emph{The Property, Action, and View classes}
+\end{itemize}
+
+The Distributed application comprises the code implemented by
+the application developer, and is written in Java, extended with constructs defined in the DADT
+specification language. This code is later  translated into executable Java
+code using a preprocesssor and interfaced with the DADT runtime.
+
+The \emph{Sensor} and \emph{DSensor} classes are the data
+ADT and data DADT specifications used by the DADT/LN prototype, and are entirely
+defined by the application developer. The space ADTs \emph{Host}
+and \emph{Network} are currently built into the DADT/LN prototype, and cannot be defined by the application programmer. However, data ADTs can be placed into space ADTs.
+
+The \emph{DADT runtime layer} holds the DADT runtime library, which provides
+handling of ADTs and DADTs. 
+
+The \emph{DADT Manager} performs several tasks, including managing the binding and unbinding
+of ADT instances to DADT type by means of the  \emph{Binding Registry} class,
+and providing support for space ADTs using the \emph{Site} class. 
+
 The abstract classes \emph{Property} and \emph{Action} represent the
-corresponding concepts, described in the Section \ref{subsec:DADTsConcepts}.
+corresponding concepts described in the Section \ref{subsec:DADTsConcepts}.
 The class \emph{View} provides support for data and space DADT Views, and
-contains the set of \emph{Property} objects, that define the scope of the
-operations. Properties are organised into an abstract tree which provides the
+contains the set of \emph{Property} objects that define the scope of the
+operations. 
+
+Properties are organised into an abstract tree which provides the
 logical predicate defining the view, with the leaves representing DADT
-properties and the nodes specifying boolean operators used to compose it.
+properties and the nodes specifying boolean operators that are used to compose it.
+The class \emph{Operator} is a superclass for all of the DADT Operators, though
+the current implementation of the DADT/LN prototype provides support mainly for
+selection operators.
 
-\textcolor{green}{to be expanded a bit more, 13/08}
+\subsubsection{Lower Layer}
 
-The lower layer provides support for interfacing DADT runtime and LN runtime.
-This is achived by using instances of the \emph{LNNodeManager} on each sensor
+The lower layer -\emph{DADT/LN runtime} - provides support for interfacing the DADT
+runtime with the LN runtime. This is achived by using instances of the \emph{LNNodeManager} class on each sensor
 device and \emph{LNDistrNodeManager} instance on the controller node. 
 
-Communication between sensor devices and controller node is handled by LN
-runtime layer and from the application's view achieved by use of 
-\emph{RequestMsg} and \emph{ReplyMsg} messages.
-
-
-
-\subsection{DADT specification language} \label{subsec:DADTlanguage}
- 
-%FILL THIS
+Communication between sensor devices and the controller node is handled by the LN
+runtime layer. This is abstracted from the application programmer by means of the 
+\emph{RequestMsg} and \emph{ReplyMsg} methods. The classes \emph{SelectAll} and
+\emph{SelectAny} implement DADT selection operators, and allow for the invocation of
+the corresponding send methods defined in the LN API.
 
 \subsection{Implementation Details}
 
 This section attempts to explain the operation of the DADT/LN prototype
 developed as part of this work by considering the sequence of method calls made
-during execution. The operation of the simulation platform as well as the
-nodes itself is abstracted from the explanations that follow, as is the actual
-\emph{.dadt} syntax used by the application programmer himself to trigger these
+during the execution of the DADT/LN prototype. The operation of the simulation platform as well as that of the
+nodes themselves are not described in detail in the explanation that follows, as is the actual
+\emph{.dadt} syntax used by the application programmer to trigger these
 operations. 
 
 \subsubsection{The DADT/LN prototype on the Controller}
@@ -393,17 +438,16 @@ A \emph{Client Node} is an abstraction that holds a DADT
 instance. The application programmer's requests to the network are issued
 by the Client Node.
   
-A \emph{DADT Instance} allows for collective access to multiple ADT instances,
-as it was described in Section \ref{subsubsec:dadtspecandinst}.
+A \emph{DADT Instance} allows for collective access to multiple ADT instances (see Section \ref{subsubsec:dadtspecandinst}).
 
-An \emph{Expression Tree} is a specific construct that allows to build a
-hierarchical data view.
+An \emph{Expression Tree} is a special object that allows the construction of an abstract
+tree for the DADT View, based on the set of DADT Properties defined.
 
 A \emph{DADT Manager} provides the interface between the Client Node and the
 network, and passes request messages from the Client Node to the lower layers
 of the protocol stack.
 
-\emph{Data Views} present a mechanism for partitioning the collection of
+\emph{DADT Views} present a mechanism for partitioning the collection of
 ADT instances bound to a particular DADT type, and were explained in Section
 \ref{subsubsec:views}.
 
@@ -418,46 +462,51 @@ The instantiation of a DADT type by the application programmer's
 code\footnote{This is written in the DADT specification language.} causes the
 following actions to take place at the Controller:
 \begin{itemize}
- \item the Client Node creates an instance of the DADT type that is used to
-  perform collective operations on the network.   
+ \item the Client Node creates an instance of the DADT type and uses it 
+ to perform collective operations on the network.
   \item a new expression tree
-  is created to provide a hierarchical representation of the application programmer's definition of a data view.
+  is created to provide a representation of the DADT View defined by an application
+  programmer.
   \item the DADT instance creates an instance of the DADT Manager.
 \end{itemize}
 
 When the application programmer's code requests the execution of a distributed operation
-on the WSN, the Client Node forwards the request to the DADT instance, which
-processes the request and communicates with an underlying WSN.
+on the WSN, the Client Node forwards the request to the DADT instance, which in turn
+processes the request and facilitates communication across the WSN.
 
-The DADT instance performs following actions:
+The DADT instance performs the following actions:
   \begin{itemize} 
-    \item it processes the request and according to the defined scope of the
-    distributed operation constructs the relevant DADT View using the
-    expression tree object,
-    \item subsequently uses the DADT Manager to specify LN for the
-    provided request, by using a special procedure of mapping DADT properties
-    from the expression tree object into LN predicates,
-    \item using the DADT manager it constructs and sends a request message to
-    underlying WSN, and
-    \item being a separate thread, it sleeps until, if required, the result of
+    \item It processes the request, and, according to the defined scope of the
+    distributed operation, constructs the relevant DADT View using the
+    expression tree object.
+    \item It uses the DADT Manager to translate the DADT View
+    (defined in the expression tree object) into LN predicates, and constructs and sends a request message to
+    underlying WSN.
+    \item The DADT instance sleeps until, if required, the result of
     the request is received from the network layer.
   \end{itemize}
   
-If no reply from the WSN nodes is expected the Client Node continues its work in
-the normal mode. This situation may happen if the request was presented by an
-action such as \emph{Reset} sensors. 
+If no reply is expected from the nodes to which the communication was sent, the Client Node continues to operate normally. This situation occurs, for instance, in the case of a request from the Controller Node
+that contains the \emph{ResetAll} action. 
  
-On the other hand, if the result of the distributed computation is exp ected and
-finally received, the Client Node is notified. The Client Node then executes the
-appropriate function on the DADT instance to collect and process the readings.
-The DADT instance returns the processed readings to the Client Node.
+Otherwise, if the result of the distributed computation is expected, the DADT
+instance is notified when the relevant data are received from the WSN.
+The DADT instance then invokes the relevant methods to collect and process the received
+readings. Finally, it returns the result of the DADT request to
+the Client Node.
 
 \subsubsection{The DADT/LN prototype on the sensor device} \label{subsubsec:DADTLNSensorDevice}
 
 Figure \ref{Fig:SeqDiagram_Sensornode} presents the operation of the DADT/LN
-prototype on the sensor device (which may be either simulated or a real
-device). As shown in the figure, the implementation running on each sensor node 
-consists of the following entities:
+prototype on the sensor device (which may be either a simulated or a real
+node).
+
+In the rest of this section, the term \emph{sensor device} is used to refer to the
+physical sensor node entity, while the term \emph{sensor node} refers to the application
+layer abstraction of all of the sensors within the device that resides on-device.
+
+The DADT/LN prototype implementation running on each sensor node consists of the
+following entities:
 
 \begin{itemize}
   \item \emph{Sensor Node} 
@@ -465,12 +514,9 @@ consists of the following entities:
   \item \emph{ADT Manager} 
 \end{itemize}
 
-A\emph{Sensor Node} is an abstraction that consists of a list of sensors. This
+A \emph{Sensor Node} is an abstraction that consists of a list of sensors. This
 follows from the example used to illustrate the concept of ADTs in Section
-\ref{subsec:ADTSpecInst}. The term \emph{sensor device} is used to refer to the
-physical sensor node entity, while the term \emph{sensor node} refers to the application
-layer abstraction of all of the sensors within the device. This abstraction
-resides on the device.
+\ref{subsec:ADTSpecInst}. 
 
 A \emph{Sensor ADT instance} is an ADT instance for a given sensor on the sensor
 node upon which the prototype executes.
@@ -493,26 +539,24 @@ the ADT manager\footnote{The ADT manager is assumed in our
 current implementation to be aware of all DADT types defined in the WSN.}.
 
 When the lower layer (which runs the LN algorithm) delivers a message to the
-Sensor Node, the ADT Manager is used to processed the request message.The
-request message contains a DADT Data view (see Section \ref{subsubsec:views})
-which is used to filter from the sensor ADT instances on the given Sensor node
-those that fit into the Data View. 
+Sensor Node, the ADT Manager is used to process the request message.The
+request message contains details of the DADT View (see Section
+\ref{subsubsec:views}) used later to filter from the sensor ADT
+instances on the given Sensor node those that fit into the requested DADT View. 
 
 If the request message is received in the application layer, then at least one of
-the sensor ADT instances in the Sensor Node fits into the dataview, as the data
-view is expressed in the form of an LN predicate. This minimises the number of
+the sensor ADT instances in the Sensor Node fits into the DADT view, as the DADT
+view is expressed in the form of LN predicates\footnote{If none of the sensor ADT instances fit the view, the message would be discarded in the network layer.}. This minimises the number of
 messages received at the application layer. However, since a given Sensor Node
 may contain several sensor ADT instances, the ADT instances have to be filtered.
 
-The request message also contains a description of the DADT action to be
-performed on-device (see Section
-\ref{subsubsec:OperatorsAndActions}). The ADT manager calls the action for each
-sensor ADT instance that fits into the DADT Data View. 
+The request message also contains information about the DADT action to be
+performed on device (see Section \ref{subsubsec:OperatorsAndActions}). 
+The ADT manager calls the action for each sensor ADT instance that fits into the DADT View. 
 
 If the application layer requires that a reply be sent, the LN implementation in
-the lower layer of the protocol stack is used as it can be seen on the bottom
-right section of Figure \ref{Fig:SeqDiagram_sensornode}.
-
+the lower layer of the protocol stack is used as can be seen on the bottom
+right section of Figure \ref{Fig:SeqDiagram_Sensornode}.
 
 
 \subsection{The DADT/LN prototype in the simulated environment}
@@ -520,8 +564,7 @@ right section of Figure \ref{Fig:SeqDiagram_sensornode}.
 
 As the simulator used in this work is a discrete event simulator, this section 
 begins with a short description of discrete event simulators. 
-This is followed by a discussion on a particular discrete event simulator
-called JiST, and the SWANS network simulator built on top of JiST.
+This is followed by a discussion on the SWANS network simulator used during the course of this work, and the JiST Java-based discrete event simulator upon which SWANS is built.
 
 \paragraph{Discrete Event Simulator}
 
@@ -548,10 +591,10 @@ conventional programming language, i.e., Java).
 
 JiST simulation code is written in Java, and converted to run over the JiST 
 simulation kernel using a bytecode-level rewriter\footnote{The bytecode 
-rewriter and the simulation kernel are both written in Java},  as it can be
+rewriter and the simulation kernel are both written in Java},  as can be
 seen in Figure \ref{Fig:JiST_architecture}.
 
-The execution of a JiST program can be understood by considering example as
+The execution of a JiST program can be understood by considering the example 
 shown in Listing \ref{listing:JiSTExample}
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
@@ -596,7 +639,7 @@ The JistAPI functions used in the example code are used to perform the
 code transformations. The method call to myEvent is now scheduled and executed
 by the simulator in simulation time. Simulation time differs from ``actual''
 time in that the advancement of actual time is independent of application
-execution. 
+execution, whereas simulation time is not. 
  
 \paragraph{Scalable Wireless Ad hoc Network Simulator (SWANS)}
 SWANS is a wireless network simulator developed in order to provide efficient
@@ -629,7 +672,7 @@ The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}.
 
 \subsubsection{Simulation using JiST/SWANS}
 
-The DADT/LN prototype was tested on the SWANS WSN simulator, that is built upon
+The DADT/LN prototype was tested on the SWANS WSN simulator, which is built upon
 the JiST discrete event simulator (see Section \ref{subsec:jist}). 
 
 The DADT/LN prototype code is wrapped in the JiST API, and is loaded on to a
@@ -637,88 +680,32 @@ simulated node. As described in the previous section, there are two kinds of
 nodes in the DADT/LN prototype:
 
 \begin{itemize}
-  \item \emph{Controller Node}, that holds the distributed application, and the
+  \item \emph{Controller Node}, which holds the distributed application, and the
   framework to manage the same.
-  \item \emph{Sensor Device}, that holds the individual ADT instances. 
+  \item \emph{Sensor Device}, which holds the individual ADT instances. 
 \end{itemize}
 
 The Controller Node was implemented as a separate node on the JiST/SWANS
-simulator, and was run as an undependet WSN simulated node for the purposes of
-simulation. The Sensor Device implementation (see Section
+simulator, and was run as an independent simulated node for the purposes of
+the simulation. The Sensor Device implementation (see Section
 \ref{subsubsec:DADTLNSensorDevice}) was loaded on to all but one of the nodes in
 the simulator.
 
-The simulation was run on networks of upto 50 nodes to empirically verify the
+The simulation was run on networks of upto 50 nodes to develop and empirically verify the
 robustness of the work done as part of this thesis.
 
 \subsection{The DADT/LN prototype on Sun SPOTs}
 
 For further experimental validation of the implementation produced as part of 
-this thesis,
-the DADT/LN prototype was deployed on Sun SPOTs \cite{simon_squawk:2006}. 
+this thesis, the DADT/LN prototype was deployed on Sun SPOTs \cite{simon_squawk:2006} (see Section \ref{sec:sunspots}. 
 
-The
-Controller application was executed as a host application on the host machine (a
+The Controller application was executed as a host application on the host machine (a
 PC), while the other Sun SPOTs ran the Sensor Device implementation as on-SPOT
 applications (see Section \ref{subsec:sunspotapps} for a description of host and on-SPOT
 applications).
 
-\section{Evaluation}
-
-The performance of the DADT/LN prototype was evaluated using the following
-metrics: 
-\begin{itemize}
-  \item Packet processing workload on the application layer.
-  \item Ease of implementation. 
-\end{itemize}
-
-The first metric was used to compare the performance of the DADT/LN prototype
-against that of the original DADT prototype used as the basis for this work
-\cite{migliavacca_DADT:2006}. In the original DADT prototype, a request message
-was replied to or discarded on the basis of an expression tree evaluation in the
-application layer. In the implementation presented in this work, the integration
-with the LN approach results in unsuitable request messages being discarded on
-the basis of predicate evaluation in the network layer. 
-
-A series of simulations were run using the JiST/SWANS simulations to determine
-the number of request messages discarded at the network layer and the number
-passed on to the application layer by the LN predicate matching algorithm. The
-sum provides the total number of packets processed in the application layer of
-the original DADT prototype.
-
-It was found that the number of messages processed in the application layer was
-lower in the implementation produced as part of this work.
-
-%HOW CAN WE SAY LN PREDICATE EVAL IS MORE EFFICIENT THAN EXPRESSION TREE?
-
-%
-%The second metric used the number of lines of code required to implement a
-%simple distributed averaging application. While not an ideal metric, it
-%quantifies the difference in the order of magnitude of coding effort required
-%on the part of the application programmer to produce WSN applications with and
-%without the use of programming abstractions. To this end, a simple WSN
-%application was written on the Sun SPOTs to calculate the distributed average.
-
-%The difference in the number of lines was **.
-
-\section{Future Work}
-
-This section presents a list of possible extensions to the work implemented as
-part of this thesis. These include:
-
-\begin{itemize}
-  \item \emph{Support for DADT selection operators:} The current prototype
-  supports the selection of all ADT instances that match a defined DADT Data
-  view, but does not enable the selection of a subset of the aforementioned
-  collection of ADT instances. This arises due to limitations in the current LN implementation.
-  \item \emph{Extending support for Space DADTs:} Currently, the prototype
-  provide a limited support for the notion of space. Therefore, a
-  possible avenue for future work could include the extended support implementation of Space DADTs.
-  \item \emph{Extending the prototype for networks of heterogenous nodes:}
-  The current prototype, by virtue of it being implemented in Java, cannot be
-  used on a wide variety of different nodes. 
-\end{itemize}
-
-\section{Conclusions}
-
-%HERE MORE BLAH BLAH
+Deployment of the DADT/LN prototype on Sun SPOT devices involved several
+challenges. Whereas the JiST/SWANS simulator allows to run unmodified Java code on
+the simulated node, the Squawk JVM on Sun SPOTs introduces severe limitations
+on the code. The application code has to be compliant with CLDC 1.1
+specification of Java ME, and therefore lacks support for a number of APIs that were previously used during the development of the DADT prototype \cite{migliavacca_DADT:2006}.

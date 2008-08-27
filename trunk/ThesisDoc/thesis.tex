@@ -8,6 +8,7 @@
 \usepackage{indent}  
 \usepackage{listings} 
 \usepackage{rotating}
+\usepackage{bnf}
 \usepackage{color} 
 
 \author{Galiia Khasanova}
@@ -16,8 +17,6 @@
 \newcommand\T{\rule{0pt}{3.1ex}} % Adds a space between the text and the [T]op \hline
 
 \enlargethispage{5cm} \thispagestyle{empty} \vsize=25.0cm
-
-
 
 \abstract{
  This thesis presents blah blah blah.
@@ -54,7 +53,7 @@
 	        \begin{Large}
 	        Tesi di Laurea\\
 	        \end{Large}
-	        \vspace{1.4cm}
+	        \vspace{1.0cm}
 	    \begin{center}
 	    \begin{LARGE}
 	        \textbf{Enabling Distributed Programming Abstractions for Real-World
@@ -62,7 +61,7 @@ Wireless Sensor Networks (draft)}\\
 	        \end{LARGE}
 	    \end{center}
 	
-	        \vspace{1.5cm}
+	        \vspace{1.2cm}
 	    \end{center}
 	\begin{center}
 	    \begin{tabular}{ll}
@@ -73,7 +72,7 @@ Wireless Sensor Networks (draft)}\\
 	        \large{\textbf{Klaus Wehrle}} & \hspace{5 cm}\\
 	    \end{tabular}
 	\end{center}
-	    \vspace{1.0cm}
+	    \vspace{1.3cm}
 	    \begin{center}\begin{large}Anno accademico 2007/2008\end{large}\end{center}
 \end{titlepage}
 
@@ -103,7 +102,11 @@ Wireless Sensor Networks (draft)}\\
 	\hline
 	MAC \T \B & Media Access Control \\
 	\hline
+	MEMS \T \B & Micro-Electro-Mechanical Systems \\
+	\hline
 	OS \T \B & Operating System \\
+	\hline
+	QoS \T \B & Quality of Service \\
 	\hline
 	RF \T \B & Radio Frequency \\
 	\hline
@@ -126,7 +129,7 @@ Wireless Sensor Networks (draft)}\\
 %boyfriend insists.}
 \tableofcontents
 \listoffigures
-\listoftables
+%\listoftables
 \end{preliminary} 
 
 
@@ -134,6 +137,7 @@ Wireless Sensor Networks (draft)}\\
 \include{chapIntroWSN}
 \include{chapBackground}
 \include{chapImplementation}
+\include{chapConclusions}
 
 \bibliography{references}
 \bibliographystyle{acm}

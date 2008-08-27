@@ -1,22 +1,76 @@
-\chapter{Introduction}
-
-\textcolor{green}{Jo: quote is fine, but better Sth Like : Mark Weiser once
-wrote in his visionary paper from whenever [22]:}
+\chapter{Introduction} \label{chap:Intro}
 
 \begin{quote}
 \emph{The most profound technologies are those that disappear. They weave
 themselves into the fabric of everyday life until they are indistinguishable
-from it} (Mark Weiser)
-
+from it} [Mark Weiser]
 \end{quote}
 
-Recent progress in micro system technologies and wireless communication
-made it possible to deploy wireless sensor networks (WSNs) that contain a large
-number of sensor nodes, multifunctional devices characterised by their low- cost,
-low-power, and small form factor, that can communicate across short distances
-using Radio Frequency (RF) communication \cite{SensorSurveyAkyildiz:2002}.
+\section{Motivation}
+Recent advances in Micro-Electro-Mechanical Systems (MEMS)
+technologies and wireless communication have made it possible to deploy networks
+of sensor nodes called Wireless Sensor Networks (WSNs) that contain a large
+number of sensor nodes in several disparate environments. Each individual node is
+a multifunctional device characterised by its low cost, low power, and small form
+factor. They can communicate untethered across short distances using a variety of
+means, including Radio Frequency (RF) communication
+\cite{SensorSurveyAkyildiz:2002}.
 
-WSNs are being used in a wide range of applications in military and civilian
-operations such as, for instance, health monitoring, environment monitoring,
-data acquisition in dangerous environments, and target tracking.
+WSNs are currently used in a wide range of applications including health
+monitoring, environment monitoring, data acquisition in dangerous environments,
+and target tracking.
+
+However, programming WSNs is currently a complex task that requires an
+understanding of the operation of WSNs. This limits its utility in widely
+disparate fields by scientists unaware of the technology underlying them. To deal
+with this problem, it is necessary to abstract the details of WSN operation
+thereby allowing the application programmer to develop WSN applications inspite
+of being naive to the details of embedded system programming. This is achieved
+using programming abstractions wherein the WSN application is viewed as a system
+and sensor nodes and sensor data are abstracted.
+
+This work underlies the extension of a distributed programming abstraction called
+Distributed Abstract Data Types (DADTs) \cite{migliavacca_DADT:2006} that use
+high-level programming constructs to abstract interfaces to individual entities
+in a distributed network and allow the application programmer to communicate
+directly with the the entire distributed network (or a subset thereof).
+
+Though DADTs appear ideal to the problem domain of abstracting WSN programming,
+no work had been performed on examining their suitability, and subsequently
+extending them for use in WSN applications. Additionally, a robust routing
+mechanism that allows for the selection of a subset of the sensor nodes in a WSN
+is required - a requirement that is not met by conventional WSN routing
+algorithms.
+
+\section{Contributions}
+
+This work makes the following contributions:
+
+\begin{itemize}
+\item It extends the DADT prototype developed in \cite{migliavacca_DADT:2006} to WSNs.
+\item It integrates the DADT mechanism in the application layer with a Logical
+Neighbourhood \cite{mottola_LNAbstraction} routing mechanism that allows for the partitioning of
+the WSN network on the basis of neighbourhoods defined by logical predicates in the network layer.
+\item It evaluates the suitability of the developed prototype on simulations as well as real nodes.
+\end{itemize}
+
+\section{Outline}
+The outline of the thesis is as follows: Chapter \ref{chap:IntroWSN} presents an
+introduction to wireless sensor networks, and discusses the protocol stack used
+in a typical WSN application and a short survey of routing mechanisms for WSNs.
+Chapter \ref{chap:background} discusses the background underlying this work, and
+includes brief descriptions of WSN programming models, DADTs, the LN routing mechanism,
+and the hardware platform used to evaluate the prototype produced as part of this
+work. Chapter \ref{chap:Implementation} describes the details of the
+implementation of the prototype as well as a brief description of the structure of the DADT prototype
+that was modified during the course of this work. Finally, Chapter \ref{chap:
+Evaluation} describes the metrics and experimental methodology used to evaluate this work, the
+conclusions thus reached, and possible avenues for future work.
+
+
+
+
+
+
+
 
