@@ -1,0 +1,158 @@
+\chapter{Tools} \label{chap:tools}
+
+\section{simulator - rename}
+
+\section {Sun SPOTs} \label{sec:sunspots}
+
+Sensor nodes, as mentioned in Section \ref{subsec:sensornodes}, are
+characterised by limited resources, including memory. 
+
+In order to overcome memory limitations, wireless sensor network applications
+have traditionally been coded in non-managed languages like C and assembly
+language \cite{simon_squawk:2006}.
+ 
+Managed runtime languages like Java were not used for sensor network programming
+because of the combination of the static memory footprint of the Java Virtual
+Machine (JVM) and the dynamic memory footprint of the WSN application code.
+ 
+On the other hand, it is widely accepted that development times are greatly reduced
+upon the use of managed runtime languages such as Java
+\cite{simon_squawk:2006}. Therefore, currently prevalent WSN programming practice
+trades developer efficiency for memory efficiency. 
+
+However, Simon et al \cite{simon_squawk:2006} state the benefits resulted from
+using a managed runtime language for WSN programming as follows:
+
+\begin{itemize}
+  \item Simplification of the process of WSN programming, that would cause an
+  increase in developer adoption rates and productivity.
+  \item Opportunity to use standard development and debugging tools.
+\end{itemize}
+
+The use of the Java programming language in SunSPOTs makes it particularly
+suitable as a platform for the DADT applications presented. This is because the
+DADT programming abstraction is designed to reduce programmer workload, and the
+use of a managed runtime language such as Java has been shown to further
+improve developer efficiency.
+ 
+\subsection{The Sun SPOT hardware platform }
+Sun Microsystems has, on the basis of the arguments discussed in the previous
+section, proposed and built a sensor device
+called the Sun Small Programmable Object Technology (Sun SPOT) that uses a
+on-board JVM to allow for WSN programming using Java.
+
+The Sun SPOT (see Figure \ref{Fig:SunSpot}) uses an ARM-9 processor, has 512 KB of RAM
+and 4 MB of flash memory, uses a 2.4GHz radio with an integrated antenna on the board. The radio
+is a TI CC2420 and is IEEE 802.15.4 compliant.
+
+\begin{figure} 
+\centering
+\includegraphics[scale=0.50]{img/sunspot1.eps} 
+\caption[Sun SPOT device]{Sun SPOT device}
+\label{Fig:SunSpot}
+\end{figure} 
+
+
+\subsection{The Squawk JVM}
+
+The Squawk JVM is used on Sun SPOTs to enable on-board execution of Java
+programs. The Squawk VM was originally developed for a smart card system with
+even greater memory constraints than the Sun SPOTs. The Squawk JVM has the
+following features \cite{simon_squawk:2006}:
+
+\begin{itemize}
+  \item It is written in Java, and specifically designed for resource
+  constrained devices, meeting the requirements of Connected Limited Device
+  Configuration 1.1 (CLDC) framework for Java Micro Edition (Java ME)
+  applications.
+  \item It does not require an underlying OS as it runs directly on the Sun
+  SPOT hardware. This allows for a reduction in memory consumption.
+  \item It suuports inter-device application migration.
+  \item It allows the execution of multiple applications on one VM,
+  representing each one as an object.
+\end{itemize}
+
+\subsection{Split VM Architecture}
+
+As resource constrained devices are incapable of loading class files on-device
+by virtue of their limited memory, a VM architecture known as the ``split VM
+architecture'' is used, as shown in Figure
+\ref{Fig:SquawkVM_architecture}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.61]{img/Squawk_architecture.eps} 
+\caption[The Squawk Split VM Architecture]{The Squawk
+Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
+\label{Fig:SquawkVM_architecture}
+\end{figure}  
+
+The Squawk split VM architecture uses a class file preprocessor known as the
+\emph{suite creator} that converts the \emph{.class} bytecode into a more
+compact representation called the Squawk bytecode. According to
+\cite{simon_squawk:2006}, Squawk bytecodes are optimised in order to:
+\begin{itemize}
+\item minimise space used by using smaller bytecode representation, escape
+mechanisms for float and double instructions, and widened operands. 
+\item enable in-place execution, by ``resolving symbolic references to other
+classes, data members, and member functions into direct pointers, object offsets
+and method table offsets respectively''.
+\item simplify garbage collection, by the careful reallocation of local
+variables, and by storing on the operand stack the operands of only those instructions that would result in a memory allocation.
+\end{itemize}
+
+The Squawk bytecodes are converted into a \emph{.suite} file created by
+serialising and saving into a file the internal object memory representation.
+These files are loaded on to the device, and subsequently interpreted by the
+on-device VM.
+
+\subsection{Sun SPOT applications} \label{subsec:sunspotapps}
+
+Sun SPOT applications are divided into two classes:
+\cite{sun_developer:2008}:
+
+\begin{itemize}
+  \item \emph{On-SPOT applications}
+  \item \emph{On-Host applications}
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{img/SunSPOTS_applications.eps} 
+\caption[Types of Sun SPOT applications]{Types of Sun SPOT applications (adapted from
+\cite{sun_developer:2008})}
+\label{Fig:SunSPOTS_applications}
+\end{figure}  
+
+\emph{On-SPOT applications}  are deployed and
+executed on a remote Sun SPOT that communicates untethered. On-SPOT
+applications are Java programs that runs on the Squawk VM, and is compliant
+with CLDC 1.1 specification. 
+
+\emph{On-Host applications} run on the host machine
+(typically a PC), and communicate with the network of Sun SPOTs through a base
+station node that serves no purpose other than to facilitate Sun SPOT-host
+machine communication. 
+  
+The base station node, which is a Sun SPOT itself, communicates with other
+nodes in the network using RF communication, and with the host machine via a
+USB link (see Figure \ref{Fig:SunSPOTS_applications}). The host application is
+a Java 2 Standard Edition (J2SE) program.
+  
+ 
+\section{Summary}
+
+This chapter presented an overview of the concepts, technologies, and hardware
+underlying the work presented in this thesis. After underlining the need for the
+use of programming models to increase the ubiquity of WSN use, this chapter
+introduced a taxonomy of programming abstractions and placed the Distributed
+Abstract Data Types programming abstraction used in this work within the
+framework of the taxonomy. This was followed by a detailed discussion on Abstract
+and Distributed Abstract Data Types used in the application layer of the
+prototype produced during the course of this work, and the Logical Neighbourhood
+routing mechanism used in the network and data link layers of the prototype. The
+chapter concluded with a brief presentation of the SunSPOTs hardware platform,
+and its particular suitability for the application under consideration. 
+
+
+  

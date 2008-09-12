@@ -1,46 +1,42 @@
 \chapter{Evaluation, Conclusions, and Future Work} \label{chap: Evaluation}
  \section{Evaluation}
 
-The performance of the DADT/LN prototype was evaluated using the following
-metrics: 
-\begin{itemize}
-  \item Packet processing workload on the application layer.
-  \item Ease of implementation. 
-\end{itemize}
+The metric used to evaluate the performance of the DADT/LN prototype is
+the packet processing workload on the application layer. This metric was used to
+compare the performance of the DADT/LN prototype against that of the original
+DADT prototype used as the basis for this work \cite{migliavacca_DADT:2006}. 
 
-The first metric was used to compare the performance of the DADT/LN prototype
-against that of the original DADT prototype used as the basis for this work
-\cite{migliavacca_DADT:2006}. In the original DADT prototype, a request message
-was replied to or discarded in the application layer on the basis of the
-evaluation of an abstract tree representing specified scope of the operation.
-In the implementation presented in this work, the integration with the LN approach results in unsuitable request messages being discarded on
-the basis of predicate evaluation in the network layer. 
+In the original DADT prototype, a request message
+was either replied to or discarded by the application layer entity on the basis of the
+evaluation of an abstract tree representing the specified scope of the operation. In
+the implementation presented in this work, the integration with the LN approach
+results in unsuitable request messages being discarded on the basis of predicate
+evaluation in the network layer.
 
-A series of simulations were run using the JiST/SWANS simulations to determine
-the number of request messages discarded at the network layer and the number
-passed on to the application layer by the LN predicate matching algorithm. The
-sum provides the total number of packets processed in the application layer of
-the original DADT prototype.
+//add the graph here
 
-It was found that the number of messages processed in the application layer was
-lower in the implementation produced as part of this work.
-
-%HOW CAN WE SAY LN PREDICATE EVAL IS MORE EFFICIENT THAN EXPRESSION TREE?
-
-%
-%The second metric used the number of lines of code required to implement a
-%simple distributed averaging application. While not an ideal metric, it
-%quantifies the difference in the order of magnitude of coding effort required
-%on the part of the application programmer to produce WSN applications with and
-%without the use of programming abstractions. To this end, a simple WSN
-%application was written on the Sun SPOTs to calculate the distributed average.
-
-%The difference in the number of lines was **.
+A series of simulations were run using the JiST/SWANS simulator to determine
+the number of request messages discarded in the network layer, and the number
+passed on to the application layer by the LN predicate matching algorithm. 
+It was found that for every distributed operation request that was limited in
+scope to a set of ADT instances present only in a subset of the sensor nodes in
+the network, the number of packets forwarded to the DADT/LN prototype's
+application layer for processing was lower than the corresponding number in the
+original DADT prototype. In the worst case scenario where every sensor node in
+the network has at least one ADT instance that falls within the scope of the
+operation, the application layer traffic on both prototypes is the same.
 
 \section{Conclusions}
 
-%HERE MORE BLAH BLAH
-
+During the course of this project, it was proven that the concept of DADTs can be
+applied to real world WSNs. The proof-of-concept prototype implemented indicates
+the potential of programming abstractions in helping reduce the effort involved
+in developing applications for WSNs.
+In addition, upon integrating the innovative LN routing mechanism
+with the DADT implementation on the application layer, there was found to be a
+significant reduction in the amount of processing performed in the application
+layer. 
+ 
 \section{Future Work}
 
 This section presents a list of possible extensions to the work implemented as

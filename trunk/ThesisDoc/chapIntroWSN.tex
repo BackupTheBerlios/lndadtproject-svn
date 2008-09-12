@@ -8,8 +8,8 @@ WSNs are, as described earlier (see Chapter \ref{chap:Intro}), networks of senso
 nodes, and are typically deployed randomly in a possibly large area where
 phenomena are required to be monitored.
 
-A sensor node consists of the following elements (as can be seen
-in Figure \ref{Fig:SensorNodeArch})
+As presented in Figure \ref{Fig:SensorNodeArch}, a sensor node consists of
+the following elements:
 \begin{itemize}
   \item \emph{Sensing unit}, which is comprised of a number of sensors and
   analog-to-digital converters. 
@@ -55,9 +55,18 @@ redeployment of additional sensor nodes at any time during operation.
 \section{WSN Protocol Stack} \label{sec:WSNProtStack}
 
 The WSN protocol stack presented in \cite{SensorSurveyAkyildiz:2002} is an
-adaptation of a generic protocol stack \cite{ComputerNetworksTannenbaum:2003}. As
-can be seen from Figure \ref{Fig:ProtStack}, the WSN protocol stack consists of
-the following layers:
+adaptation of a generic protocol stack \cite{ComputerNetworksTannenbaum:2003}.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{img/ProtStack.eps}
+\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
+\label{Fig:ProtStack}
+\end{figure}
+
+According to \cite{SensorSurveyAkyildiz:2002} the WSN protocol stack consists
+of the following layers:
 
 \begin{itemize}
 \item \emph{Physical Layer}, which provides the transmission of data over the physical transmission medium.
@@ -69,19 +78,15 @@ supports error checking mechanisms.
 \item \emph{Application Layer}, where the application software resides.
 \end{itemize}
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.65]{img/ProtStack.eps}
-\caption[WSN protocol stack]{WSN protocol stack (reproduced from \cite{SensorSurveyAkyildiz:2002})}
-\label{Fig:ProtStack}
-\end{figure}
 
 \section {Routing in WSNs}
 
-According to \cite{routing:2004}, routing algorithms may
-be classified on the basis of the network structure used. Using this metric,
-routing algorithms are classified along the organisation used for the WSN.
-Routing algorithms are thus primarily classified into being either:
+The existing constraints of the sensor nodes influence the design of routing
+protocols, and these limitations have to be overcome in order to provide
+efficient communication in WSNs \cite{routing:2004}.
+
+Routing algorithms may be classified on the basis of the organisation of
+the network structure used. Routing algorithms are thus primarily classified into being either:
 \begin{itemize}
 \item \emph{Flat}, where every node plays the same role, 
 \item \emph{Hierarchical}, where the network is organised into physically
@@ -98,11 +103,17 @@ routing protocols can be split into three categories \cite{routing:2004}:
 	\item \emph{Hybrid}, which uses a combination of the two techniques above.
 \end{itemize}
 
-
 The LN routing algorithm that is principal to this work may be considered an
 extension of a location-based, hybrid routing algorithm, as logical predicates
 are used to direct traffic to a specific \emph{logical} subset of the network. A more
 detailed discussion of the LN mechanism may be found in
 Chapter \ref{chap:background}.
+
+\section{Summary}
+This chapter presented an introduction to WSNs and discussed in detail the 
+sensor nodes that constitute them. This was followed by a description of the WSN
+protocol stack. The chapter concluded with a classification of
+existing WSN routing mechanisms, and placed the techniques and concepts used during the course of
+this work within this classification.
 
 

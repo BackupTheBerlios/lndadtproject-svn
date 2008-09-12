@@ -1,18 +1,17 @@
 \chapter{Background} \label{chap:background}
 
 This chapter presents a brief discussion of the concepts, algorithms, and 
-hardware platforms that were used during the course of this work. This
-chapter begins with an introduction to programming abstractions, and continues
+hardware platform that were used during the course of this work. This
+chapter begins with an introduction to programming abstractions and continues
 with a discussion on their applications in WSN programming.
 
-This chapter further presents the concepts underlying
-Distributed Abstract Data Types (DADTs). This is followed by a presentation of
+This chapter further presents the concepts underlying Distributed Abstract Data
+Types (DADTs) \cite{migliavacca_DADT:2006}. This is followed by a presentation of
 the Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism that
-enables routing and scoping in WSNs. The chapter then concludes 
-with a description of the hardware platform - Sun Small Programable Object
-Technology (SPOT) \cite{simon_squawk:2006} - used
-to experimentally validate the implemented prototype in a
-real-world environment. 
+enables routing and scoping in WSNs. The chapter then concludes with a
+description of the hardware platform - Sun Small Programable Object Technology
+(SPOT) \cite{simon_squawk:2006} - used to experimentally validate the implemented
+prototype in a real-world environment.
 
 \section {Programming models for WSNs}
 
@@ -20,7 +19,7 @@ Current WSN programming paradigms are predominantly node-centric, wherein
 applications are monolithic and tightly coupled with the protocols and algorithms
 used in the lower layers of the protocol stack. 
 The main reason for this is the limited resources available on the sensor node, as
-was discussed in the Section \ref{subsec:sensornodes}.
+was previously discussed in the Section \ref{subsec:sensornodes}.
 
 The primary problem with a node-centric approach is that most WSN applications
 are developed at an extremely low level of abstraction, which requires the programmer to be knowledgeable in the field of
@@ -272,7 +271,7 @@ By declaration of multiple such ADT instances, the nature of the
 wireless sensor node can be abstracted, as can be seen in the \emph{Sensor Node} entity shown in
 Figure \ref{Fig:MultipleADTs}. This then allows the ADT instances to be used by the application
 developer at a later point\footnote{Further details of ADT specification and
-intantiation is provided in Section \ref{subsec:ADTSpecInst}}.
+intantiation are provided in Section \ref{subsec:ADTSpecInst}}.
 
 \subsection{Data and space ADTs} \label{subsubsec:DataAndSpaceADTs}
 
@@ -351,7 +350,15 @@ DADT type, but are executed as an operation on remote ADT instances.
 \emph{DADT Views} permit the definition of the scope of distributed operations
 that the application requires to perform. This approach is particularly useful
 when a distributed operation has to be executed only on a subset of the
-member set of ADT instances.
+member set of ADT instances. The concept of DADT Views is presented in Figure
+\ref{Fig:DADT_Views}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{img/DADT_Views.eps} 
+\caption[DADT Views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
+\label{Fig:DADT_Views}
+\end{figure}
 
 The member set may be partitioned into DADT Views by using properties. A
 \emph{Property} is a DADT characteristic that is defined in terms of an ADT's
@@ -363,14 +370,6 @@ DADT View may either be:
   \item \emph{Space View}.
 \end{itemize}
 
-The concept of DADT Views is presented in Figure \ref{Fig:DADT_Views}.
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.71]{img/DADT_Views.eps} 
-\caption[DADT Views]{DADT views (reproduced from \cite{migliavacca_DADT:2006})}
-\label{Fig:DADT_Views}
-\end{figure}
 
 \section {Logical neighbourhoods} \label{LNDescription}
 
@@ -381,18 +380,20 @@ network that fall within the communication range of a given node - is central to
 
 However, in heterogenous WSN applications, the developer might require to
 communicate with a specific subset of the network that is defined logically and
-not physically. As an example of this, consider the following example. An
+not physically. As an example of this, consider the following case. An
 application that provides security in a high-risk environment by monitoring 
 motion might require - in the event of a security alarm - all sensors at the
-entrances to the guarded area to report a recent history of recorded motion.
+entrances to the guarded area to report about detected motion.
 The sensors at the entrance form a logical neighbourhood in this case. However,
-as the entrances may be widely separated, it is not necessary that these nodes constitute part of a single physical neighbourhood. 
+as the entrances may be widely separated, it is not necessary that these nodes
+constitute part of a single physical neighbourhood.
 
-The use of current WSN
-programming techniques to enable a mechanism of this nature entails additional
-programming effort, because the developer has to deal not only with
-the application logic, but also with the underlying problems of transmitting messages to a specific logical neighbouhood while using lower layer constructs that have no notion of this.This leads to
-increased code complexity \cite{mottola_LN:2006}.
+The use of current WSN programming techniques to enable a mechanism of this
+nature entails additional programming effort, because the developer has to deal
+not only with the application logic, but also with the underlying problems of
+transmitting messages to a specific logical neighbouhood while using lower layer
+constructs that have no notion of this. This leads to increased code complexity
+\cite{mottola_LN:2006}.
 
 \begin{figure} 
 \centering
@@ -408,9 +409,8 @@ of the nodes in) the node's logical neighborhood} (reproduced from
 Mottola and Picco \cite{mottola_LN:2006} suggest the addressing of the
 aforementioned issues using \emph{Logical Neighbourhoods (LNs)}, an
 abstraction that replaces the node's physical neighbourhood with a logical notion of
-proximity (See and Figure \ref{Fig:LN_physical_vs_logical}). Using this abstraction, programmers
-can communicate
-with members of a LN using a simple message passing API,
+proximity (See Figure \ref{Fig:LN_physical_vs_logical}). Using this abstraction, programmers
+can communicate with members of a LN using a simple message passing API,
 thereby allowing for logical broadcasts. The implementation of this API is
 supported by means of a novel routing mechanism devised specifically to support
 LN communication.
@@ -431,6 +431,10 @@ Nodes are a logical representation of the subset of a sensor node's state and
 characterstics, and are used for the specification of an LN. Nodes are defined
 in a node template and are subsequently instantiated, as shown in Listing \ref{listing:LN1}
    
+A neighbourhood can be defined by applying predicates on the attributes defined
+in the node template. The neighbourhood is defined using a neighbourhood
+template, and subsequently instantiated.
+   
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
 basicstyle=\ttfamily\footnotesize, breaklines, caption = Node Definition and Instantiation, label = listing:LN1]  
 node template Sensor
@@ -446,10 +450,6 @@ create node ts from Sensor
   BatteryPower as getBatteryPower()
 \end{lstlisting}
 
-A neighbourhood can be defined by applying predicates on the attributes defined
-in the
-node template. The neighbourhood is defined using a neighbourhood
-template, and subsequently instantiated. 
 
 Listing \ref{listing:LN2} shows the definition and
 instantiation of a
@@ -511,15 +511,15 @@ paths, and exploring paths.
 \section {Sun SPOTs} \label{sec:sunspots}
 
 Sensor nodes, as mentioned in Section \ref{subsec:sensornodes}, are
-characterised by limited resources, including memory.
- 
-Managed runtime languages like Java were not used for sensor network programming
-because of the combination of the static memory footprint of the Java Virtual
-Machine (JVM) and the dynamic memory footprint of the WSN application code.
+characterised by limited resources, including memory. 
 
 In order to overcome memory limitations, wireless sensor network applications
 have traditionally been coded in non-managed languages like C and assembly
 language \cite{simon_squawk:2006}.
+ 
+Managed runtime languages like Java were not used for sensor network programming
+because of the combination of the static memory footprint of the Java Virtual
+Machine (JVM) and the dynamic memory footprint of the WSN application code.
  
 On the other hand, it is widely accepted that development times are greatly reduced
 upon the use of managed runtime languages such as Java
@@ -535,7 +535,11 @@ using a managed runtime language for WSN programming as follows:
   \item Opportunity to use standard development and debugging tools.
 \end{itemize}
 
-The use of the Java programming language in SunSPOTs makes it particularly suitable as a platform for the DADT application presented. This is because the DADT programming abstraction is designed to reduce programmer workload, and the use of a managed runtime language such as Java has been to shown to further improve developer efficiency. 
+The use of the Java programming language in SunSPOTs makes it particularly
+suitable as a platform for the DADT applications presented. This is because the
+DADT programming abstraction is designed to reduce programmer workload, and the
+use of a managed runtime language such as Java has been shown to further
+improve developer efficiency.
  
 \subsection{The Sun SPOT hardware platform }
 Sun Microsystems has, on the basis of the arguments discussed in the previous
@@ -564,8 +568,9 @@ following features \cite{simon_squawk:2006}:
 
 \begin{itemize}
   \item It is written in Java, and specifically designed for resource
-  constrained devices, meeting the Connected Limited Device Configuration
-  (CLDC) Java Micro Edition (Java ME) configuration requirements.
+  constrained devices, meeting the requirements of Connected Limited Device
+  Configuration 1.1 (CLDC) framework for Java Micro Edition (Java ME)
+  applications.
   \item It does not require an underlying OS as it runs directly on the Sun
   SPOT hardware. This allows for a reduction in memory consumption.
   \item It suuports inter-device application migration.
@@ -588,16 +593,16 @@ Split VM Architecture (reproduced from \cite{simon_squawk:2006})}
 \label{Fig:SquawkVM_architecture}
 \end{figure}  
 
-The Squawk split VM architecture uses a class file preprocessor (known as the
-suite creator) that converts the \emph{.class} bytecode into a more compact
-representation called the Squawk bytecode. According to
+The Squawk split VM architecture uses a class file preprocessor known as the
+\emph{suite creator} that converts the \emph{.class} bytecode into a more
+compact representation called the Squawk bytecode. According to
 \cite{simon_squawk:2006}, Squawk bytecodes are optimised in order to:
 \begin{itemize}
 \item minimise space used by using smaller bytecode representation, escape
 mechanisms for float and double instructions, and widened operands. 
 \item enable in-place execution, by ``resolving symbolic references to other
 classes, data members, and member functions into direct pointers, object offsets
-and method table offsets respectively'' \cite{simon_squawk:2006}.
+and method table offsets respectively''.
 \item simplify garbage collection, by the careful reallocation of local
 variables, and by storing on the operand stack the operands of only those instructions that would result in a memory allocation.
 \end{itemize}
@@ -628,7 +633,7 @@ Sun SPOT applications are divided into two classes:
 \emph{On-SPOT applications}  are deployed and
 executed on a remote Sun SPOT that communicates untethered. On-SPOT
 applications are Java programs that runs on the Squawk VM, and is compliant
-with Java ME. 
+with CLDC 1.1 specification. 
 
 \emph{On-Host applications} run on the host machine
 (typically a PC), and communicate with the network of Sun SPOTs through a base
@@ -643,13 +648,17 @@ a Java 2 Standard Edition (J2SE) program.
  
 \section{Summary}
 
-This chapter presented an overview of the concepts, technologies, and hardware underlying the work presented in this thesis. After underlining the need for the use of programming models to increase the ubiquity of WSN use, this chapter presented a taxonomy of programming abstractions and placed the programming abstraction used herein; namely, Distributed Abstract Data Types, within the framework of the taxonomy. This was followed by a detailed discussion on Abstract and Distributed Abstract Data Types used in the application layer of the prototype producing during the course of this work, and the Logical Neighbourhood routing mechanism used in the network and data link layers of the same. The chapter concluded with a brief presentation of the SunSPOTs hardware platform, and its particular suitability for the application under consideration. The following chapter presents a description of the implementation of the DADT prototype on the JiST simulation environment during development, and the SunSPOTs for verification.
+This chapter presented an overview of the concepts, technologies, and hardware
+underlying the work presented in this thesis. After underlining the need for the
+use of programming models to increase the ubiquity of WSN use, this chapter
+introduced a taxonomy of programming abstractions and placed the Distributed
+Abstract Data Types programming abstraction used in this work within the
+framework of the taxonomy. This was followed by a detailed discussion on Abstract
+and Distributed Abstract Data Types used in the application layer of the
+prototype produced during the course of this work, and the Logical Neighbourhood
+routing mechanism used in the network and data link layers of the prototype. The
+chapter concluded with a brief presentation of the SunSPOTs hardware platform,
+and its particular suitability for the application under consideration. 
 
-\textcolor{green}{Some conclusions about what has been discussed learned and
-what is next}
-
-
-\textcolor{blue}{The LN mechanism that forms the \textcolor{green}{bedrock} of this work (see Section \ref{LNDescription}) provides the functionality of the Data Link Layer and the Network Layer. The concept of Distributed Abstract
-Data Types (see Section \ref{sec:DADT}) is restricted to the application layer, and the focus of this work thus lies primarily within the application layer.}
 
   
