@@ -21,11 +21,11 @@ monitoring, environment monitoring, data acquisition in dangerous environments,
 and target tracking.
 
 However, programming WSNs is currently a complex task that requires an
-understanding of the operation of WSNs. This limits its utility in widely
-disparate fields by scientists unaware of the technology underlying them. To deal
-with this problem, it is necessary to abstract the details of WSN operation
-thereby allowing the application programmer to develop WSN applications inspite
-of being native the details of embedded system programming. This is
+understanding of the inner operation of WSNs. This limits its applicability in
+widely disparate fields by scientists unaware of the technology underlying WSNs.
+To deal with this problem, it is necessary to abstract the details of WSN operation
+thereby allowing the application programmer to develop WSN applications in spite
+of being an expert embedded system programmer. This is
 achieved using programming abstractions wherein the WSN application is viewed as a system
 and sensor nodes and sensor data are abstracted.
 
@@ -52,21 +52,27 @@ This work makes the following contributions:
 Neighbourhood \cite{mottola_LNAbstraction} routing mechanism that allows for
 the partitioning of the WSN network on the basis of neighbourhoods defined by logical predicates in the network layer.
 \item It evaluates the suitability of the developed prototype in simulated
-environment as well as in he real-world wireless sensor networks.
+environment as well as in real-world wireless sensor networks.
 \end{itemize}
 
 \section{Outline}
 The outline of the thesis is as follows: Chapter \ref{chap:IntroWSN} presents an
-introduction to wireless sensor networks, and discusses the protocol stack used
-in a typical WSN application and a short survey of routing mechanisms for WSNs.
-Chapter \ref{chap:background} discusses the background underlying this work, and
-includes brief descriptions of WSN programming models, DADTs, the LN routing mechanism,
-and the hardware platform used to evaluate the prototype produced as part of this
-work. Chapter \ref{chap:Implementation} describes the details of the
-implementation of the prototype as well as a brief description of the structure of the DADT prototype
-that was modified during the course of this work. Finally, Chapter \ref{chap:
-Evaluation} describes the metrics and experimental methodology used to evaluate this work, the
-conclusions thus reached, and possible avenues for future work.
+introduction to wireless sensor networks including descriptions of example WSN
+applications, provides details about selected hardware platforms and introduces
+the protocol stack used in a typical WSN application, coupled with a brief overview of
+underlying routing mechanisms for WSNs. Besides, it provides description of WSN
+programming models. Chapter \ref{chap:background} discusses the background
+underlying this work, and includes brief descriptions of DADTs, the LN routing mechanism, and provides a brief description of the structure of the DADT prototype that was modified during the course of this work. 
+Chapter \ref{chap:tools} presents the simluation
+environment and the hardware platform used to evaluate the prototype produced as part of this work. 
+Chapter \ref{chap:design} describes the high-level design details of the
+implementation of the prototype. 
+Chapter \ref{chap:implementation} provides implementation details and discusses
+the issues concerning testing of the prototype in simulated and in real-wolrd
+environment. 
+Chapter \ref{chap:evaluation} describes the metrics and experimental methodology
+used to evaluate this work.
+Finally, Chapter \ref{chap:conclusions} provides the conclusions and possible avenues for future work.
 
 
 

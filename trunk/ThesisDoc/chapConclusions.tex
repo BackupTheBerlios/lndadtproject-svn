@@ -1,32 +1,5 @@
-\chapter{Evaluation, Conclusions, and Future Work} \label{chap: Evaluation}
- \section{Evaluation}
-
-The metric used to evaluate the performance of the DADT/LN prototype is
-the packet processing workload on the application layer. This metric was used to
-compare the performance of the DADT/LN prototype against that of the original
-DADT prototype used as the basis for this work \cite{migliavacca_DADT:2006}. 
-
-In the original DADT prototype, a request message
-was either replied to or discarded by the application layer entity on the basis of the
-evaluation of an abstract tree representing the specified scope of the operation. In
-the implementation presented in this work, the integration with the LN approach
-results in unsuitable request messages being discarded on the basis of predicate
-evaluation in the network layer.
-
-//add the graph here
-
-A series of simulations were run using the JiST/SWANS simulator to determine
-the number of request messages discarded in the network layer, and the number
-passed on to the application layer by the LN predicate matching algorithm. 
-It was found that for every distributed operation request that was limited in
-scope to a set of ADT instances present only in a subset of the sensor nodes in
-the network, the number of packets forwarded to the DADT/LN prototype's
-application layer for processing was lower than the corresponding number in the
-original DADT prototype. In the worst case scenario where every sensor node in
-the network has at least one ADT instance that falls within the scope of the
-operation, the application layer traffic on both prototypes is the same.
-
-\section{Conclusions}
+\chapter{Conclusions, and Future Work} \label{chap:conclusions}
+ \section{Conclusions}
 
 During the course of this project, it was proven that the concept of DADTs can be
 applied to real world WSNs. The proof-of-concept prototype implemented indicates

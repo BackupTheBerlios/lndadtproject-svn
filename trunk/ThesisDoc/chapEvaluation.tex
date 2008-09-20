@@ -1,28 +1,252 @@
-\chapter{Evaluation} \label{chap: Evaluation}
+\chapter{Evaluation} \label{chap:evaluation}
+
+This chapter presents the results of the performance evaluation of the 
+DADT/LN prototype running on real-world sensor nodes (Sun SPOTs). 
+
+\section{Setting}
+
+% Unless you already explained it somewhere else (and yet a reference to this
+% "somewhere else" must be put in this chapter), the reader has very
+%little information as to what your test application is doing. You need to give
+%more details, say exactly what the application is supposed to accomplish and
+%how.
+
+The sample distributed application used for evaluation of the DADT/LN prototype 
+implements an example WSN application where several sensor devices are deployed
+in the environment and able to provide reports about some physical
+phenomena, e.g. temperature. A monitoring station may access
+particular sensor devices in WSN to aggregate their sensor readings, e.g. to
+calculate average value, or reset sensors in case of problems.
+
+The sample distributed application initially consists of the following files:
+\begin{itemize}
+  \item \emph{Sensor.java}, which defines the functionality of the device
+  that provides sensing ability.
+  \item \emph{SensorNode.dadt}, which defines the sensors and/or actuators available on the sensor
+  device as abstract ADT instances, and binds them to the ``DSensor''  DADT type.
+  \item \emph{ClientNode.dadt}, which is run by monitoring station
+  in order to perform the distributed operation requests; the scope
+  of the distributed operation is also declared here.
+  \item \emph{DSensor.dadt}, which declares the list of available
+  distributed operations, actions and properties.
+\end{itemize}
+
+As described in Section \ref{sec:PrototypeDesign}, the dadt files are translated
+by DADT preprocessor into conventional java application. This
+results into creation of additional java files, each of which represents DADT
+Property and DADT Action classes (see Section \ref{subsec:DADTsConcepts}) that
+were declared by application developer in \emph{DSensor.dadt} file. 
+
+These files are named according the following naming scheme:
+``DSensorXXXproperty'' or ``DSensorYYYaction'', where \emph{XXX} is a name of the
+DADT Property and \emph{YYY} is a name of the DADT Action respectively. 
+
+The functionality of the sample application is provided by the objects
+of the runtime library of the DADT/LN prototype \ref{ADDREF}.  
+
+The code of the distributed application is coupled with the
+compiled runtime library to create 2 jar-files representing distributed
+applications, namely the SensorNode and ClientNode applications, which were
+deployed on the Sun SPOT devices.
+
+6 Sun SPOT devices that form a simple WSN were used as a testbed for performing
+their evaluation. Each of the Sun SPOT devices ran one of the LN/DADT prototype
+distributed applications (ClientNode or SensorNode) application, as can be seen
+in Figure \ref{Fig:EvaluationConfig}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.50]{img/EvaluationConfig.eps} 
+\caption[Test-bed model of WSN using the DADT/LN prototype]{Test-bed model of WSN using the DADT/LN prototype}
+\label{Fig:EvaluationConfig}
+\end{figure}
+
+The sensor device that ran the SensorNode application used the temperature and
+light sensors available on the Sun SPOT demo sensor board. The DADT/LN prototype
+on the sensor device abstracted those sensors using ADT instances, and provided
+functionality to perform sensing and resetting operations. Communication between
+sensor devices was supported by the LN implementation.
+
+The sensor device that runs the ClientNode application was programmed to 
+calculate the average temperature or luminosity value sensed by the set of
+nodes. This set of nodes was specified implicitly using a DADT Dataview object
+(see Section \ref{subsubsec:views}).
 
 
-The metric used to evaluate the performance of the DADT/LN prototype is
-the packet processing workload on the application layer. This metric was used to
-compare the performance of the DADT/LN prototype against that of the original
-DADT prototype used as the basis for this work \cite{migliavacca_DADT:2006}. 
+\section{Metrics}
 
-In the original DADT prototype, a request message
-was either replied to or discarded by the application layer entity on the basis of the
-evaluation of an abstract tree representing the specified scope of the operation. In
-the implementation presented in this work, the integration with the LN approach
-results in unsuitable request messages being discarded on the basis of predicate
-evaluation in the network layer.
+The DADT/LN prototype was evaluated using the following metrics:
+\begin{itemize}
+\item Memory usage
+\item Processing and communication delays
+\end{itemize} 
 
-//add the graph here
+These metrics were selected due to the fact that they allow to  ..  
 
-A series of simulations were run using the JiST/SWANS simulator to determine
-the number of request messages discarded in the network layer, and the number
-passed on to the application layer by the LN predicate matching algorithm. 
-It was found that for every distributed operation request that was limited in
-scope to a set of ADT instances present only in a subset of the sensor nodes in
-the network, the number of packets forwarded to the DADT/LN prototype's
-application layer for processing was lower than the corresponding number in the
-original DADT prototype. In the worst case scenario where every sensor node in
-the network has at least one ADT instance that falls within the scope of the
-operation, the application layer traffic on both prototypes is the same.
+%Here you need to "define" the various metrics, say what they are and so on...
+%More importantly, however, you need to say *why* you picked these metrics and
+%why they are important, which you completely miss right now. For instance,
+%memory usage is important to measure because it determines how complex your
+%application can be while still fitting in the node's memory. Delays are
+%important to measure because they determine how scalable is the solution
+%w.r.t. the number of DADT properties involved, number of devices in the
+%network and so on... For each metric, you also need to say how you measured
+%it. For instance, how did you measure the delays? Did you somewhat instrument
+%the code?
+
+\section{Results}
+
+\subsection{Memory Usage}
+
+As mentioned above, the memory requirements of the DADT/LN implementation are
+based on the following components:
+\begin{itemize}
+  \item Distributed application code translated and compiled from dadt files
+  \item The runtime library of the DADT/LN prototype
+\end{itemize}
+
+
+
+Table \ref{Tab:Memory} presents the memory requirements for the evaluated sample
+distributed application.
+
+\begin{table}
+
+	\begin{center}
+	\begin{tabular}{| p{1.8cm} | p{1.8cm} | p{1.8cm} |}
+	\hline
+	
+	%There are free tools online to gather various statistics on source code
+	% (WINDOWS), e.g., http://sourcecount.com/
+	Filename & DADT Source code, bytes  & Java source code, Num of
+	code lines Java bytecode size, bytes \\ \hline 
+	
+	Sensor.java & -  & tbc  3164 \\ \hline
+	SensorNode.dadt \T \B & 477 \T \B & tbc \T \B tbc \\ \hline
+	ClientNode.dadt \T \B & 841 \T \B & tbc \T \B tbc \\ \hline
+	DSensor.dadt \T \B & 303 \T \B & tbc \T \B tbc \\ \hline
+	\end{tabular}
+	\end{center}
+	\caption{Memory usage}
+	\label{Tab:Memory}
+\end{table}
+
+As discussed before, the runtime library consists of a number
+of Java files that provide the functionality of the DADT/LN prototype. The \emph{jar} file representing the runtime
+library for the SUN SPOT device requires 81KB of memory. 
+
+The runtime library was later integrated with the SensorNode application code 
+resulting in 95KB jar-file. Similarly, the integrated jar-file of the ClientNode
+application requires 99 KB of the memory.
+
+\subsection{Processing and Communication Delays}
+
+This section presents evaluation of the round trip delay time required for
+executing a distributed sensing operation on the WSN.  
+
+%%
+
+The processing and communication delays were used to compare the performance of
+the DADT/LN prototype upon execution of the distributed operation ``average''
+over several such Dataviews. %rewrite%
+
+The Dataview used to define the scope of the given distributed operation would be classified as follows:
+\begin{itemize}
+\item \emph{low} complexity, which consists of up to 3 DADT properties allowing to define
+views, such as ``all active temperature sensors'';
+\item \emph{moderate} complexity, which uses from 3 to 10 properties that allows to
+create views, such as ``all active temperature
+sensors with precision > 1.0 and sensor reading greater than 80'';
+\item \emph{high} complexity, which uses up to 20 properties. The number of properties that construct such type of Dataviews was
+limited by the length of the radiogram size used for communication between Sun SPOTs.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.60]{img/RTTevaluation.eps} 
+\caption[Delay factors for distributed operation execution]{Factors contributing to delays in the execution of a distributed operation on a WSN using the DADT/LN prototype}
+\label{Fig:TimingsModel}
+\end{figure}
+
+Figure \ref{Fig:TimingsModel} shows the relevant time delays occurred during the
+work of DADT/LN prototype. 
+
+\subsubsection{Non-concurrent requests}
+
+This section provides results of the evaluation of the average time intervals on the basis of single non-concurrent requests.
+
+\begin{table}[h]
+\begin{tabular*}{0.85\textwidth}{| p{1.8cm} | p{1.9cm} | p{2.1cm} | p{1.8cm} |
+p{1.9cm} | p{1.9cm} | }
+\cline{1-6} & \multicolumn{3}{|c|}{ClientNode Application} & \multicolumn{2}{|
+c |}{SensorNode Application} \\ \cline{1-6}
+Dataview complexity \T \B & Create request (ms) & Send request over LN and wait
+for replies (ms) & Process sensor readings (ms) & Receive request, select ADT
+instances & Perform requested action and send reply \\ \cline{1-6}
+Low & 44.64 & 1414.27 & 203.91 & 520.13 & 92.94  \\ \cline{1-6}
+Moderate & 49.82 & 3101.91 & 203.45 & 943.02 & 93.76 \\ \cline{1-6}
+High  & 62.55 & 6034.82 & 205.45 & 1077.83 & 89.95 \\ \cline{1-6}
+\end{tabular*}
+\caption{Processing and communication delays for non-concurrent requests for
+execution of distributed operation ``average''}
+\label{Tab:EvalRes}
+\end{table}
+
+As can be seen in Table \ref{Tab:EvalRes}, the complexity of the 
+Dataview has a direct correlation to the delays associated with processing of the request
+on the SensorNode side. This subsequently leads to increasing waiting
+intervals on the ClientNode side.
+
+On the SensorNode, this might be a consequence of the given limitations of the
+Squawk JVM, which does not provide support for serialization of objects. Hence,
+delays occur when the object representing the scope of the distributed operation is
+recreated by the SensorNode, and is later used for identifying the relevant ADT
+instances which execute the requested operation.
+Activities such as performing an action that involve: (a) requesting sensor
+readings, and (b) the subsequent invocation of the LN API to send a reply message, were
+executed in a relatively short time.
+
+On the ClientNode, actions such as preparing a request message and parsing
+the received results take on average 10-15\% of the time spent waiting for the receipt of reply messages with sensor readings.
+
+\subsubsection{Concurrent requests}
+
+Table \ref{Tab:EvalResConcurrent} shows the processing time delays caused by
+concurrent requests on the WSN. The WSN used as part of this evaluation consisted
+of two devices running the Client Node application, which issued concurrent
+distributed operation execution requests. 
+Evaluation of the concurrent requests was based on the assumption that these
+requests may be 10-80 ms apart in time.
+
+\begin{table}[h]
+\begin{tabular*}{0.85\textwidth}{| p{1.8cm} | p{1.9cm} | p{2.1cm} | p{1.8cm} |
+p{1.9cm} | p{1.9cm} | }
+\multicolumn{3}{|c|}{ClientNode Application} & \multicolumn{2}{|
+c |}{SensorNode Application} \\ \cline{1-6}
+Dataview complexity & Create request, ms & Send request over LN and wait
+for replies, ms & Process sensor readings, ms & Receive request, select ADT
+instances & Perform requested action and send reply \\ \cline{1-6}
+Low & 51.40 & 2604.75 & 197.85 & 595.95 & 178.84  \\ \cline{1-6}
+\end{tabular*}
+\caption{Processing and communication delays for concurrent requests for
+execution of distributed operation ``average''}
+\label{Tab:EvalResConcurrent}
+\end{table}
+
+The results presented in Table \ref{Tab:EvalResConcurrent} considered only those
+Dataviews with low complexity. For concurrent requests over Dataviews with a
+high-level of complexity, the time delays were found to be inappropriately large
+for executing a distributed operation.
+
+It can be seen that, in general, concurrent requests increase the processing time
+on devices running the SensorNode application. However, the other delay factors
+involved in the execution of the distributed operation are comparable to that
+incurred upon execution of non-concurrent requests.
+
+%%% SUGGESTION: PLACE IN SEPARATE SECTION %%
+Future work may include further evaluation and adaptation of the DADT/LN
+prototype to provide acceptable performance for Dataviews of moderate and high complexity
+containing of a large number of DADT properties. 
+
+
 

@@ -1,8 +1,121 @@
 \chapter{Tools} \label{chap:tools}
 
-\section{simulator - rename}
+This chapter presents the tools that were used to show the feasibility of the
+prototype implemented during the course og this work. These tools include
+JiST/SWANS discrete event simulator and Sun Small Programable Object
+Technology (Sun SPOT) hardware platform. 
 
-\section {Sun SPOTs} \label{sec:sunspots}
+\section {JiST/SWANS simulator} \label{sec:jistswans}
+
+As the simulator used in this work is a discrete event simulator, this section
+begins with a short description of discrete event simulators. This is followed by
+a discussion on the SWANS network simulator used during the course of this work,
+and the JiST Java-based discrete event simulator upon which SWANS is built.
+
+\subsection{Discrete Event Simulator}
+
+A discrete event simulator allows for the simulated execution of a process (that
+may be either deterministic or stochastic), and consists of the following
+components \cite{Shankar_DiscreteEventSim}:
+
+\begin{itemize}
+  \item \emph{Simulation variables:} These variables keep track of simulation 
+  time, the list of events to be simulated, the (evolving) system state, and 
+  performance indicators.
+  \item \emph{Event handler:} The event handler schedules events for execution 
+  at specific points in simulation time (and unschedules them if necessary), 
+  and additionally updates the state variables and performance indicators.
+\end{itemize}
+ 
+\subsection{Java In Simulation Time (JiST)} \label{subsec:jist}
+
+JiST \cite{barr_JIST:2005} is a discrete event simulator that is 
+efficient (compared to existing simulation systems), 
+transparent (simulations are automatically translated to run with the 
+simulation time semantics), and standard (simulations use a
+conventional programming language, i.e., Java).
+
+JiST simulation code is written in Java, and converted to run over the JiST 
+simulation kernel using a bytecode-level rewriter\footnote{The bytecode 
+rewriter and the simulation kernel are both written in Java},  as can be
+seen in Figure \ref{Fig:JiST_architecture}.
+
+The execution of a JiST program can be understood by considering the example 
+shown in Listing \ref{listing:JiSTExample}
+
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Example JiST program (reproduced from \cite{barr_JIST:2005}, label = listing:JiSTExample]  
+import jist.runtime.JistAPI;  
+class hello implements JistAPI.Entity { 
+  public static void main(String[] args) { 
+    System.out.println("Simulation start"); 
+    hello h = new hello(); 
+    h.myEvent(); 
+  } 
+  public void myEvent() { 
+    JistAPI.sleep(1); 
+    myEvent(); 
+    System.out.println("hello world, " + JistAPI.getTime()); 
+  }} 
+\end{lstlisting}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{img/JiST_architecture.eps} 
+\caption[The JiST System Architecture]{The JiST system architecture (reproduced from
+\cite{barr_JIST:2005})}
+\label{Fig:JiST_architecture}
+\end{figure}  
+ 
+This program is then compiled and executed in the JiST simulation
+kernel, using the following commands:
+
+  
+\begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
+basicstyle=\ttfamily\footnotesize, breaklines, caption = Execution of the
+program in the JiST, label = listing:JiST ]  
+javac hello.java
+java jist.runtime.Main hello
+\end{lstlisting}
+
+
+The simulation kernel is loaded upon execution of this command. This kernel
+installs into the JVM a class loader that performs the rewrite of the bytecode.
+The JiST API functions used in the example code are used to perform the
+code transformations. The method call to myEvent is now scheduled and executed
+by the simulator in simulation time. Simulation time differs from ``actual''
+time in that the advancement of actual time is independent of application
+execution, whereas simulation time is not. 
+ 
+\subsection{Scalable Wireless Ad hoc Network Simulator (SWANS)}
+SWANS is a wireless network simulator developed in order to provide efficient
+and scalable simulations without compromising on simulation detail \cite{barr_SWANS},
+and is built upon the JiST discrete event simulator described in Section \ref{subsec:jist}. 
+It is organised a a collection of independent, relatively simple, event driven
+components that are encapsulated as JiST entities. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{img/SWANS_architecture.eps} 
+\caption[SWANS architecture]{SWANS architecture}
+\label{Fig:SWANS_architecture}
+\end{figure} 
+  
+SWANS has the following capabilities \cite{barr_SWANS}:
+
+\begin{itemize}
+\item The use of
+interchangeable components enables the construction of a protocol stack for the
+network, and facilitates parallelism, and execution in a distributed environment.
+\item Can execute unmodified Java network applications on the
+simulated network (in simulation time), by virtue of its being built over
+JiST. Using a harness, the aforementioned Java code is automatically rewritten to
+run on the simulated network.  
+\end{itemize}
+   
+The SWANS architecture may be seen in Figure \ref{Fig:SWANS_architecture}. 
+
+\section {Sun SPOT platform} \label{sec:sunspots}
 
 Sensor nodes, as mentioned in Section \ref{subsec:sensornodes}, are
 characterised by limited resources, including memory. 
@@ -35,7 +148,6 @@ DADT programming abstraction is designed to reduce programmer workload, and the
 use of a managed runtime language such as Java has been shown to further
 improve developer efficiency.
  
-\subsection{The Sun SPOT hardware platform }
 Sun Microsystems has, on the basis of the arguments discussed in the previous
 section, proposed and built a sensor device
 called the Sun Small Programmable Object Technology (Sun SPOT) that uses a
@@ -71,8 +183,6 @@ following features \cite{simon_squawk:2006}:
   \item It allows the execution of multiple applications on one VM,
   representing each one as an object.
 \end{itemize}
-
-\subsection{Split VM Architecture}
 
 As resource constrained devices are incapable of loading class files on-device
 by virtue of their limited memory, a VM architecture known as the ``split VM
@@ -126,7 +236,7 @@ Sun SPOT applications are divided into two classes:
 
 \emph{On-SPOT applications}  are deployed and
 executed on a remote Sun SPOT that communicates untethered. On-SPOT
-applications are Java programs that runs on the Squawk VM, and is compliant
+applications are Java programs that runs on the Squawk VM, and are compliant
 with CLDC 1.1 specification. 
 
 \emph{On-Host applications} run on the host machine
@@ -142,17 +252,11 @@ a Java 2 Standard Edition (J2SE) program.
  
 \section{Summary}
 
-This chapter presented an overview of the concepts, technologies, and hardware
-underlying the work presented in this thesis. After underlining the need for the
-use of programming models to increase the ubiquity of WSN use, this chapter
-introduced a taxonomy of programming abstractions and placed the Distributed
-Abstract Data Types programming abstraction used in this work within the
-framework of the taxonomy. This was followed by a detailed discussion on Abstract
-and Distributed Abstract Data Types used in the application layer of the
-prototype produced during the course of this work, and the Logical Neighbourhood
-routing mechanism used in the network and data link layers of the prototype. The
-chapter concluded with a brief presentation of the SunSPOTs hardware platform,
-and its particular suitability for the application under consideration. 
+This chapter presented tools that were used to demonstrate the feasibility of
+the prototype implemented as part of this work. The chapter provided an overview of the JIST/SWANS
+network simulator used for verification of the prototype. This was followed by
+a presentation of the SunSPOTs hardware platform, and its particular suitability for the application under
+consideration.
 
 
   
