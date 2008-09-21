@@ -11,7 +11,8 @@ DADT/LN prototype running on real-world sensor nodes (Sun SPOTs).
 %more details, say exactly what the application is supposed to accomplish and
 %how.
 
-The sample distributed application used for evaluation of the DADT/LN prototype 
+The sample distributed application used for the evaluation of the DADT/LN
+prototype 
 implements an example WSN application where several sensor devices are deployed
 in the environment and able to provide reports about some physical
 phenomena, e.g. temperature. A monitoring station may access
@@ -38,8 +39,8 @@ Property and DADT Action classes (see Section \ref{subsec:DADTsConcepts}) that
 were declared by application developer in \emph{DSensor.dadt} file. 
 
 These files are named according the following naming scheme:
-``DSensorXXXproperty'' or ``DSensorYYYaction'', where \emph{XXX} is a name of the
-DADT Property and \emph{YYY} is a name of the DADT Action respectively. 
+``DSensorXXXproperty'' or ``DSensorYYYaction'', where \emph{XXX} is the name of the
+DADT Property and \emph{YYY} is the name of the DADT Action respectively. 
 
 The functionality of the sample application is provided by the objects
 of the runtime library of the DADT/LN prototype \ref{ADDREF}.  
@@ -81,55 +82,58 @@ The DADT/LN prototype was evaluated using the following metrics:
 \item Processing and communication delays
 \end{itemize} 
 
-These metrics were selected due to the fact that they allow to  ..  
+The memory usage metric allows one to determine the possible complexity of an
+application on the application layer that can be fit into the sensor node. While
+this is to some extent dependent on the efficiency of the implementation itself
+(and the parsimony of the application programmer), this metric provides a
+reasonably good indicator.
 
-%Here you need to "define" the various metrics, say what they are and so on...
-%More importantly, however, you need to say *why* you picked these metrics and
-%why they are important, which you completely miss right now. For instance,
-%memory usage is important to measure because it determines how complex your
-%application can be while still fitting in the node's memory. Delays are
-%important to measure because they determine how scalable is the solution
-%w.r.t. the number of DADT properties involved, number of devices in the
-%network and so on... For each metric, you also need to say how you measured
-%it. For instance, how did you measure the delays? Did you somewhat instrument
-%the code?
+The ``processing and communication delays'' metric allows one to measure the
+scalability of the solution, by measuring the increase in delay caused by an
+increase in the number of DADT properties used to determine membership, or the
+number of nodes in the network.
+
+The memory requirements of the DADT/LN implementation on Sun SPOTs are
+based on the following components:
+\begin{itemize}
+  \item Distributed application code translated and compiled from dadt files.
+  \item The runtime library of the DADT/LN prototype.
+\end{itemize}
+
+The communication and processing delays can be decomposed as shown in Figure \ref{Fig:TimingsModel}:
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.60]{img/RTTevaluation.eps} 
+\caption[Delay factors for distributed operation execution]{Factors contributing to delays in the execution of a distributed operation on a WSN using the DADT/LN prototype}
+\label{Fig:TimingsModel}
+\end{figure}
+
+For this metric, the round trip delay time required for
+executing a distributed sensing operation on the WSN was evaluated.  
+
+The processing and communication delays were used to compare the performance of
+the DADT/LN prototype upon execution of the distributed operation ``average''
+over several DADT Dataviews.
+
+The Dataview used to define the scope of the given distributed operation was classified as follows:
+\begin{itemize}
+\item \emph{low} complexity, which consists of up to 3 DADT properties allowing to define
+views, such as ``all active temperature sensors'';
+\item \emph{moderate} complexity, which uses from 3 to 10 properties that allows to
+create views, such as ``all active temperature
+sensors with precision $>$ 1.0 and a sensor reading $>$ 80'';
+\item \emph{high} complexity, which uses up to 20 properties. The number of properties that construct such type of Dataviews was
+limited by the length of the radiogram size used for communication between Sun SPOTs.
+\end{itemize}
 
 \section{Results}
 
 \subsection{Memory Usage}
 
-As mentioned above, the memory requirements of the DADT/LN implementation are
-based on the following components:
-\begin{itemize}
-  \item Distributed application code translated and compiled from dadt files
-  \item The runtime library of the DADT/LN prototype
-\end{itemize}
-
-
-
 Table \ref{Tab:Memory} presents the memory requirements for the evaluated sample
 distributed application.
 
-\begin{table}
-
-	\begin{center}
-	\begin{tabular}{| p{1.8cm} | p{1.8cm} | p{1.8cm} |}
-	\hline
-	
-	%There are free tools online to gather various statistics on source code
-	% (WINDOWS), e.g., http://sourcecount.com/
-	Filename & DADT Source code, bytes  & Java source code, Num of
-	code lines Java bytecode size, bytes \\ \hline 
-	
-	Sensor.java & -  & tbc  3164 \\ \hline
-	SensorNode.dadt \T \B & 477 \T \B & tbc \T \B tbc \\ \hline
-	ClientNode.dadt \T \B & 841 \T \B & tbc \T \B tbc \\ \hline
-	DSensor.dadt \T \B & 303 \T \B & tbc \T \B tbc \\ \hline
-	\end{tabular}
-	\end{center}
-	\caption{Memory usage}
-	\label{Tab:Memory}
-\end{table}
 
 As discussed before, the runtime library consists of a number
 of Java files that provide the functionality of the DADT/LN prototype. The \emph{jar} file representing the runtime
@@ -140,36 +144,6 @@ resulting in 95KB jar-file. Similarly, the integrated jar-file of the ClientNode
 application requires 99 KB of the memory.
 
 \subsection{Processing and Communication Delays}
-
-This section presents evaluation of the round trip delay time required for
-executing a distributed sensing operation on the WSN.  
-
-%%
-
-The processing and communication delays were used to compare the performance of
-the DADT/LN prototype upon execution of the distributed operation ``average''
-over several such Dataviews. %rewrite%
-
-The Dataview used to define the scope of the given distributed operation would be classified as follows:
-\begin{itemize}
-\item \emph{low} complexity, which consists of up to 3 DADT properties allowing to define
-views, such as ``all active temperature sensors'';
-\item \emph{moderate} complexity, which uses from 3 to 10 properties that allows to
-create views, such as ``all active temperature
-sensors with precision > 1.0 and sensor reading greater than 80'';
-\item \emph{high} complexity, which uses up to 20 properties. The number of properties that construct such type of Dataviews was
-limited by the length of the radiogram size used for communication between Sun SPOTs.
-\end{itemize}
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.60]{img/RTTevaluation.eps} 
-\caption[Delay factors for distributed operation execution]{Factors contributing to delays in the execution of a distributed operation on a WSN using the DADT/LN prototype}
-\label{Fig:TimingsModel}
-\end{figure}
-
-Figure \ref{Fig:TimingsModel} shows the relevant time delays occurred during the
-work of DADT/LN prototype. 
 
 \subsubsection{Non-concurrent requests}
 
@@ -195,16 +169,21 @@ execution of distributed operation ``average''}
 As can be seen in Table \ref{Tab:EvalRes}, the complexity of the 
 Dataview has a direct correlation to the delays associated with processing of the request
 on the SensorNode side. This subsequently leads to increasing waiting
-intervals on the ClientNode side.
+intervals on the ClientNode. However, processing delays constitute a very small
+part of
+the total processing and communication latency. Efficient manual serialization
+results in only a minimal increase in the size of the messages sent when there
+is an increase in the number of predicates used. This explains why the increase
+in the latency with an increase in the complexity of the Dataview does not
+exceed 20\% on the ClientNode.
 
-On the SensorNode, this might be a consequence of the given limitations of the
-Squawk JVM, which does not provide support for serialization of objects. Hence,
-delays occur when the object representing the scope of the distributed operation is
-recreated by the SensorNode, and is later used for identifying the relevant ADT
+Delays on the SensorNode occur when (a) deseralization is performed, and (b) the
+object representing the scope of the distributed operation is
+recreated by the SensorNode and is later used for identifying the relevant ADT
 instances which execute the requested operation.
 Activities such as performing an action that involve: (a) requesting sensor
 readings, and (b) the subsequent invocation of the LN API to send a reply message, were
-executed in a relatively short time.
+executed in a relatively short time. However, 
 
 On the ClientNode, actions such as preparing a request message and parsing
 the received results take on average 10-15\% of the time spent waiting for the receipt of reply messages with sensor readings.
@@ -235,10 +214,22 @@ execution of distributed operation ``average''}
 
 The results presented in Table \ref{Tab:EvalResConcurrent} considered only those
 Dataviews with high complexity. 
-It can be seen that, in general, concurrent requests increas the processing time
-on devices running the SensorNode application only to a little degree. However,
-the other delay factors involved in the execution of the distributed operation are comparable to that
+It can be seen that, in general, concurrent requests increase the processing time
+on devices running the SensorNode application only by a small degree. The other
+delay factors involved in the execution of the distributed operation are comparable to that
 incurred upon execution of non-concurrent requests.
+
+This clearly indicates the scalability of the system.
+
+\section{Summary}
+
+This chapter presented the evaluation of the DADT/LN prototype on Sun SPOTs. Two
+metrics - (a) memory usage, and (b) processing and communication delays - were
+used to perform this evaluation. The results obtained indicated that the memory
+usage allows for far more complex applications to be implemented. The processing
+and communication delays indicated the scalability of the application, with
+performance degradations being within low bounds with increases in request 
+complexity and concurrency.
 
 
 

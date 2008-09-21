@@ -3,8 +3,6 @@
 This chapter provides the implementation details of the DADT/LN prototype
 developed as part of this work.  
 
-
-
 %This section attempts to explain the operation of the DADT/LN prototype
 %developed as part of this work by considering the sequence of method calls made
 %during the execution of the DADT/LN prototype. The operation of the simulation
@@ -94,27 +92,27 @@ the Client Node.
 
 \subsection{Interaction between DADT and LN layers} \label{subsec:DADTLNMapping}
 
-The DistrNode Manager is responsible for the interaction between DADT and LN
+The DistrNode Manager is responsible for the interaction between the DADT and LN
 layers, as was mentioned in Section \ref{subsubsec:LowerLayer}.
 
-Invocation of the request for distributed operation causes the DistrNode Manager
+Invocation of a distributed operation request causes the DistrNode Manager
 to perform the following actions:
 \begin{itemize}
-  \item Provide mapping between components of the Expression Tree object, which
-  represents the scope of the distributed request and LN predicates.
+  \item Provide mapping between the components of the Expression Tree object,
+  which represents the scope of the distributed request and LN predicates.
   \item Identify the required selection operator provided in the request
-  (See Section \ref{subsubsec:OperatorsAndActions} for details) and send
-  this request to the WSN.
+  (See Section \ref{subsubsec:OperatorsAndActions} for details), and send
+  this request to the WSN using the selection operator functionality.
 \end{itemize}
 
-Each expresson tree contains a set of DADT Properties, comparison operators
+Each expresson tree contains a set of DADT Properties, comparison operators,
 and values associated with each DADT Property. Moreover,
-each DADT Property implements method that provides mapping of the DADT
-Property into LN predicate by using the relevant LN runtime classes. 
+each DADT Property implements methods that provide mapping from DADT
+Properties into LN predicates using the relevant LN runtime classes. 
 
-Therefore, when request has to be sent, the DistrNode Manager performs traversal
-of the given Expression Tree object and collects a list of LN predicates that
-is used later by LN runtime for routing. Listing
+Therefore, when request has to be sent, the DistrNode Manager traverses
+the given Expression Tree object and collects a list of LN predicates that
+is later used by the LN runtime for routing. Listing
 \ref{listing:PropertyLNPredicateMapping} presents an example of such a mapping.
 
 \begin{lstlisting}[frame=trbl, basewidth={0.55em, 0.6em}, captionpos=b, 
@@ -145,14 +143,15 @@ public class DSensor_isValueLess_Property implements  Property {
 }
 \end{lstlisting} 
 
-DADT Property shown in Listing \ref{listing:PropertyLNPredicateMapping}
-checks if the sensor of a given type provides a sensor reading which is less than specified by \emph{valueToCheck} field. 
-When the request is constructed, method \emph{getLNPredicate} is used and
-mapping is performed. 
+The DADT Property shown in Listing \ref{listing:PropertyLNPredicateMapping}
+checks if the sensor of a given type provides a sensor reading which is less
+than what is specified by the \emph{valueToCheck} field. 
+When the request is constructed, the \emph{getLNPredicate} method is used to
+perform the mapping. 
 
-Currenty the mapping between each DADT Property and relevant LN Predicate
-object has to be provided by an application developer manually. Future work may
-include implementation of such mapping in automatic mode.
+Currently, the mapping from each DADT Property to the relevant LN Predicate
+object has to be provided manually by an application developer.
+Future work may include implementation of such mapping automatically.
 
 \section{The DADT/LN Prototype on the Sensor Device} \label{subsubsec:DADTLNSensorDevice}
 
@@ -213,61 +212,64 @@ If the application layer requires that a reply be sent, the LN implementation in
 the lower layer of the protocol stack is used as can be seen on the bottom
 right section of Figure \ref{Fig:SeqDiagram_Sensornode}.
 
-\subsection{Handling of Multiple ADT Instances}
+\subsection{Handling Multiple ADT Instances}
 
-When the request message is received in the application layer, then at least
+When a request message is received in the application layer, then at least
 one of the sensor ADT instances in the Sensor Node fits into the DADT view\footnote{If none of the sensor ADT instances fit the view, the message would have been discarded in the network
-layer.}, because LN runtime uses a set of LN predicates based upon DADT view
-(See Section \ref{subsec:DADTLNMapping}) for routing. 
+layer.}. This is because the LN runtime uses a set of LN predicates based on the
+DADT view (See Section \ref{subsec:DADTLNMapping}) for routing. 
 This minimises the number of messages received at the application layer. However,
 since a given Sensor Node may contain several sensor ADT instances, the ADT
 instances have to be filtered.
 
-Filtering is performed by using DADT view object that was sent as the part
-of Request message. For each ADT instance binded to the DADT class, all DADT
+Filtering is performed by using DADT view object that was sent as part
+of a Request message. For each ADT instance bound to the DADT class, all DADT
 properties that constitute the DADT view are evaluated. 
 
-Once selection of the relevant for the request ADT instances is done, the
-request DADT Action is performed by the \emph{Node Manager}.
+Once selection of the ADT instances relevant to the request is performed, the
+requested DADT Action is performed by the \emph{Node Manager}.
 
 \section{Communication Messages} \label{sec:messages}
 
 As was discussed in Chapter \ref{chap:design}, nodes that use the DADT/LN
-prototype are communicate between each other by means of specific messages:
+prototype communicate with each other by means of the following
+messages:
 \begin{itemize}
   \item \emph{Request message}
   \item \emph{Reply message}
 \end{itemize} 
 
-The \emph{Request Message}, as follows from its name, used by controller device
-to define a request for distributed action. This message contains 
+The \emph{Request Message}, as follows from its name, is used by the controller
+device to define a request for distributed action. This message contains 
 the following fields: 
 \begin{itemize}
-  \item \emph{Sender}, which provides information about the node-requestor,
+  \item \emph{Sender}, which provides information about the requesting node,
   used later by the sensor device to forward a reply message,
   \item \emph{DADT action}, which specifies the name of the distributed
   action to be executed,
-  \item \emph{DADT Classname}, which provides name of the DADT instance,
-  \item \emph{DADT View} which represents the scope of the distributed request
-  and used by the sensr device to select the relevant  ADT instance.
+  \item \emph{DADT Classname}, which provides the name of the DADT instance,
+  \item \emph{DADT View} which represents the scope of the distributed request,
+  and is used by the sensor device to select the relevant  ADT instance.
 \end{itemize}
 
-The \emph{Reply Message} used by sensor device to provide the requestor with
-relevant sensor data, if it is required. This message contains the following
-fields:
+The \emph{Reply Message} is used by the sensor device to provide the requesting node
+with
+the sensor data requested for, if necessary. This message contains the
+following fields:
 \begin{itemize}
-  \item \emph{Source}, which specifies the sensor device sending the reply
-  \item \emph{Readings}, which stores sensor readings  
+  \item \emph{Source}, which specifies the sensor device sending the reply.
+  \item \emph{Readings}, which stores sensor readings.  
 \end{itemize}
 
-These messages are sent over WSN and delivered to the nodes by means of LN, as it was discussed in Chapter \ref{chap:design}.
+These messages are sent over the WSN and delivered to the nodes by means of the
+LN runtime, as was discussed in Chapter \ref{chap:design}.
 
 \section{The DADT/LN Prototype in the simulated environment}
 
 \subsection{Simulation using JiST/SWANS}
 
-The DADT/LN prototype was tested on the SWANS WSN simulator, which is built upon
-the JiST discrete event simulator (see Section \ref{subsec:jist}). 
+The DADT/LN prototype was developed on the SWANS WSN simulator, which is built
+upon the JiST discrete event simulator (see Section \ref{subsec:jist}). 
 
 The DADT/LN prototype code is wrapped in the JiST API, and is loaded on to a
 simulated node. 
@@ -296,7 +298,7 @@ e.g. Temperature sensor, Humidity senser, etc., and bound them to the DADT type
 
 The nature of discrete event simulation allowed to verify empirically the
 robustness of the prototype done as part of this thesis, but could not provide any evaluation
-results relevant for real-world WSNs.
+results relevant to real-world WSNs.
 
 %The simulation was run on networks of up to 50 nodes to develop and
 %empirically verify the robustness of the work done as part of this thesis.
@@ -324,15 +326,18 @@ of the Java ME framework, and therefore lacks support for a number of APIs that 
 previously used during the development of the DADT prototype \cite{migliavacca_DADT:2006}.
 
 Strict constraints on the supported classes and packages,
-e.g. \emph{java.utils}, have required refactoring of the code when deployed
-on the Sun SPOT devices. Moreover, lack of support for the serialization of objects resulted in the
-necessity to perform serialization ``manually'' for the DADT Action
-and the DADT View objects contained in the request messages (see Section
-\ref{sec:messages}), and hence, increased size of the request message payload.
+such as for instance \emph{java.utils}, necessitated refactoring of the code
+prior to deployment
+on the Sun SPOT devices. Moreover, the lack of support for the serialization of
+objects resulted in the
+development of a mechanism to manually serialize the DADT View objects contained in the request messages (see Section
+\ref{sec:messages}). This required extra processing to be performed on the
+sensor node, thereby having an effect on the latency as well as the memory consumption.
 
 \section{Summary}
 
 This chapter presented the details of the implementation of the DADT/LN
-prototype developed during the course of this work. The chapter
-concluded with a description of the challenges surmounted in order to
-further verify the DADT/LN prototype on the Sun SPOT sensor devices.
+prototype developed during the course of this work. After describing the
+prototype on the controller as well as on the sensor devices, it concluded with a
+description of the challenges surmounted in
+order to further verify the DADT/LN prototype on the Sun SPOT sensor devices.

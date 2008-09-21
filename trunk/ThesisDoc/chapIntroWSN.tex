@@ -1,7 +1,8 @@
 \chapter{Introduction to Wireless Sensor Networks} \label{chap:IntroWSN}
-This chapter presents a brief introduction to Wireless Sensor Networks (WSNs).
-Additionally, it describes the reference WSN protocol stack used as part of this
-work, and provides a short overview of WSN routing techniques.
+This chapter presents a brief introduction to Wireless Sensor Networks (WSNs)
+and its applications. This is followed by a description of the reference
+protocol stack used in this work, and the programming abstractions used herein. 
+This chapter concludes with examples of typical WSN hardware platforms.
 
 \section{Sensor Nodes} \label{subsec:sensornodes}
 WSNs are, as described earlier (see Chapter \ref{chap:Intro}), networks of sensor
@@ -106,9 +107,10 @@ supports error checking mechanisms.
 \item \emph{Application Layer}, where the application software resides.
 \end{itemize}
 
-The work presented here is resided fully on the application layer of the
-protocol stack, but uses network layer .. . %%%% TO WRITE UP (TO COVER WHY WE
-%DECRIBE PROTOCOL STACK )
+The work presented here resides entirely on the application layer of the
+protocol stack, and integrates the application layer code with a routing
+mechanism that resides in the network
+layer.
 
 %\section {Routing in WSNs}
 
@@ -253,22 +255,22 @@ Abstractions that use \emph{physical neighbourhood} approach provide
   within direct communication range. Examples of communication in physical
   neighbourhood include nesC \cite{nesc:2003} and Active Messages \cite{activemessagesEicken:2001}.
   
-Abstractions with \emph{multi-hop group} approach allow the
+Abstractions using the \emph{multi-hop group} approach allow the
   programmer to exchange data among subsets of nodes in the WSN using
   multi-hop communication. These sets may either be
   \emph{connected}, wherein there always exists a path between any two nodes in
   the set, or \emph{non-connected/disconnected}, where ``no assumptions on the geographical location of nodes 
 belonging to the group'' \cite{mottola_middleware:2008} can be made.  
-  EnviroSuite Framework \cite{envirosuite:2006} represents an example of
-  connected multi-hop communication, and Logical Neighborhoods
+  The EnviroSuite Framework \cite{envirosuite:2006} represents an example of
+  connected multi-hop communication, as do Logical Neighborhoods
   \cite{mottola_LN:2006} - an example of non-connected multi-hop
   communication.
 
 \emph{System-wide} abstractions let the
   programmer use constructs that allow data exchange between any two nodes
-  of the entire WSN. This may be seen as an extreme manifestation of the
+  in the WSN. This may be seen as an extreme manifestation of the
   \emph{multi-hop group} approach mentioned above. An example of system-wide
-  communication is TinyDB \cite{madden_TinyDB:2005} project.
+  communication is the TinyDB \cite{madden_TinyDB:2005} project.
   
 \subsubsection{Addressing Scheme}
 
@@ -284,12 +286,12 @@ identified. Typically, there are two kinds of addressing schemes used
 In \emph{physical addressing} schemes nodes are identified using unique 
   identifiers. The same address always identifies the same node (or nodes, if
   duplicate  identifiers exist) at any time during the execution of the
-  application. The paradigmatic example of physical addressing scheme is Active
-  Messages communication \cite{activemessagesEicken:2001}.
+  application. The paradigmatic example of a physical addressing scheme is
+  Active Messages communication \cite{activemessagesEicken:2001}.
 
 When a \emph{logical addressing} mechanism is used, nodes are identified on the
 basis of application-level properties specified by the application
-programmer. Therefore, the same address, i.e. set of
+programmer. Therefore, the same address, i.e., the set of
 application-level predicates, can identify different sets of nodes at different
 times. An example of logical addressing is Logical Neighborhood communication
 \cite{mottola_LN:2006}.
@@ -308,8 +310,8 @@ interfaces may provide either \cite{mottola_middleware:2008}:
   high-level constructs.
 \end{itemize}
 
-Active Messages \cite{activemessagesEicken:2001} present an example of
-explicit communication approach. In contrast, the Active Regions programming
+Active Messages \cite{activemessagesEicken:2001} are an example of
+an explicit communication approach. In contrast, the Active Regions programming
 framework \cite{activeregions:2004} belongs to the latter category.
 
 \subsubsection{Computation Span}
@@ -329,8 +331,8 @@ computation span provided by a given abstraction can be
   instruction can impact every node in the WSN.
 \end{itemize}
 
-An example of node computation is the ATaG framework \cite{atag:2005}; the
-Regiment system \cite{regiment:2007} implements group communication approach. The
+An example of node computation is the ATaG framework \cite{atag:2005}, while the
+Regiment system \cite{regiment:2007} implements a group communication approach.
 TinyDB \cite{madden_TinyDB:2005} represents an example of global computation
 span.
 
@@ -344,7 +346,8 @@ stack (adapted from \cite{mottola_middleware:2008})}
 \label{Fig:ProtStack_ProgAbstr}
 \end{figure}
 
-WSN programming models often are placed between the application layer and the
+WSN programming models are typically placed between the application layer and
+the
 transport layer in the protocol stack shown in Section \ref{sec:WSNProtStack}. As it can be seen from
 Figure \ref{Fig:ProtStack_ProgAbstr},
 fine-grained details are hidden from the application programmer's view. These
@@ -384,9 +387,10 @@ using the nesC programming language \cite{gay_nesc}.
 
 \subsubsection{The Sentilla Mini}
 
-Moteiv has been acquired by Sentilla, and have released a MSP430-based sensor
+Moteiv has been acquired by Sentilla, and have released a Java-compliant 
+MSP430-based sensor
 device with a smaller form factor than that of the Tmote sky, called the
-Sentilla mini.
+Sentilla mini\footnote{http://www.sentilla.com/hardware.html}.
 
 \section{Summary}
 This chapter presented an introduction to WSNs and discussed in detail the 
@@ -394,5 +398,3 @@ sensor nodes that constitute them. This was followed by a description of WSN
 applications, and the
 WSN protocol stack. The chapter then concluded with a description of WSN
 programming models and hardware platforms.
-
-

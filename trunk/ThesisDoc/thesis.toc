@@ -1,14 +1,14 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}
-\contentsline {section}{\numberline {1.1}Motivation}{1}
+\contentsline {section}{\numberline {1.1}Motivation}{2}
 \contentsline {section}{\numberline {1.2}Contributions}{2}
 \contentsline {section}{\numberline {1.3}Outline}{3}
 \contentsline {chapter}{\numberline {2}Introduction to Wireless Sensor Networks}{4}
 \contentsline {section}{\numberline {2.1}Sensor Nodes}{4}
 \contentsline {section}{\numberline {2.2}Applications of WSNs}{6}
-\contentsline {section}{\numberline {2.3}WSN Protocol Stack}{6}
+\contentsline {section}{\numberline {2.3}WSN Protocol Stack}{7}
 \contentsline {section}{\numberline {2.4}Programming Models for WSNs}{8}
 \contentsline {subsection}{\numberline {2.4.1}Taxonomy of WSN Programming Models}{9}
-\contentsline {subsubsection}{\numberline {2.4.1.1}Communication Span}{10}
+\contentsline {subsubsection}{\numberline {2.4.1.1}Communication Span}{11}
 \contentsline {subsubsection}{\numberline {2.4.1.2}Addressing Scheme}{11}
 \contentsline {subsubsection}{\numberline {2.4.1.3}Communication Abstraction}{12}
 \contentsline {subsubsection}{\numberline {2.4.1.4}Computation Span}{12}
@@ -16,51 +16,65 @@
 \contentsline {section}{\numberline {2.5}Hardware Platforms}{14}
 \contentsline {subsection}{\numberline {2.5.1}Sun SPOTs}{14}
 \contentsline {subsection}{\numberline {2.5.2}Tmote Sky}{14}
-\contentsline {section}{\numberline {2.6}Summary}{14}
-\contentsline {chapter}{\numberline {3}Background}{15}
-\contentsline {section}{\numberline {3.1}Abstract Data Types}{15}
+\contentsline {subsubsection}{\numberline {2.5.2.1}The Sentilla Mini}{14}
+\contentsline {section}{\numberline {2.6}Summary}{15}
+\contentsline {chapter}{\numberline {3}Background}{16}
+\contentsline {section}{\numberline {3.1}Abstract Data Types}{16}
 \contentsline {section}{\numberline {3.2}Distributed Abstract Data Types}{17}
-\contentsline {subsection}{\numberline {3.2.1}Data and Space ADTs}{17}
-\contentsline {subsection}{\numberline {3.2.2}DADTs as an extension of ADTs}{17}
+\contentsline {subsection}{\numberline {3.2.1}Data and Space ADTs}{18}
+\contentsline {subsection}{\numberline {3.2.2}DADTs as an extension of ADTs}{18}
 \contentsline {subsubsection}{\numberline {3.2.2.1}DADT Operators and Actions}{19}
-\contentsline {subsubsection}{\numberline {3.2.2.2}Views}{19}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Views}{20}
 \contentsline {subsection}{\numberline {3.2.3}The DADT Prototype}{21}
-\contentsline {subsection}{\numberline {3.2.4}ADTs Specification and Instantiation}{21}
-\contentsline {subsection}{\numberline {3.2.5}DADT Specification and Instantiation}{22}
-\contentsline {subsection}{\numberline {3.2.6}Binding ADTs to DADTs}{23}
+\contentsline {subsection}{\numberline {3.2.4}ADTs Specification and Instantiation}{22}
+\contentsline {subsection}{\numberline {3.2.5}DADT Specification and Instantiation}{23}
+\contentsline {subsection}{\numberline {3.2.6}Binding ADTs to DADTs}{24}
 \contentsline {subsection}{\numberline {3.2.7}Implementing DADT Operators and Actions}{24}
-\contentsline {subsubsection}{\numberline {3.2.7.1}DADT Operators}{24}
+\contentsline {subsubsection}{\numberline {3.2.7.1}DADT Operators}{25}
 \contentsline {subsubsection}{\numberline {3.2.7.2}DADT Actions}{25}
 \contentsline {subsection}{\numberline {3.2.8}DADT Views}{26}
 \contentsline {section}{\numberline {3.3}Logical Neighborhoods}{27}
-\contentsline {subsection}{\numberline {3.3.1}The LN Abstraction}{28}
-\contentsline {section}{\numberline {3.4}Summary}{29}
-\contentsline {chapter}{\numberline {4}Tools}{30}
-\contentsline {section}{\numberline {4.1}JiST/SWANS simulator}{30}
-\contentsline {subsection}{\numberline {4.1.1}Discrete Event Simulator}{30}
-\contentsline {subsection}{\numberline {4.1.2}Java In Simulation Time (JiST)}{31}
-\contentsline {subsection}{\numberline {4.1.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{32}
-\contentsline {section}{\numberline {4.2}Sun SPOT platform}{33}
-\contentsline {subsection}{\numberline {4.2.1}The Squawk JVM}{34}
-\contentsline {subsection}{\numberline {4.2.2}Sun SPOT applications}{36}
-\contentsline {section}{\numberline {4.3}Summary}{37}
-\contentsline {chapter}{\numberline {5}Design Overview}{38}
-\contentsline {section}{\numberline {5.1}Limitations of the existing DADT Prototype}{38}
-\contentsline {section}{\numberline {5.2}The DADT/LN Prototype Design}{39}
-\contentsline {subsection}{\numberline {5.2.1}Workflow Overview}{39}
-\contentsline {subsection}{\numberline {5.2.2}Architecture}{42}
-\contentsline {subsubsection}{\numberline {5.2.2.1}Upper layer}{42}
-\contentsline {subsubsection}{\numberline {5.2.2.2}Lower Layer}{44}
-\contentsline {section}{\numberline {5.3}Summary}{44}
-\contentsline {chapter}{\numberline {6}Evaluation}{45}
-\contentsline {section}{\numberline {6.1}Setting}{45}
-\contentsline {section}{\numberline {6.2}Metrics}{47}
-\contentsline {section}{\numberline {6.3}Results}{47}
-\contentsline {subsection}{\numberline {6.3.1}Memory Usage}{47}
-\contentsline {subsection}{\numberline {6.3.2}Processing and Communication Delays}{49}
-\contentsline {subsubsection}{\numberline {6.3.2.1}Non-concurrent requests}{49}
-\contentsline {subsubsection}{\numberline {6.3.2.2}Concurrent requests}{51}
-\contentsline {chapter}{\numberline {7}Conclusions, and Future Work}{53}
-\contentsline {section}{\numberline {7.1}Conclusions}{53}
-\contentsline {section}{\numberline {7.2}Future Work}{53}
-\contentsline {chapter}{Bibliography}{55}
+\contentsline {subsection}{\numberline {3.3.1}The LN Abstraction}{29}
+\contentsline {section}{\numberline {3.4}Summary}{30}
+\contentsline {chapter}{\numberline {4}Tools}{31}
+\contentsline {section}{\numberline {4.1}JiST/SWANS simulator}{31}
+\contentsline {subsection}{\numberline {4.1.1}Discrete Event Simulator}{31}
+\contentsline {subsection}{\numberline {4.1.2}Java In Simulation Time (JiST)}{32}
+\contentsline {subsection}{\numberline {4.1.3}Scalable Wireless Ad hoc Network Simulator (SWANS)}{33}
+\contentsline {section}{\numberline {4.2}Sun SPOT platform}{34}
+\contentsline {subsection}{\numberline {4.2.1}The Squawk JVM}{35}
+\contentsline {subsection}{\numberline {4.2.2}Sun SPOT applications}{37}
+\contentsline {section}{\numberline {4.3}Summary}{38}
+\contentsline {chapter}{\numberline {5}Design Overview}{39}
+\contentsline {section}{\numberline {5.1}Limitations of the existing DADT Prototype}{39}
+\contentsline {section}{\numberline {5.2}The DADT/LN Prototype Design}{40}
+\contentsline {subsection}{\numberline {5.2.1}Workflow Overview}{40}
+\contentsline {subsection}{\numberline {5.2.2}Architecture}{43}
+\contentsline {subsubsection}{\numberline {5.2.2.1}Upper layer}{43}
+\contentsline {subsubsection}{\numberline {5.2.2.2}Lower Layer}{45}
+\contentsline {section}{\numberline {5.3}Summary}{45}
+\contentsline {chapter}{\numberline {6}Implementation and Testing}{46}
+\contentsline {section}{\numberline {6.1}The DADT/LN Prototype on the Controller}{46}
+\contentsline {subsection}{\numberline {6.1.1}Workflow}{47}
+\contentsline {subsection}{\numberline {6.1.2}Interaction between DADT and LN layers}{49}
+\contentsline {section}{\numberline {6.2}The DADT/LN Prototype on the Sensor Device}{51}
+\contentsline {subsection}{\numberline {6.2.1}Workflow}{51}
+\contentsline {subsection}{\numberline {6.2.2}Handling Multiple ADT Instances}{53}
+\contentsline {section}{\numberline {6.3}Communication Messages}{53}
+\contentsline {section}{\numberline {6.4}The DADT/LN Prototype in the simulated environment}{54}
+\contentsline {subsection}{\numberline {6.4.1}Simulation using JiST/SWANS}{54}
+\contentsline {subsection}{\numberline {6.4.2}The DADT/LN Prototype on Sun SPOTs}{55}
+\contentsline {section}{\numberline {6.5}Summary}{56}
+\contentsline {chapter}{\numberline {7}Evaluation}{57}
+\contentsline {section}{\numberline {7.1}Setting}{57}
+\contentsline {section}{\numberline {7.2}Metrics}{59}
+\contentsline {section}{\numberline {7.3}Results}{61}
+\contentsline {subsection}{\numberline {7.3.1}Memory Usage}{61}
+\contentsline {subsection}{\numberline {7.3.2}Processing and Communication Delays}{61}
+\contentsline {subsubsection}{\numberline {7.3.2.1}Non-concurrent requests}{61}
+\contentsline {subsubsection}{\numberline {7.3.2.2}Concurrent requests}{62}
+\contentsline {section}{\numberline {7.4}Summary}{63}
+\contentsline {chapter}{\numberline {8}Conclusions, and Future Work}{64}
+\contentsline {section}{\numberline {8.1}Conclusions}{64}
+\contentsline {section}{\numberline {8.2}Future Work}{64}
+\contentsline {chapter}{Bibliography}{66}

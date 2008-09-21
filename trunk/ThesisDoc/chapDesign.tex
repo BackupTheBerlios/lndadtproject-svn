@@ -35,9 +35,9 @@ approach is clearly applicable to WSNs, the prototype itself did not support WSN
 abstractions, as it suffers from the following major limitations:
 
 \begin{itemize}
-  \item The lack of a routing mechanism suited for WSN
-  \item Limitations in portability to real WSN nodes
-  \item Memory and code occupation
+  \item The lack of a routing mechanism suitable for WSNs.
+  \item Limitations in portability to real WSN nodes.
+  \item Memory usage and program code size.
 \end{itemize}
 
 \section{The DADT/LN Prototype Design} \label{sec:PrototypeDesign}
@@ -172,11 +172,12 @@ runtime with the LN runtime \footnote{The LN implementation
 used as part of this work does not use a declarative language for LN
 specification which was used for decription of the LN concepts}, which enables
 routing and scoping mechanisms in WSN. 
-Interaction with LN runtime achieved by using instances of
+Interaction with the LN runtime is achieved using instances of
 the \emph{LNNodeManager} class on each sensor device, and the \emph{LNDistrNodeManager} instance on the controller node.
 
-Communication between sensor devices and the controller node is fully handled by
-the LN runtime layer. This is abstracted from the application programmer by means of the
+Communication between sensor devices and the controller node is handled entirely
+by
+the LN runtime layer. This is abstracted from the application programmer by means of
 \emph{Request} and \emph{Reply} messages (details of implementation are provided
 in Section \ref{sec:messages}). The classes \emph{SelectAll} and \emph{SelectAny} implement
 DADT selection operators, and allow for the invocation of the corresponding send methods defined in the LN API.
@@ -186,4 +187,4 @@ DADT selection operators, and allow for the invocation of the corresponding send
 This chapter presented the architecture of the DADT/LN
 prototype developed during the course of this work. The chapter concluded with a
 detailed description of the modules constituting the prototype and 
-interaction between them.
+the interactions between them.

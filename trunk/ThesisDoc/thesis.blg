@@ -10,47 +10,51 @@ A level-1 auxiliary file: chapEvaluation.aux
 A level-1 auxiliary file: chapConclusions.aux
 The style file: acm.bst
 Database file #1: references.bib
+Repeated entry---line 549 of file references.bib
+ : @inbook{levis_tinyos:2005
+ :                          ,
+I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "benson_carpark"
 Warning--to sort, need author or key in NIST_website
-You've used 30 entries,
+You've used 33 entries,
             2253 wiz_defined-function locations,
-            717 strings with 10064 characters,
-and the built_in function-call counts, 8899 in all, are:
-= -- 817
-> -- 506
+            728 strings with 10568 characters,
+and the built_in function-call counts, 9989 in all, are:
+= -- 911
+> -- 596
 < -- 0
-+ -- 208
-- -- 178
-* -- 711
-:= -- 1526
-add.period$ -- 88
-call.type$ -- 30
-change.case$ -- 177
++ -- 246
+- -- 212
+* -- 813
+:= -- 1715
+add.period$ -- 96
+call.type$ -- 33
+change.case$ -- 203
 chr.to.int$ -- 0
-cite$ -- 31
-duplicate$ -- 302
-empty$ -- 678
-format.name$ -- 178
-if$ -- 1786
+cite$ -- 34
+duplicate$ -- 330
+empty$ -- 739
+format.name$ -- 212
+if$ -- 1993
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 26
-newline$ -- 151
-num.names$ -- 58
-pop$ -- 172
+int.to.str$ -- 33
+missing$ -- 28
+newline$ -- 165
+num.names$ -- 62
+pop$ -- 197
 preamble$ -- 1
-purify$ -- 148
+purify$ -- 172
 quote$ -- 0
-skip$ -- 175
+skip$ -- 190
 stack$ -- 0
-substring$ -- 343
-swap$ -- 62
+substring$ -- 376
+swap$ -- 68
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 118
+type$ -- 130
 warning$ -- 1
-while$ -- 76
-width$ -- 32
-write$ -- 290
-(There were 2 warnings)
+while$ -- 82
+width$ -- 35
+write$ -- 316
+(There was 1 error message)

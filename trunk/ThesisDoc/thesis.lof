@@ -6,21 +6,24 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Classification of Programming Abstractions (adapted from \cite {mottola_middleware:2008})}}{10}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Programming models on the WSN protocol stack}}{13}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Abstraction of sensor node through multiple ADTs}}{16}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Data and space in the DADT model}}{18}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces DADT Views}}{20}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Abstraction of sensor node through multiple ADTs}}{17}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Data and space in the DADT model}}{19}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces DADT Views}}{21}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Difference between physical and logical neighborhoods}}{28}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces The JiST System Architecture}}{32}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces SWANS architecture}}{33}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Sun SPOT device}}{35}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces The Squawk Split VM Architecture}}{36}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Types of Sun SPOT applications}}{37}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces The JiST System Architecture}}{33}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces SWANS architecture}}{34}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sun SPOT device}}{36}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces The Squawk Split VM Architecture}}{37}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Types of Sun SPOT applications}}{38}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces DADT/LN application workflow}}{40}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces WSN in DADT/LN prototype}}{41}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces DADT/LN architecture}}{43}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces DADT/LN application workflow}}{41}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces WSN in DADT/LN prototype}}{42}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces DADT/LN architecture}}{44}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Test-bed model of WSN using the DADT/LN prototype}}{47}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Delay factors for distributed operation execution}}{50}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Operation of the DADT/LN prototype on Controller}}{48}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Operation of the DADT/LN prototype on sensor device}}{52}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Test-bed model of WSN using the DADT/LN prototype}}{59}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Delay factors for distributed operation execution}}{60}
 \addvspace {10\p@ }

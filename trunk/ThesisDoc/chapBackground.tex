@@ -1,30 +1,10 @@
 \chapter{Background} \label{chap:background}
 
-%% REWRITE!??
-
 This chapter presents a brief discussion of the concepts and algorithms
-that were used during the course of this work. 
-
-This chapter begins with presentation of abstract data types and
-discusses its applicability for WSNs. The chapter further presents distributed
-abstract data types (DADTs) and concepts underlying them \cite{migliavacca_DADT:2006}.
-
-This is followed by a brief presentation of the Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism that
-enables routing and scoping in WSNs.  
-
-%This
-%chapter begins with an introduction to programming abstractions and continues
-%with a discussion on their applications in WSN programming.
-
-%This chapter further presents the concepts underlying Distributed Abstract Data
-%Types (DADTs) \cite{migliavacca_DADT:2006}. This is followed by a presentation
-%of the Logical Neighborhoods (LN) \cite{mottola_LNScoping:2006}, a mechanism
-%that enables routing and scoping in WSNs. 
-
-%The chapter then concludes with a
-%description of the hardware platform - Sun Small Programable Object Technology
-%(SPOT) \cite{simon_squawk:2006} - used to experimentally validate the
-%implemented prototype in a real-world environment.
+that were used during the course of this work. It then presents the concepts underlying DADTs, and describes the DADT
+prototype modified for the purposes of this work \cite{migliavacca_DADT:2006}.
+This is followed by a discussion of the Logical Neighbourhoods (LN)
+\cite{mottola_LNScoping:2006} WSN routing and scoping mechanism.
 
 \section{Abstract Data Types}
 
@@ -47,15 +27,11 @@ several different implementations of an ADT may be defined using the proposed sp
 %\subsection{ADTs in WSNs} \label{subsubsec:ADTsinWSN}
 
 The concept of ADTs has been successfully used in several different areas of
-science. This idea clearly has found its applicability in WSNs, due to
-possibility to separate interfaces provided by sensor nodes and their particular
-implementations. 
-
+science. This idea is clearly applicable to WSNs, because each sensor node may
+consist of several sensors that can be accessed transparently using separate interfaces.
 %The rest of this section focuses on the application and extension of the concept of ADTs for use in WSNs.
 
 A top-down aproach can be used to overview an abstraction of WSN and its parts.
-Any WSN as described earlier, usually consists of a number of sensor nodes, where each
-sensor node may include several sensors used to measure specific phenomenon.
 
 \begin{figure}[h]
 \centering
@@ -145,33 +121,32 @@ DADT operators may belong to one of the following types:
 \begin{itemize}
   \item \emph{Selection Operators} that allow the performance of
   distributed operations on a subset of the instances in the member set.
-  Examples of such operators could be \emph{all}, or \emph{any} selection
-  operator, because they allow to declare a subset of the instances.
+  Examples of such operators could be the \emph{all} and \emph{any} selection
+  operators, as they allow for the declaration of a subset of the instances.
 
   \item \emph{Conditional Operators} that provide support for global
   conditions to be applied on the member set prior to the execution of the DADT
-  operation. One of the examples of conditional operator is operator
-  \emph{in}, that allows to check if one set of instances contains in another
-  one.
+  operation. An example of conditional operators is the operator
+  \emph{in}, that allows to check if one set of instances is contained in another.
 
   \item \emph{Iteration Operators} that allow iterating over the
   ADT instances in the set, and thus permit access to individual ADT instances.
-  Examples of such operators are \emph{next}, \emph{previous}, \emph{last},
+  Examples of such operators include \emph{next}, \emph{previous}, \emph{last},
   \emph{first}, as they allow to address and iterate over the members of the
   set.
 \end{itemize}
 
-The DADT operators described above allow different way to access ADT
-instance and execute one of the ADT operations defined in the
+The DADT operators described above provide different mechanisms to access ADT
+instances, and execute the ADT operations defined in the
 ADT specification.
 
-Distributed appliation developer may require to implement more complicated
-application logic, though it may happen that even available ADT operations
-are not sufficient. In this case the special DADT construct, called DADT
-action, can be used \cite{migliavacca_DADT:2006}. 
+A Distributed application developer may require to implement more complicated
+application logic, for which the available ADT operations
+are insufficient. In this case, a special DADT construct, called a DADT
+action, may be used \cite{migliavacca_DADT:2006}. 
 
 DADT actions are specified by the DADT type, but are executed similarly to ADT
- operation on remote ADT instances.
+ operations, i.e., on remote ADT instances.
 
 \subsubsection{Views} \label{subsubsec:views}
 
@@ -197,16 +172,16 @@ data and operations, and is evaluated locally on the ADT instance
   \item \emph{Space View}.
 \end{itemize}
 
-Application developer should decide what could be the best
+The application developer should decide the best
 way to access the WSN. A Data DADT instance can be used to
 operate on the distributed data and limit the scope using predicates over
 DADT properties representing data, space, or both,
 depending on the needs of the application. Similarly, any kind of view to
 access the distributed representation of Space can be applied.
 
-This section has presented concepts underlying the DADTs. A brief description
-of the DADT prototype \cite{migliavacca_DADT:2006} will be presented further in
-Section \ref{sec:DADTPrototype}.
+This section has presented the concepts underlying DADTs. Additionally, a brief
+description of the DADT prototype \cite{migliavacca_DADT:2006} is presented
+in the following section (Section \ref{sec:DADTPrototype}).
 
 \subsection {The DADT Prototype} \label{sec:DADTPrototype}
 
@@ -341,8 +316,7 @@ basicstyle=\ttfamily\footnotesize, breaklines, caption = Binding ADT instances t
   ...
 \end{lstlisting} 
 
-Binding of ADT instances takes place on the sensor device that holds sensors,
-as those are abstracted into specific ADTs.
+Binding of ADT instances takes place on the sensor device that holds sensors.
 
 \subsection{Implementing DADT Operators and Actions}
 \label{subsubsec:OperatorsAndActionsImpl}
@@ -554,11 +528,8 @@ details in \cite{mottola_LN:2006, mottola_LNScoping:2006}.
 \section{Summary}
 
 This chapter presented an overview of the concepts, technologies, and hardware
-underlying the work presented in this thesis. After underlining the need for the
-use of programming models to increase the ubiquity of WSN use, this chapter
-introduced a taxonomy of programming abstractions and placed the Distributed
-Abstract Data Types programming abstraction used in this work within the
-framework of the taxonomy. This was followed by a detailed discussion on Abstract
+underlying the work presented in this thesis. This was followed by a detailed
+discussion of Abstract
 and Distributed Abstract Data Types used in the application layer of the
 prototype produced during the course of this work, and the Logical Neighbourhood
 routing mechanism used in the network and data link layers of the prototype. 

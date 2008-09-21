@@ -6,7 +6,6 @@ themselves into the fabric of everyday life until they are indistinguishable
 from it} [Mark Weiser]
 \end{quote}
 
-\section{Motivation}
 Recent advances in Micro-Electro-Mechanical Systems (MEMS)
 technologies and wireless communication have made it possible to deploy networks
 of sensor nodes called Wireless Sensor Networks (WSNs) that contain a large
@@ -29,18 +28,29 @@ of being an expert embedded system programmer. This is
 achieved using programming abstractions wherein the WSN application is viewed as a system
 and sensor nodes and sensor data are abstracted.
 
-This work underlies the extension of a distributed programming abstraction called
-Distributed Abstract Data Types (DADTs) \cite{migliavacca_DADT:2006} that use
-high-level programming constructs to abstract interfaces to individual entities
-in a distributed network and allow the application programmer to communicate
-directly with the the entire distributed network.
+\section{Motivation}
 
-Though DADTs appear ideal to the problem domain of abstracting WSN programming,
-no work had been performed on examining their suitability, and subsequently
-extending them for use in WSN applications. Additionally, a robust routing
-mechanism that allows for the selection of a subset of the sensor nodes in a WSN
-is required - a requirement that is not met by conventional WSN routing
-algorithms.
+As was described above, programming for WSNs is an extremely arduous task, which
+can be simplified using programming abstraction. Distributed Abstract Data Types
+(DADTs) are a distributed programming abstraction that allows for the
+distributed state of a system to be manipulated transparently
+\cite{migliavacca_DADT:2006}. Though they seem ideal for use in WSNs, DADTs have
+not been tested on them.
+
+Conventional WSN routing mechanisms work on the principle of a physical
+neighbourhood. However, the data-centric nature of WSNs results in sensor nodes
+in different physical neighbourhoods being part of the same logical subset of
+nodes. It was to address this that the Logical Neighbourhood (LN)
+\cite{mottola_LN:2006} routing mechanism was developed. However, the current
+DADT prototype does not use this routing technique.
+
+This work thus attempts to solve the following problems:
+
+\begin{itemize}
+  \item Porting the DADT prototype to run on WSNs.
+  \item Using an effective routing mechanism to enable distributed programming
+  abstractions using DADTs in WSNs.
+\end{itemize}
 
 \section{Contributions}
 
