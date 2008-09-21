@@ -183,9 +183,9 @@ c |}{SensorNode Application} \\ \cline{1-6}
 Dataview complexity \T \B & Create request (ms) & Send request over LN and wait
 for replies (ms) & Process sensor readings (ms) & Receive request, select ADT
 instances & Perform requested action and send reply \\ \cline{1-6}
-Low & 44.64 & 1414.27 & 203.91 & 520.13 & 92.94  \\ \cline{1-6}
-Moderate & 49.82 & 3101.91 & 203.45 & 943.02 & 93.76 \\ \cline{1-6}
-High  & 62.55 & 6034.82 & 205.45 & 1077.83 & 89.95 \\ \cline{1-6}
+Low & 48.44 & 1154.78 & 220.89 & 251.63 & 86.45  \\ \cline{1-6}
+Moderate & 51.36 & 1368.55 & 206.45 & 296.10 & 71.03 \\ \cline{1-6}
+High  & 57.67 & 1385.89 & 210.33 & 356.06 & 72.38 \\ \cline{1-6}
 \end{tabular*}
 \caption{Processing and communication delays for non-concurrent requests for
 execution of distributed operation ``average''}
@@ -226,7 +226,7 @@ c |}{SensorNode Application} \\ \cline{1-6}
 Dataview complexity & Create request, ms & Send request over LN and wait
 for replies, ms & Process sensor readings, ms & Receive request, select ADT
 instances & Perform requested action and send reply \\ \cline{1-6}
-Low & 51.40 & 2604.75 & 197.85 & 595.95 & 178.84  \\ \cline{1-6}
+High & 64.50 & 1699.80 & 210.00 & 325.23 & 88.06  \\ \cline{1-6}
 \end{tabular*}
 \caption{Processing and communication delays for concurrent requests for
 execution of distributed operation ``average''}
@@ -234,19 +234,12 @@ execution of distributed operation ``average''}
 \end{table}
 
 The results presented in Table \ref{Tab:EvalResConcurrent} considered only those
-Dataviews with low complexity. For concurrent requests over Dataviews with a
-high-level of complexity, the time delays were found to be inappropriately large
-for executing a distributed operation.
-
-It can be seen that, in general, concurrent requests increase the processing time
-on devices running the SensorNode application. However, the other delay factors
-involved in the execution of the distributed operation are comparable to that
+Dataviews with high complexity. 
+It can be seen that, in general, concurrent requests increas the processing time
+on devices running the SensorNode application only to a little degree. However,
+the other delay factors involved in the execution of the distributed operation are comparable to that
 incurred upon execution of non-concurrent requests.
 
-%%% SUGGESTION: PLACE IN SEPARATE SECTION %%
-Future work may include further evaluation and adaptation of the DADT/LN
-prototype to provide acceptable performance for Dataviews of moderate and high complexity
-containing of a large number of DADT properties. 
 
 
 
