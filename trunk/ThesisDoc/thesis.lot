@@ -4,8 +4,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Memory usage}}{58}
-\contentsline {table}{\numberline {7.2}{\ignorespaces Processing and communication delays for non-concurrent requests for execution of distributed operation ``average''}}{61}
-\contentsline {table}{\numberline {7.3}{\ignorespaces Processing and communication delays for concurrent requests for execution of distributed operation ``average''}}{61}
+\contentsline {table}{\numberline {6.1}{\ignorespaces Memory usage}}{48}
+\contentsline {table}{\numberline {6.2}{\ignorespaces Processing and communication delays for non-concurrent requests for execution of distributed operation ``average''}}{51}
+\contentsline {table}{\numberline {6.3}{\ignorespaces Processing and communication delays for concurrent requests for execution of distributed operation ``average''}}{51}
 \addvspace {10\p@ }

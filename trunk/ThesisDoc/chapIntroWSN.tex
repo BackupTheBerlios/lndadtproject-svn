@@ -52,6 +52,34 @@ and therefore, sensor nodes should be capable of dealing with changes of this ki
 conditions, the failure-prone nature of sensor nodes and the possibility of
 redeployment of additional sensor nodes at any time during operation.
 
+There has been a great deal of interest in WSNs because of several
+properties, some of which are listed below: 
+\begin{itemize}
+  \item Low cost.
+  \item Ease of deployment.
+  \item Ability to deploy non-invasively in a variety of environments.
+  \item High fault tolerance that allows for operation in hostile environments.
+  \item High sensing granularity possible.
+\end{itemize}
+
+\section{Applications of WSNs}
+
+WSNs have several applications ranging from the military and security domains to
+environmental monitoring. This section describes an example of the use of WSNs
+to perform fine-grained monitoring of parking bays in a parking lot \cite{benson_carpark}.
+
+Parking lots typically keep track of available spaces using a barrier system
+that provides information on vehicles coming in and going out. However, this
+approach fails to provide more fine-grained information, such as the
+availability of individual parking spaces. WSNs that use RF communication lend
+themselves admirably to allowing more fine-grained tracking. 
+
+To implement this, a WSN is deployed in a car park, with a sensor node placed on every
+parking bay. When a car is parked on a parking space, it causes a drastic
+reduction in the sensor node's communication range, thereby affecting the
+pre-existing routing topology. This change in topology can be used to determine
+the used and empty parking bays.
+
 \section{WSN Protocol Stack} \label{sec:WSNProtStack}
 
 The WSN protocol stack presented in \cite{SensorSurveyAkyildiz:2002} is an
@@ -329,11 +357,42 @@ include:
   communication such as RF communication.
 \end{itemize}
 
+\section{Hardware Platforms}
+
+There exist several hardware platforms for WSN development, a few of which are
+described here.
+
+\subsection{Sun SPOTs}
+
+Sun SPOTs \cite{simon_squawk:2006,sun_developer:2008} are sensor devices built
+upon the IEEE 802.15.4 standard by Sun
+Microsystems, and are programmed using a subset of the Java managed-runtime
+programming
+language. Programs written for Sun SPOTs are run on the Squawk Java Virtual
+Machine (JVM). Sun SPOTs were the hardware platform used for the evaluation of
+this work, and are described in greater detail in Section \ref{sec:sunspots}.
+
+\subsection{Tmote Sky}
+
+The Tmote sky is an IEEE 802.15.4 compliant sensor device
+\cite{tmote_sky_brochure:xxxx} developed by moteiv
+(now Sentilla). It uses an MSP430 microcontroller, provides 10 kB of RAM,
+48 kB of program space, and 1024 kB of external Flash memory, and can transfer
+data at the rate of 250 kBps in the 2.4 GHz Industrial-Scientific-Medical (ISM)
+band. These devices run the TinyOS Operating System (OS) \cite{levis_tinyos:2005}, and are programmed
+using the nesC programming language \cite{gay_nesc}.
+
+\subsubsection{The Sentilla Mini}
+
+Moteiv has been acquired by Sentilla, and have released a MSP430-based sensor
+device with a smaller form factor than that of the Tmote sky, called the
+Sentilla mini.
+
 \section{Summary}
 This chapter presented an introduction to WSNs and discussed in detail the 
-sensor nodes that constitute them. This was followed by a description of the WSN
-protocol stack. The chapter concluded with a classification of
-existing WSN routing mechanisms, and placed the techniques and concepts used during the course of
-this work within this classification.
+sensor nodes that constitute them. This was followed by a description of WSN
+applications, and the
+WSN protocol stack. The chapter then concluded with a description of WSN
+programming models and hardware platforms.
 
 
